@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="shell" translatable="false">/system/bin/sh -</string>
+
+</resources>
