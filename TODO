@@ -1,3 +1,18 @@
+===============
+== ReLaunchX ==
+===============
+- connect to Callibre server
+- add cloud storage support
+- fix or add preference setting for full screen mode with Android OS toolbar
+- fix blank screen (screen not refreshed until tapped) on startup, happens on Onyx Boox Max
+
+DONE
+- (DONE) fixed partition size and free space view for Onyx Boox Max
+- (DONE) upgrade project from Eclipse to AndroidStudio
+
+==============
+== ReLaunch ==
+==============
 gamba69@gmail.com: I left the project for an indefinite period... sorry.
 
 ==========
