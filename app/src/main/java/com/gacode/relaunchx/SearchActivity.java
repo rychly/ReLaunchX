@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -296,6 +297,7 @@ public class SearchActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.search);
 
 		SEARCH_FILE = getResources().getInteger(R.integer.SEARCH_FILE);

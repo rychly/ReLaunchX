@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -68,6 +69,7 @@ public class Viewer extends Activity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		app = (ReLaunchApp) getApplicationContext();
 		app.setFullScreenIfNecessary(this);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.viewer_layout);
 
 		// Read parameters

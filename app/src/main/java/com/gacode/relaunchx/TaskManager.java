@@ -29,6 +29,7 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
@@ -1010,6 +1011,7 @@ public class TaskManager extends Activity {
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
 		pm = getPackageManager();
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.taskmanager_layout);
 
 		doNotKillLabels = getResources().getStringArray(

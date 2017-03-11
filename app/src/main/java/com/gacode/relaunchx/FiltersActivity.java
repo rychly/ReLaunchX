@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -199,6 +200,7 @@ public class FiltersActivity extends Activity {
 		// Create global storage with values
 		app = (ReLaunchApp) getApplicationContext();
 		app.setFullScreenIfNecessary(this);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.filters_view);
 
 		lv = (ListView) findViewById(R.id.filters_lv);

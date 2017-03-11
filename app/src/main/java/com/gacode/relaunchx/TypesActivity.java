@@ -16,6 +16,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -348,6 +349,7 @@ public class TypesActivity extends Activity {
 		// Global storage
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.types_view);
 		icons = app.getIcons();
 

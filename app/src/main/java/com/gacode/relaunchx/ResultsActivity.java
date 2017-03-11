@@ -44,6 +44,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -521,6 +522,7 @@ public class ResultsActivity extends Activity {
 
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.results_layout);
 
 		icons = app.getIcons();

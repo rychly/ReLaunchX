@@ -32,6 +32,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
@@ -684,6 +685,7 @@ public class Advanced extends Activity {
 
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.advanced_layout);
 
 		// "Advanced functions, info, etc."

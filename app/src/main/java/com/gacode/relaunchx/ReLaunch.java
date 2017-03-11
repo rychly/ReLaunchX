@@ -1913,6 +1913,7 @@ public class ReLaunch extends Activity {
 			useHome = true;
 		app.fullScreen = prefs.getBoolean("fullScreen", true);
 		app.setFullScreenIfNecessary(this);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		if (app.dataBase == null)
 			app.dataBase = new BooksBase(this);

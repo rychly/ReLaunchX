@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Window;
@@ -753,14 +754,21 @@ public class ReLaunchApp extends Application {
 
 	public void setFullScreenIfNecessary(Activity a) {
 		if (fullScreen) {
-			a.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			if (Build.VERSION.SDK_INT >= 14) {
+				a.sendBroadcast(new Intent("hide_status_bar"));
+			}
+			a.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		} else {
+			if (Build.VERSION.SDK_INT >= 14) {
+				a.sendBroadcast(new Intent("show_status_bar"));
+			}
+			a.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 	}
 
 	public void generalOnResume(String name, Activity a) {
 		Log.d(TAG, "--- onResume(" + name + ")");
+		setFullScreenIfNecessary(a);
 	}
 
 	public boolean copyPrefs(String from, String to) {
