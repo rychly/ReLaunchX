@@ -2,10 +2,7 @@ package com.gacode.relaunchx;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -21,7 +18,7 @@ import java.util.Stack;
 import ebook.EBook;
 import ebook.parser.InstantParser;
 import ebook.parser.Parser;
-import android.R.style;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -66,7 +63,6 @@ import android.view.View.MeasureSpec;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.view.LayoutInflater;
@@ -134,6 +130,10 @@ public class ReLaunch extends Activity {
 	final static int SORT_FILES_DESC = 1;
 	final static int SORT_TITLES_ASC = 2;
 	final static int SORT_TITLES_DESC = 3;
+	final static int SORT_FILE_EXTENSION_ASC = 2;
+	final static int SORT_FILE_EXTENSION_DESC = 3;
+	final static int SORT_FILE_DATE_ASC = 4;
+	final static int SORT_FILE_DATE_DESC = 5;
 	String currentRoot = "/sdcard";
 	Integer currentPosition = -1;
 	List<HashMap<String, String>> itemsArray;
@@ -918,7 +918,7 @@ public class ReLaunch extends Activity {
 	private void drawDirectory(String root, Integer startPosition) {
 		File dir = new File(root);
 		File[] allEntries = dir.listFiles();
-		List<String> files = new ArrayList<String>();
+		List<File> files = new ArrayList<File>();
 		List<String> dirs = new ArrayList<String>();
 
 		setEinkController();
@@ -1099,7 +1099,7 @@ public class ReLaunch extends Activity {
 				else if (!prefs.getBoolean("filterResults", false)
 						|| app.filterFile(dir.getAbsolutePath(),
 								entry.getName()))
-					files.add(entry.getName());
+					files.add(entry);
 			}
 		}
 		Collections.sort(dirs);
@@ -1122,19 +1122,23 @@ public class ReLaunch extends Activity {
 			itemsArray.add(item);
 		}
 		List<HashMap<String, String>> fileItemsArray = new ArrayList<HashMap<String, String>>();
-		for (String f : files) {
-			if ((f.startsWith(".")) && (!prefs.getBoolean("showHidden", false)))
+		for (File f : files) {
+			String fname = f.getName();
+			if ((fname.startsWith(".")) && (!prefs.getBoolean("showHidden", false)))
 				continue;
 			HashMap<String, String> item = new HashMap<String, String>();
 			if (prefs.getBoolean("showBookTitles", false))
-				item.put("sname", app.dataBase.getEbookName(dir.getAbsolutePath(), f, prefs.getString("bookTitleFormat", "%t[\n%a][. %s][-%n]")));
+				item.put("sname", app.dataBase.getEbookName(dir.getAbsolutePath(), fname, prefs.getString("bookTitleFormat", "%t[\n%a][. %s][-%n]")));
 			else
-				item.put("sname", f);
-			item.put("name", f);
+				item.put("sname", fname);
+			item.put("name", fname);
 			item.put("dname", dir.getAbsolutePath());
-			item.put("fname", dir.getAbsolutePath() + "/" + f);
+			item.put("fname", dir.getAbsolutePath() + "/" + fname);
 			item.put("type", "file");
-			item.put("reader", app.readerName(f));
+            item.put("date", String.valueOf(f.lastModified()));
+			item.put("reader", app.readerName(fname));
+            String[] fparts = fname.split("[.]");
+            item.put("extension", fparts.length > 1 ? fparts[fparts.length -1] : "");
 			fileItemsArray.add(item);
 		}
 
@@ -3622,20 +3626,33 @@ public class ReLaunch extends Activity {
 	private List<HashMap<String, String>> sortFiles(
 			List<HashMap<String, String>> array, String field, boolean order) {
 		class ArrayComparator implements Comparator<Object> {
-			String key;
+			String primaryKey;
+            String secondaryKey;
 
-			ArrayComparator(String key) {
-				this.key = key;
+			ArrayComparator(String primarykey, String secondaryKey) {
+                this.primaryKey = primarykey;
+                this.secondaryKey = secondaryKey;
 			}
 
 			public int compare(Object lhs, Object rhs) {
-				return ((HashMap<String, String>) lhs).get(key)
+                int eq = ((HashMap<String, String>) lhs).get(primaryKey)
 						.compareToIgnoreCase(
-								((HashMap<String, String>) rhs).get(key));
+								((HashMap<String, String>) rhs).get(primaryKey));
+                if (eq == 0 && secondaryKey != null) {
+                    eq = ((HashMap<String, String>) lhs).get(secondaryKey)
+                            .compareToIgnoreCase(
+                                    ((HashMap<String, String>) rhs).get(secondaryKey));
+                }
+
+                return eq;
 			}
 		}
 		Object[] arr = array.toArray();
-		ArrayComparator comparator = new ArrayComparator(field);
+        String secondField = null;
+        if (field == "extension" || field == "date") {
+            secondField = "name";
+        }
+		ArrayComparator comparator = new ArrayComparator(field, secondField);
 		Arrays.sort(arr, comparator);
 		List<HashMap<String, String>> ret = new ArrayList<HashMap<String, String>>();
 		if (order) {
@@ -3657,9 +3674,13 @@ public class ReLaunch extends Activity {
 			orderList[2] = getString(R.string.jv_relaunchx_sort_title_dir);
 			orderList[3] = getString(R.string.jv_relaunchx_sort_title_rev);
 		} else {
-			orderList = new String[2];
+			orderList = new String[6];
 			orderList[0] = getString(R.string.jv_relaunchx_sort_file_dir);
 			orderList[1] = getString(R.string.jv_relaunchx_sort_file_rev);
+			orderList[2] = getString(R.string.jv_relaunchx_sort_extension_dir);
+			orderList[3] = getString(R.string.jv_relaunchx_sort_extension_rev);
+			orderList[4] = getString(R.string.jv_relaunchx_sort_date_dir);
+			orderList[5] = getString(R.string.jv_relaunchx_sort_date_dir);
 		}
 		int sortMode = prefs.getInt("sortMode", 0);
 		if (sortMode > orderList.length - 1)
@@ -3700,21 +3721,47 @@ public class ReLaunch extends Activity {
 	}
 
 	private void setSortMode(int i) {
-		if ((!prefs.getBoolean("showBookTitles", false)) && (i > 1))
-			i = 0;
-		if (i == SORT_FILES_ASC) {
-			sortType[0] = "name";
-			sortOrder[0] = true;
-		} else if (i == SORT_FILES_DESC) {
-			sortType[0] = "name";
-			sortOrder[0] = false;
-		} else if (i == SORT_TITLES_ASC) {
-			sortType[0] = "sname";
-			sortOrder[0] = true;
-		} else if (i == SORT_TITLES_DESC) {
-			sortType[0] = "sname";
-			sortOrder[0] = false;
-		}
+		if ((!prefs.getBoolean("showBookTitles", false))) {
+            if (i > 5) {
+                i = 0;
+            }
+            if (i == SORT_FILES_ASC) {
+                sortType[0] = "name";
+                sortOrder[0] = true;
+            } else if (i == SORT_FILES_DESC) {
+                sortType[0] = "name";
+                sortOrder[0] = false;
+            } else if (i == SORT_FILE_EXTENSION_ASC) {
+                sortType[0] = "extension";
+                sortOrder[0] = true;
+            } else if (i == SORT_FILE_EXTENSION_DESC) {
+                sortType[0] = "extension";
+                sortOrder[0] = false;
+            } else if (i == SORT_FILE_DATE_ASC) {
+                sortType[0] = "date";
+                sortOrder[0] = true;
+            } else if (i == SORT_FILE_DATE_ASC) {
+                sortType[0] = "date";
+                sortOrder[0] = false;
+            }
+        } else {
+            if (i > 3) {
+                i = 0;
+            }
+            if (i == SORT_FILES_ASC) {
+                sortType[0] = "name";
+                sortOrder[0] = true;
+            } else if (i == SORT_FILES_DESC) {
+                sortType[0] = "name";
+                sortOrder[0] = false;
+            } else if (i == SORT_TITLES_ASC) {
+                sortType[0] = "sname";
+                sortOrder[0] = true;
+            } else if (i == SORT_TITLES_DESC) {
+                sortType[0] = "sname";
+                sortOrder[0] = false;
+            }
+        }
 	}
 
 	@Override

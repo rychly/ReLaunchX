@@ -596,5 +596,9 @@
 	<string name="bookinfo_authors">Authors:</string>
 	<string name="bookinfo_series">Series:</string>
 	<string name="bookinfo_title">Title:</string>
-			
+	<string name="jv_relaunchx_sort_extension_dir">filetype A-Z</string>
+	<string name="jv_relaunchx_sort_extension_rev">filetype Z-A</string>
+	<string name="jv_relaunchx_sort_date_dir">date newest</string>
+	<string name="jv_relaunchx_sort_date_rev">date oldest</string>
+
 </resources>
