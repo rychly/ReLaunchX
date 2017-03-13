@@ -1,14 +1,5 @@
 package com.harasoft.relaunch;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
@@ -28,23 +19,21 @@ import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class TaskManager extends Activity {
 	final String TAG = "TaskManager";
-	final int DIALOG_TASK_DETAILS = 1;
-	final int DIALOG_SERVICE_DETAILS = 2;
+	//final int DIALOG_TASK_DETAILS = 1;
+	//final int DIALOG_SERVICE_DETAILS = 2;
 
 	String[] doNotKillLabels;
 	String[] doNotKillNames;
@@ -136,35 +125,6 @@ public class TaskManager extends Activity {
 	List<Integer> newServ;
 	HashMap<Integer, PInfo> newPinfo;
 
-	private void setEinkController() {
-		if (prefs != null) {
-			Integer einkUpdateMode = 1;
-			try {
-				einkUpdateMode = Integer.parseInt(prefs.getString(
-						"einkUpdateMode", "1"));
-			} catch (Exception e) {
-				einkUpdateMode = 1;
-			}
-			if (einkUpdateMode < -1 || einkUpdateMode > 2)
-				einkUpdateMode = 1;
-			if (einkUpdateMode >= 0) {
-				EinkScreen.UpdateMode = einkUpdateMode;
-
-				Integer einkUpdateInterval = 10;
-				try {
-					einkUpdateInterval = Integer.parseInt(prefs.getString(
-							"einkUpdateInterval", "10"));
-				} catch (Exception e) {
-					einkUpdateInterval = 10;
-				}
-				if (einkUpdateInterval < 0 || einkUpdateInterval > 100)
-					einkUpdateInterval = 10;
-				EinkScreen.UpdateModeInterval = einkUpdateInterval;
-
-				EinkScreen.PrepareController(null, false);
-			}
-		}
-	}
 
 	public class cpuComparator implements java.util.Comparator<Integer> {
 		public int compare(Integer o1, Integer o2) {
@@ -525,7 +485,7 @@ public class TaskManager extends Activity {
 				taskPids = newTask;
 				servPids = newServ;
 				sortLists();
-				setEinkController();
+                EinkScreen.PrepareController(null, false);
 				adapter_t.notifyDataSetChanged();
 				adapter_s.notifyDataSetChanged();
 
@@ -542,7 +502,8 @@ public class TaskManager extends Activity {
 								+ getResources().getString(
 										R.string.jv_taskman_free)
 								+ " <b>"
-								+ memUsage / 1048576 + "</b>M"),
+								+ memUsage / 1048576
+                                + "</b>M"),
 						TextView.BufferType.SPANNABLE);
 				title2.setText(Html.fromHtml("<b>" + CPUUsage + "</b>%"),
 						TextView.BufferType.SPANNABLE);
@@ -579,6 +540,7 @@ public class TaskManager extends Activity {
 					+ Long.parseLong(toks[6]) + Long.parseLong(toks[7])
 					+ Long.parseLong(toks[8]);
 		} catch (IOException ex) {
+			//emply
 		}
 	}
 
@@ -655,8 +617,7 @@ public class TaskManager extends Activity {
 		((TextView) dialog.findViewById(R.id.tm1_label)).setText(p.label);
 		((TextView) dialog.findViewById(R.id.tm1_name)).setText(p.name);
 		((TextView) dialog.findViewById(R.id.tm1_extra)).setText(p.extra);
-		((Button) dialog.findViewById(R.id.tm1_ok))
-				.setOnClickListener(new View.OnClickListener() {
+		(dialog.findViewById(R.id.tm1_ok)).setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
 						dialog.dismiss();
 					}
@@ -669,6 +630,7 @@ public class TaskManager extends Activity {
 					ApplicationInfo ai = pm.getApplicationInfo(localName, 0);
 					am.restartPackage(ai.packageName);
 				} catch (PackageManager.NameNotFoundException e) {
+					//emply
 				}
 
 				dialog.dismiss();
@@ -955,26 +917,19 @@ public class TaskManager extends Activity {
 				switch (pi.imp) {
 				case 1:
 					SpannableString s = new SpannableString(label);
-					s.setSpan(new StyleSpan(Typeface.BOLD), 0, label.length(),
-							0);
-					tv1.setBackgroundColor(getResources().getColor(
-							R.color.foreground_task_bg));
-					tv1.setTextColor(getResources().getColor(
-							R.color.foreground_task_fg));
+					s.setSpan(new StyleSpan(Typeface.BOLD), 0, label.length(),0);
+					tv1.setBackgroundColor(getResources().getColor(R.color.foreground_task_bg));
+					tv1.setTextColor(getResources().getColor(R.color.foreground_task_fg));
 					tv1.setText(s);
 					break;
 				case 2:
-					tv1.setBackgroundColor(getResources().getColor(
-							R.color.background_task_bg));
-					tv1.setTextColor(getResources().getColor(
-							R.color.backgorund_task_fg));
+					tv1.setBackgroundColor(getResources().getColor(R.color.background_task_bg));
+					tv1.setTextColor(getResources().getColor(R.color.backgorund_task_fg));
 					tv1.setText(label);
 					break;
 				case 3:
-					tv1.setBackgroundColor(getResources().getColor(
-							R.color.nonactive_task_bg));
-					tv1.setTextColor(getResources().getColor(
-							R.color.nonactive_task_fg));
+					tv1.setBackgroundColor(getResources().getColor(R.color.nonactive_task_bg));
+					tv1.setTextColor(getResources().getColor(R.color.nonactive_task_fg));
 					tv1.setText(label);
 					break;
 				}
@@ -991,8 +946,7 @@ public class TaskManager extends Activity {
 								+ pi.mem + "</b>K"),
 						TextView.BufferType.SPANNABLE);
 				if (pi.icon == null)
-					iv.setImageDrawable(getResources().getDrawable(
-							android.R.drawable.sym_def_app_icon));
+					iv.setImageDrawable(getResources().getDrawable(android.R.drawable.sym_def_app_icon));
 				else
 					iv.setImageDrawable(pi.icon);
 			}
@@ -1005,10 +959,13 @@ public class TaskManager extends Activity {
 		super.onCreate(savedInstanceState);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		setEinkController();
+        EinkScreen.setEinkController(prefs);
 
 		app = ((ReLaunchApp) getApplicationContext());
-		app.setFullScreenIfNecessary(this);
+        if(app == null ) {
+            finish();
+        }
+        app.setFullScreenIfNecessary(this);
 		pm = getPackageManager();
 		setContentView(R.layout.taskmanager_layout);
 
@@ -1052,8 +1009,8 @@ public class TaskManager extends Activity {
 						sv.total = totalItemCount;
 						sv.count = visibleItemCount;
 						sv.first = firstVisibleItem;
-						setEinkController();
-						sv.invalidate();
+                        EinkScreen.PrepareController(null, false);
+                        sv.invalidate();
 					}
 
 					public void onScrollStateChanged(AbsListView view,
@@ -1077,8 +1034,12 @@ public class TaskManager extends Activity {
 						sv.total = totalItemCount;
 						sv.count = visibleItemCount;
 						sv.first = firstVisibleItem;
-						setEinkController();
-						sv.invalidate();
+                        if(N2DeviceInfo.EINK_ONYX){
+                            EinkScreen.PrepareController(sv, false);
+                        }else{
+                            EinkScreen.PrepareController(null, false);
+                            sv.invalidate();
+                        }
 					}
 
 					public void onScrollStateChanged(AbsListView view,
@@ -1091,7 +1052,7 @@ public class TaskManager extends Activity {
 			lv_t.setOnScrollListener(new AbsListView.OnScrollListener() {
 				public void onScroll(AbsListView view, int firstVisibleItem,
 						int visibleItemCount, int totalItemCount) {
-					setEinkController();
+                    EinkScreen.PrepareController(null, false);
 				}
 
 				public void onScrollStateChanged(AbsListView view,
@@ -1101,7 +1062,7 @@ public class TaskManager extends Activity {
 			lv_s.setOnScrollListener(new AbsListView.OnScrollListener() {
 				public void onScroll(AbsListView view, int firstVisibleItem,
 						int visibleItemCount, int totalItemCount) {
-					setEinkController();
+                    EinkScreen.PrepareController(null, false);
 				}
 
 				public void onScrollStateChanged(AbsListView view,
@@ -1168,25 +1129,19 @@ public class TaskManager extends Activity {
 		stopCPUUpdate();
 	}
 
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		setEinkController();
-		startCPUUpdate();
-	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		setEinkController();
+        EinkScreen.setEinkController(prefs);
 		startCPUUpdate();
-		app.generalOnResume(TAG, this);
+		app.generalOnResume(TAG);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		setEinkController();
+        EinkScreen.setEinkController(prefs);
 		startCPUUpdate();
 	}
 

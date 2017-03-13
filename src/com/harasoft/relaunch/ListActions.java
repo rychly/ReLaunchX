@@ -1,20 +1,13 @@
 package com.harasoft.relaunch;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
+
+import java.util.*;
 
 public class ListActions {
 	String TAG = "ListActions";
@@ -46,19 +39,6 @@ public class ListActions {
 				itemsArray.add(item);
 			}
 		}
-	}
-
-	private void start(Intent i) {
-		if (i != null)
-			try {
-				act.startActivity(i);
-			} catch (ActivityNotFoundException e) {
-				Toast.makeText(
-						act,
-						app.getResources().getString(
-								R.string.jv_results_activity_not_found),
-						Toast.LENGTH_LONG).show();
-			}
 	}
 
 	public ListActions(ReLaunchApp application, Activity activity) {
@@ -103,15 +83,7 @@ public class ListActions {
 				exts = new ArrayList<String>(tkeys);
 				Collections.sort(exts, new ExtsComparator());
 			}
-			// known dirs
-			ArrayList<String> dirs = new ArrayList<String>();
-			if (prefs.getBoolean("hideKnownDirs", false)) {
-				String[] home_dirs = prefs.getString("startDir",
-						"/sdcard,/media/My Files").split("\\,");
-				for (int i = 0; i < home_dirs.length; i++)
-					dirs.add(home_dirs[i]);
-				Collections.sort(dirs, new ExtsComparator());
-			}
+
 			final CharSequence[] lnames = new CharSequence[itemsArray.size()];
 			for (int i = 0; i < itemsArray.size(); i++) {
 				HashMap<String, String> item = itemsArray.get(i);
@@ -128,11 +100,11 @@ public class ListActions {
 					}
 				}
 				if (dname.equals("")) {
-					dname = "/";
+					//dname = "/";
 					if (fname.equals("")) {
-						fname = "/";
+						//fname = "/";
 						sname = "/";
-						dname = "";
+						//dname = "";
 					}
 				}
 				lnames[i] = sname;
@@ -149,7 +121,7 @@ public class ListActions {
 							dialog.dismiss();
 						}
 					});
-			builder.setNegativeButton(app.getResources().getString(R.string.jv_results_menu_button),
+			builder.setNegativeButton(app.getResources().getString(R.string.app_cancel),
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int whichButton) {
@@ -174,12 +146,8 @@ public class ListActions {
 		String fullName = item.get("dname") + "/" + item.get("fname");
 		if (item.get("type").equals("dir")) {
 			Intent intent = new Intent(act, ReLaunch.class);
-			intent.putExtra("dirviewer", false);
 			intent.putExtra("start_dir", fullName);
-			intent.putExtra("home", ReLaunch.useHome);
-			intent.putExtra("home1", ReLaunch.useHome1);
-			intent.putExtra("shop", ReLaunch.useShop);
-			intent.putExtra("library", ReLaunch.useLibrary);
+			//intent.putExtra("home", ReLaunch.useHome);
 			act.startActivityForResult(intent, ReLaunch.DIR_ACT);
 		} else {
 			String fileName = item.get("fname");
@@ -188,46 +156,7 @@ public class ListActions {
 					app.defaultAction(act, fullName);
 				else {
 					// Launch reader
-					if (app.askIfAmbiguous) {
-						List<String> rdrs = app.readerNames(item.get("fname"));
-						if (rdrs.size() < 1)
-							return;
-						else if (rdrs.size() == 1)
-							start(app.launchReader(rdrs.get(0), fullName));
-						else {
-							final CharSequence[] applications = rdrs
-									.toArray(new CharSequence[rdrs.size()]);
-							CharSequence[] happlications = app.getApps()
-									.toArray(
-											new CharSequence[app.getApps()
-													.size()]);
-							for (int j = 0; j < happlications.length; j++) {
-								String happ = (String) happlications[j];
-								String[] happp = happ.split("\\%");
-								happlications[j] = happp[2];
-							}
-							final String rdr1 = fullName;
-							AlertDialog.Builder builder = new AlertDialog.Builder(
-									act);
-							// "Select application"
-							builder.setTitle(app.getResources().getString(
-									R.string.jv_results_select_application));
-							builder.setSingleChoiceItems(happlications, -1,
-									new DialogInterface.OnClickListener() {
-										public void onClick(
-												DialogInterface dialog, int i) {
-											start(app.launchReader(
-													(String) applications[i],
-													rdr1));
-											dialog.dismiss();
-										}
-									});
-							AlertDialog alert = builder.create();
-							alert.show();
-						}
-					} else
-						start(app.launchReader(app.readerName(fileName),
-								fullName));
+					app.LaunchReader(fullName);
 				}
 			}
 		}

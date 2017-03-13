@@ -54,18 +54,6 @@
         <item>sysfs</item>
         <item>cgroup</item>
     </string-array>
-    <string-array name="GL16_modes_values">
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-    </string-array>
-    <string-array name="GL16_modes_names">
-        <item>CLEAR (mode 3)</item>
-        <item>ACTIVE_ALL (mode 4)</item>
-        <item>ONESHOT_ALL (mode 5)</item>
-        <item>CLEAR_ALL (mode 6)</item>
-    </string-array>
     <string-array name="einkUpdateMode_values">
         <item>-1</item>
         <item>0</item>
@@ -78,105 +66,69 @@
         <item>@string/arr_einkUpdateMode_names_3</item>
         <item>@string/arr_einkUpdateMode_names_4</item>
     </string-array>
-    <string-array name="home_button_actions_values">
+    <string-array name="arr_button_actions_values">
         <item>NOTHING</item>
-        <item>OPENN</item>
-        <item>OPENMENU</item>
-        <item>OPENSCREEN</item>
-    </string-array>
-    <string-array name="home_button_actions_names">
-        <item>@string/arr_home_button_actions_names_1</item>
-        <item>@string/arr_home_button_actions_names_2</item>
-        <item>@string/arr_home_button_actions_names_3</item>
-        <item>@string/arr_home_button_actions_names_4</item>
-    </string-array>
-    <string-array name="lru_button_actions_values">
-        <item>NOTHING</item>
-        <item>OPENN</item>
-        <item>OPENMENU</item>
-        <item>OPENSCREEN</item>
-    </string-array>
-    <string-array name="lru_button_actions_names">
-        <item>@string/arr_lru_button_actions_names_1</item>
-        <item>@string/arr_lru_button_actions_names_2</item>
-        <item>@string/arr_lru_button_actions_names_3</item>
-        <item>@string/arr_lru_button_actions_names_4</item>
-    </string-array>
-    <string-array name="fav_button_actions_values">
-        <item>NOTHING</item>
-        <item>OPENN</item>
-        <item>OPENMENU</item>
-        <item>OPENSCREEN</item>
-    </string-array>
-    <string-array name="fav_button_actions_names">
-        <item>@string/arr_fav_button_actions_names_1</item>
-        <item>@string/arr_fav_button_actions_names_2</item>
-        <item>@string/arr_fav_button_actions_names_3</item>
-        <item>@string/arr_fav_button_actions_names_4</item>
-    </string-array>
-    <string-array name="advanced_button_actions_values">
-        <item>NOTHING</item>
-        <item>RELAUNCH</item>
+        <item>HOMEN</item>
+        <item>HOMEMENU</item>
+        <item>HOMESCREEN</item>
+        <item>LRUN</item>
+        <item>LRUMENU</item>
+        <item>LRUSCREEN</item>
+        <item>FAVDOCN</item>
+        <item>FAVDOCMENU</item>
+        <item>FAVDOCSCREEN</item>
+        <item>ADVANCED</item>
+        <item>SETTINGS</item>
+        <item>APPMANAGER</item>
+        <item>BATTERY</item>
+        <item>FAVAPP</item>
+        <item>ALLAPP</item>
+        <item>LASTAPP</item>
+        <item>SEARCH</item>
         <item>LOCK</item>
         <item>POWEROFF</item>
+        <item>REBOOT</item>
         <item>SWITCHWIFI</item>
         <item>RUN</item>
+        <item>DROPBOX</item>
+        <item>OPDS</item>
+        <item>FTP</item>
+        <item>SYSSETTINGS</item>
+        <item>UPDIR</item>
+        <item>UPSCROOL</item>
+        <item>DOWNSCROOL</item>
     </string-array>
-    <string-array name="advanced_button_actions_names">
-        <item>@string/arr_advanced_button_actions_names_1</item>
-        <item>@string/arr_advanced_button_actions_names_2</item>
-        <item>@string/arr_advanced_button_actions_names_3</item>
-        <item>@string/arr_advanced_button_actions_names_4</item>
-        <item>@string/arr_advanced_button_actions_names_5</item>
-        <item>@string/arr_advanced_button_actions_names_6</item>
-    </string-array>
-    <string-array name="settings_button_actions_values">
-        <item>NOTHING</item>
-        <item>RELAUNCH</item>
-        <item>LOCK</item>
-        <item>POWEROFF</item>
-        <item>SWITCHWIFI</item>
-        <item>RUN</item>
-    </string-array>
-    <string-array name="settings_button_actions_names">
-        <item>@string/arr_settings_button_actions_names_1</item>
-        <item>@string/arr_settings_button_actions_names_2</item>
-        <item>@string/arr_settings_button_actions_names_3</item>
-        <item>@string/arr_settings_button_actions_names_4</item>
-        <item>@string/arr_settings_button_actions_names_5</item>
-        <item>@string/arr_settings_button_actions_names_6</item>
-    </string-array>
-    <string-array name="mem_button_actions_values">
-        <item>NOTHING</item>
-        <item>RELAUNCH</item>
-        <item>LOCK</item>
-        <item>POWEROFF</item>
-        <item>SWITCHWIFI</item>
-        <item>RUN</item>
-    </string-array>
-    <string-array name="mem_button_actions_names">
-        <item>@string/arr_mem_button_actions_names_1</item>
-        <item>@string/arr_mem_button_actions_names_2</item>
-        <item>@string/arr_mem_button_actions_names_3</item>
-        <item>@string/arr_mem_button_actions_names_4</item>
-        <item>@string/arr_mem_button_actions_names_5</item>
-        <item>@string/arr_mem_button_actions_names_6</item>
-    </string-array>
-    <string-array name="bat_button_actions_values">
-        <item>NOTHING</item>
-        <item>RELAUNCH</item>
-        <item>LOCK</item>
-        <item>POWEROFF</item>
-        <item>SWITCHWIFI</item>
-        <item>RUN</item>
-    </string-array>
-    <string-array name="bat_button_actions_names">
-        <item>@string/arr_bat_button_actions_names_1</item>
-        <item>@string/arr_bat_button_actions_names_2</item>
-        <item>@string/arr_bat_button_actions_names_3</item>
-        <item>@string/arr_bat_button_actions_names_4</item>
-        <item>@string/arr_bat_button_actions_names_5</item>
-        <item>@string/arr_bat_button_actions_names_6</item>
+    <string-array name="arr_button_actions_names">
+        <item>@string/app_settings_nothing</item>
+        <item>@string/app_settings_home_number</item>
+        <item>@string/app_settings_home_menu</item>
+        <item>@string/app_settings_home</item>
+        <item>@string/app_settings_lru_doc_number</item>
+        <item>@string/app_settings_lru_doc_menu</item>
+        <item>@string/app_settings_lru_doc</item>
+        <item>@string/app_settings_favorites_doc_number</item>
+        <item>@string/app_settings_favorites_doc_menu</item>
+        <item>@string/app_settings_favorites_doc</item>
+        <item>@string/app_settings_advanced</item>
+        <item>@string/app_settings_settings</item>
+        <item>@string/app_settings_app_manager</item>
+        <item>@string/app_settings_battery</item>
+        <item>@string/app_settings_favorites_app</item>
+        <item>@string/app_settings_all_app</item>
+        <item>@string/app_settings_last_app</item>
+        <item>@string/app_settings_search</item>
+        <item>@string/app_settings_lock</item>
+        <item>@string/app_settings_power_off</item>
+        <item>@string/app_settings_reboot</item>
+        <item>@string/app_settings_switch_wifi</item>
+        <item>@string/app_settings_run</item>
+        <item>@string/app_settings_dropbox</item>
+        <item>@string/app_settings_opds</item>
+        <item>@string/app_settings_ftp</item>
+        <item>@string/app_settings_sys_settings</item>
+        <item>@string/app_settings_up_dir</item>
+        <item>@string/app_settings_up_scrool</item>
+        <item>@string/app_settings_down_scrool</item>
     </string-array>
     <string-array name="output_columns_values">
         <item>-1</item>
@@ -235,16 +187,77 @@
         <item>@string/arr_work_mode_names_2</item>
         <item>@string/arr_work_mode_names_3</item>
     </string-array>
-    <string-array name="appfav_button_actions_values">
+
+	<string-array name="entries_lang">
+        <item>System</item>
+        <item>English</item>
+        <item>Русский</item>
+        <item>Español</item>
+	</string-array> 
+	<string-array name="entryvalues_lang">
+		<item>default</item> 
+		<item>en</item>
+		<item>ru</item>
+		<item>es</item>
+	</string-array>
+    <string-array name="array_buttons_values">
         <item>NOTHING</item>
-        <item>RELAUNCH</item>
-        <item>RUN</item>
+        <item>homeButtonDT</item>
+        <item>homeButtonLT</item>
+        <item>lruButtonDT</item>
+        <item>lruButtonLT</item>
+        <item>favButtonDT</item>
+        <item>favButtonLT</item>
+        <item>settingsButtonDT</item>
+        <item>settingsButtonLT</item>
+        <item>advancedButtonDT</item>
+        <item>advancedButtonLT</item>
+        <item>memButtonDT</item>
+        <item>memButtonLT</item>
+        <item>batButtonDT</item>
+        <item>batButtonLT</item>
+        <item>appFavButtonDT</item>
+        <item>appFavButtonLT</item>
+        <item>appAllButtonDT</item>
+        <item>appAllButtonLT</item>
+        <item>appLastButtonDT</item>
+        <item>appLastButtonLT</item>
+        <item>searchButtonDT</item>
+        <item>searchButtonLT</item>
     </string-array>
-    <string-array name="appfav_button_actions_names">
-        <item>@string/arr_appfav_button_actions_names_1</item>
-        <item>@string/arr_appfav_button_actions_names_2</item>
-        <item>@string/arr_appfav_button_actions_names_3</item>
+    <string-array name="array_buttons_names">
+        <item>@string/arr_einkUpdateMode_names_1</item>
+        <item>@string/pref_i_homeButtonDT_title</item>
+        <item>@string/pref_i_homeButtonLT_title</item>
+        <item>@string/pref_i_lruButtonDT_title</item>
+        <item>@string/pref_i_lruButtonLT_title</item>
+        <item>@string/pref_i_favButtonDT_title</item>
+        <item>@string/pref_i_favButtonLT_title</item>
+        <item>@string/pref_i_settingsButtonDT_title</item>
+        <item>@string/pref_i_settingsButtonLT_title</item>
+        <item>@string/pref_i_advancedButtonDT_title</item>
+        <item>@string/pref_i_advancedButtonLT_title</item>
+        <item>@string/pref_i_memButtonDT_title</item>
+        <item>@string/pref_i_memButtonLT_title</item>
+        <item>@string/pref_i_batButtonDT_title</item>
+        <item>@string/pref_i_batButtonLT_title</item>
+        <item>@string/pref_i_appFavButtonDT_title</item>
+        <item>@string/pref_i_appFavButtonLT_title</item>
+        <item>@string/pref_i_appAllButtonDT_title</item>
+        <item>@string/pref_i_appAllButtonLT_title</item>
+        <item>@string/pref_i_appLastButtonDT_title</item>
+        <item>@string/pref_i_appLastButtonLT_title</item>
+        <item>@string/pref_i_searchButtonDT_title</item>
+        <item>@string/pref_i_searchButtonLT_title</item>
     </string-array>
-    
-    
+
+    <string-array name="array_panel_names">
+        <item>@string/pref_i_add_new</item>
+        <item>@string/pref_i_showOnePanel_name</item>
+        <item>@string/pref_i_showTwoPanel_name</item>
+        <item>@string/pref_i_showThreePanel_name</item>
+        <item>@string/pref_i_showFourPanel_name</item>
+        <item>@string/pref_i_showFifthPanel_name</item>
+    </string-array>
+
 </resources>

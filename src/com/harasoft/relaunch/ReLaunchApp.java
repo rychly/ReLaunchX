@@ -1,43 +1,36 @@
 package com.harasoft.relaunch;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.PendingIntent;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.GridView;
 import android.widget.Toast;
+
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.util.*;
+
 
 public class ReLaunchApp extends Application {
 	final String TAG = "ReLaunchApp";
 
-	// booting state
-	public boolean booted = false;
 
 	// Reading files
 	final int FileBufferSize = 1024;
@@ -47,6 +40,7 @@ public class ReLaunchApp extends Application {
 
 	// Miscellaneous public flags/settings
 	public boolean fullScreen = false;
+	public boolean hideTitle = true;
 	public Boolean askIfAmbiguous;
 	public boolean customScrollDef = true;
 
@@ -73,46 +67,78 @@ public class ReLaunchApp extends Application {
 	public int FLT_NEW;
 	public int FLT_NEW_AND_READING;
 	public boolean filters_and;
-	
-	public final String BACKUP_DIR = "/sdcard/.relaunch";
-	public final String DATA_DIR = "/data/data/com.harasoft.relaunch";
+
+	public String DATA_DIR;
 
 	public HashMap<String, Integer> history = new HashMap<String, Integer>();
 	public HashMap<String, Integer> columns = new HashMap<String, Integer>();
-	private HashMap<String, List<String[]>> m = new HashMap<String, List<String[]>>();
-	private HashMap<String, Drawable> icons;
+	static private HashMap<String, List<String[]>> m = new HashMap<String, List<String[]>>();
 	private List<HashMap<String, String>> readers;
-	private List<String> apps;
 
 	public BooksBase dataBase;
+	private ArrayList<AppInfo> appInfoArrayList;
 
-	// Icons
-	public HashMap<String, Drawable> getIcons() {
-		return icons;
+	// Icons + Applications
+	public  class AppInfo{
+		String appName;
+		String appPackage;
+		String appActivity;
+		Drawable appIcon;
 	}
+	public ArrayList<AppInfo> createAppList(PackageManager pm) {
+		ArrayList<AppInfo> appInfos = new ArrayList<AppInfo>();
+		AppInfo appInfo;
 
-	public void setIcons(HashMap<String, Drawable> i) {
-		icons = i;
+		Intent componentSearchIntent = new Intent(Intent.ACTION_MAIN, null);
+		componentSearchIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+		componentSearchIntent.setAction(Intent.ACTION_MAIN);
+		List<ResolveInfo> ril = pm.queryIntentActivities(componentSearchIntent, 0);
+		for (ResolveInfo ri : ril) {
+			if (ri.activityInfo != null) {
+				appInfo = new AppInfo();
+				appInfo.appPackage = ri.activityInfo.packageName;
+				appInfo.appActivity = ri.activityInfo.name;
+				appInfo.appName = ri.activityInfo.loadLabel(pm).toString();
+
+				if (ri.activityInfo.icon != 0) {
+					appInfo.appIcon = ri.activityInfo.loadIcon(pm);
+				} else {
+					appInfo.appIcon = ri.loadIcon(pm);
+				}
+				if (!ReLaunch.filterMyself || (appInfo.appPackage != null && !"com.harasoft.relaunch.Main".equals(appInfo.appPackage))) {
+					appInfos.add(appInfo);
+				}
+			}
+		}
+		Collections.sort(appInfos, new Comparator<ReLaunchApp.AppInfo>() {
+			public int compare(ReLaunchApp.AppInfo o1, ReLaunchApp.AppInfo o2) {
+				return o1.appName.compareTo(o2.appName);
+			}
+		});
+		return appInfos;
 	}
-
-	// Applications
-	public List<String> getApps() {
-		return apps;
+	public ArrayList<AppInfo> getAppInfoArrayList(){
+		return appInfoArrayList;
 	}
-
-	public void setApps(List<String> a) {
-		apps = a;
+	public void setAppInfoArrayList(ArrayList<AppInfo> appList){
+		appInfoArrayList = appList;
+	}
+	public ArrayList<String> getAppList(){
+		ArrayList<String> itemsArray = new ArrayList<String>();
+		// получение имен программ
+		for (ReLaunchApp.AppInfo anAppsArray : appInfoArrayList) {
+			itemsArray.add(anAppsArray.appName);
+		}
+		return itemsArray;
 	}
 
 	// Readers
 	public List<HashMap<String, String>> getReaders() {
 		return readers;
 	}
-
 	public void setReaders(List<HashMap<String, String>> r) {
 		readers = r;
 	}
-
 	public String readerName(String file) {
 		for (HashMap<String, String> r : readers) {
 			for (String key : r.keySet()) {
@@ -122,7 +148,6 @@ public class ReLaunchApp extends Application {
 		}
 		return "Nope";
 	}
-
 	public List<String> readerNames(String file) {
 		List<String> rc = new ArrayList<String>();
 		for (HashMap<String, String> r : readers) {
@@ -134,22 +159,6 @@ public class ReLaunchApp extends Application {
 		return rc;
 	}
 
-	public List<String> extNames() {
-		List<String> rc = new ArrayList<String>();
-		for (HashMap<String, String> r : readers) {
-			for (String key : r.keySet()) {
-				if (!rc.contains(key))
-					rc.add(key);
-			}
-		}
-		return rc;
-	}
-
-	/*
-	 * Misc lists management (list is identified by name)
-	 * --------------------------------------------------
-	 */
-
 	// get list by name
 	public List<String[]> getList(String name) {
 		if (m.containsKey(name))
@@ -157,72 +166,46 @@ public class ReLaunchApp extends Application {
 		else
 			return new ArrayList<String[]>();
 	}
-
 	// set list by name
 	public void setList(String name, List<String[]> l) {
 		m.put(name, l);
 	}
-
 	public void setDefault(String name) {
 		// Set list default
-		List<String[]> nl = new ArrayList<String[]>();
-		if (name.equals("lastOpened")) {
+		//List<String[]> nl = new ArrayList<String[]>();
+		/*if (name.equals("lastOpened")) {
 		} else if (name.equals("favorites")) {
-		}
-		m.put(name, nl);
-	}
-
-	// dump all lists to log (debug)
-	public void dumpLists() {
-		/*
-		 * for (String k : m.keySet()) { Log.d(TAG, "LIST: \"" + k + "\""); for
-		 * (String[] n : m.get(k)) Log.d(TAG, "    \"" + n[0] + "\"; \"" + n[1]
-		 * + "\""); }
-		 */
-	}
-
-	// dump specified lists to log (debug)
-	public void dumpList(String name) {
-		/*
-		 * Log.d(TAG, "LIST: \"" + name + "\""); for (String[] n : m.get(name))
-		 * Log.d(TAG, "    \"" + n[0] + "\"; \"" + n[1] + "\"");
-		 */
-	}
-
-	// dump lists to log (debug)
-	public void dumpList(String name, List<String[]> l) {
-		/*
-		 * Log.d(TAG, "LIST: \"" + name + "\""); for (String[] n : l) Log.d(TAG,
-		 * "    \"" + n[0] + "\"; \"" + n[1] + "\"");
-		 */
+		}  */
+		m.put(name, new ArrayList<String[]>());
 	}
 
 	// save list
 	public void saveList(String listName) {
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		if (listName.equals("favorites")) {
 			int favMax = 30;
 			try {
 				favMax = Integer.parseInt(prefs.getString("favSize", "30"));
 			} catch (NumberFormatException e) {
+                //emply
 			}
-			this.writeFile("favorites", ReLaunch.FAV_FILE, favMax);
+			this.writeFile("favorites", ReLaunch.FAV_FILE, favMax, "/");
 		}
 		if (listName.equals("lastOpened")) {
 			int lruMax = 30;
 			try {
 				lruMax = Integer.parseInt(prefs.getString("lruSize", "30"));
 			} catch (NumberFormatException e) {
+                //emply
 			}
-			this.writeFile("lastOpened", ReLaunch.LRU_FILE, lruMax);
+			this.writeFile("lastOpened", ReLaunch.LRU_FILE, lruMax, "/");
 		}
 		if (listName.equals("app_last")) {
 			int appLruMax = 30;
 			try {
-				appLruMax = Integer.parseInt(prefs
-						.getString("appLruSize", "30"));
+				appLruMax = Integer.parseInt(prefs.getString("appLruSize", "30"));
 			} catch (NumberFormatException e) {
+                //emply
 			}
 			this.writeFile("app_last", ReLaunch.APP_LRU_FILE, appLruMax, ":");
 		}
@@ -232,9 +215,9 @@ public class ReLaunchApp extends Application {
 				appFavMax = Integer.parseInt(prefs
 						.getString("appFavSize", "30"));
 			} catch (NumberFormatException e) {
+                //emply
 			}
-			this.writeFile("app_favorites", ReLaunch.APP_FAV_FILE, appFavMax,
-					":");
+			this.writeFile("app_favorites", ReLaunch.APP_FAV_FILE, appFavMax, ":");
 		}
 		if (listName.equals("history")) {
 			List<String[]> h = new ArrayList<String[]>();
@@ -256,28 +239,18 @@ public class ReLaunchApp extends Application {
 			this.writeFile("columns", ReLaunch.COLS_FILE, 0, ":");
 		}
 	}
-
 	// Add to list
-	public void addToList(String listName, String dr, String fn,
-			Boolean addToEnd) {
-		// Log.d(TAG, "addToList(" + listName + ", " + dr + ":" + fn + ", " +
-		// addToEnd + ")");
+	public void addToList(String listName, String dr, String fn, Boolean addToEnd) {
 		addToList_internal(listName, dr, fn, addToEnd);
 	}
-
 	public void addToList(String listName, String fullName, Boolean addToEnd) {
 		addToList(listName, fullName, addToEnd, "/");
 	}
-
-	public void addToList(String listName, String fullName, Boolean addToEnd,
-			String delimiter) {
-		// Log.d(TAG, "addToList(" + listName + ", " + fullName + ", " +
-		// addToEnd + ", " + delimiter + ")");
+	public void addToList(String listName, String fullName, Boolean addToEnd, String delimiter) {
 
 		if (delimiter.equals("/")) {
 			if (fullName.endsWith("/" + DIR_TAG)) {
-				fullName = fullName.substring(0,
-						fullName.length() - DIR_TAG.length() - 1);
+				fullName = fullName.substring(0, fullName.length() - DIR_TAG.length() - 1);
 				File f = new File(fullName);
 				if (!f.exists())
 					return;
@@ -311,17 +284,14 @@ public class ReLaunchApp extends Application {
 		}
 
 	}
-
-	public void addToList_internal(String listName, String dr, String fn,
-			Boolean addToEnd) {
+	public void addToList_internal(String listName, String dr, String fn, Boolean addToEnd) {
 		if (!m.containsKey(listName))
 			m.put(listName, new ArrayList<String[]>());
 		List<String[]> resultList = m.get(listName);
 
 		String[] entry = new String[] { dr, fn };
 		for (int i = 0; i < resultList.size(); i++) {
-			if (resultList.get(i)[0].equals(dr)
-					&& resultList.get(i)[1].equals(fn)) {
+			if (resultList.get(i)[0].equals(dr) && resultList.get(i)[1].equals(fn)) {
 				resultList.remove(i);
 				break;
 			}
@@ -331,32 +301,18 @@ public class ReLaunchApp extends Application {
 		else
 			resultList.add(0, entry);
 	}
-
 	// Remove from list
 	public void removeFromList(String listName, String dr, String fn) {
-		removeFromList_internal(listName, dr, fn);
-	}
-
-	public void removeFromList(String listName, String fullName) {
-		File f = new File(fullName);
-		if (!f.exists())
-			return;
-		removeFromList_internal(listName, f.getParent(), f.getName());
-
-	}
-
-	public void removeFromList_internal(String listName, String dr, String fn) {
-		if (!m.containsKey(listName))
-			return;
-		List<String[]> resultList = m.get(listName);
-		for (int i = 0; i < resultList.size(); i++) {
-			if (resultList.get(i)[0].equals(dr)
-					&& resultList.get(i)[1].equals(fn)) {
-				resultList.remove(i);
-				saveList(listName);
-				return;
-			}
-		}
+        if (!m.containsKey(listName))
+            return;
+        List<String[]> resultList = m.get(listName);
+        for (int i = 0; i < resultList.size(); i++) {
+            if (resultList.get(i)[0].equals(dr) && resultList.get(i)[1].equals(fn)) {
+                resultList.remove(i);
+                saveList(listName);
+                return;
+            }
+        }
 	}
 
 	// If list contains
@@ -365,36 +321,32 @@ public class ReLaunchApp extends Application {
 			return false;
 		List<String[]> resultList = m.get(listName);
 
-		for (int i = 0; i < resultList.size(); i++) {
-			if (resultList.get(i)[0].equals(dr)
-					&& resultList.get(i)[1].equals(fn))
-				return true;
-		}
+        for (String[] aResultList : resultList) {
+            if (aResultList[0].equals(dr) && aResultList[1].equals(fn))
+                return true;
+        }
 		return false;
 	}
 
 	// Read misc. lists
-	public boolean readFile(String listName, String fileName) {
-		return readFile(listName, fileName, "/");
-	}
-
 	public boolean readFile(String listName, String fileName, String delimiter) {
 		FileInputStream fis = null;
 		try {
 			fis = openFileInput(fileName);
 		} catch (FileNotFoundException e) {
+            //emply
 		}
 		if (fis == null)
 			return false;
 		else {
-			InputStreamReader insr = null;
+			InputStreamReader insr;
 			try {
 				insr = new InputStreamReader(fis, "utf8");
 			} catch (UnsupportedEncodingException e) {
 				return false;
 			}
 			BufferedReader bufr = new BufferedReader(insr, FileBufferSize);
-			String l = new String();
+			String l;
 			while (true) {
 				try {
 					l = bufr.readLine();
@@ -412,23 +364,20 @@ public class ReLaunchApp extends Application {
 				insr.close();
 				fis.close();
 			} catch (IOException e) {
+                //emply
 			}
 		}
 		return true;
 	}
 
 	// Save to file miscellaneous lists
-	public void writeFile(String listName, String fileName, int maxEntries) {
-		writeFile(listName, fileName, maxEntries, "/");
-	}
-
-	public void writeFile(String listName, String fileName, int maxEntries,
-			String delimiter) {
+	public void writeFile(String listName, String fileName, int maxEntries, String delimiter) {
+        //Log.i("========= writeFile ===================", "--------------------------------start listName=" + listName);
 		if (!m.containsKey(listName))
 			return;
 
 		List<String[]> resultList = m.get(listName);
-		FileOutputStream fos = null;
+		FileOutputStream fos;
 		try {
 			fos = openFileOutput(fileName, Context.MODE_PRIVATE);
 		} catch (FileNotFoundException e) {
@@ -437,118 +386,194 @@ public class ReLaunchApp extends Application {
 		for (int i = 0; i < resultList.size(); i++) {
 			if (maxEntries != 0 && i >= maxEntries)
 				break;
-			String line = resultList.get(i)[0] + delimiter
-					+ resultList.get(i)[1] + "\n";
+			String line = resultList.get(i)[0] + delimiter + resultList.get(i)[1] + "\n";
 			try {
 				fos.write(line.getBytes());
 			} catch (IOException e) {
+                //Log.i("========= writeFile ===================", "--------------------------------error listName=" + listName);
 			}
 		}
 		try {
 			fos.close();
 		} catch (IOException e) {
+            //Log.i("========= writeFile ===================", "--------------------------------error listName=" + listName);
 		}
+        //Log.i("========= writeFile ===================", "--------------------------------end listName=" + listName);
 	}
 
 	// Remove file
-	public boolean removeFile(String fullname) {
-		File f = new File(fullname);
-		return removeFile(f.getParent(), f.getName());
-	}
+    public boolean fileRemove(File nameFile) {
 
-	public boolean removeFile(String dr, String fn) {
-		boolean rc = false;
-		String fullName = dr + "/" + fn;
-		removeFromList("lastOpened", dr, fn);
-		saveList("lastOpened");
-		removeFromList("favorites", dr, fn);
-		saveList("favorites");
-		removeFromList("history", dr, fn);
-		history.remove(fullName);
-		saveList("history");
-		File f = new File(fullName);
-		if (f.exists()) {
-			try {
-				rc = f.delete();
-			} catch (SecurityException e) {
-			}
-		}
-		return rc;
-	}
+        if (!nameFile.exists()) {
+            return false;
+        }
+        if (nameFile.isDirectory()) {
+            File[] allEntries = nameFile.listFiles();
+            if (allEntries == null) {
+                return false;
+            }
+            for (File allEntry : allEntries) {
+                if (allEntry.isDirectory()) {
+                    if (!fileRemove(allEntry)) {
+                        if (ReLaunch.selectRootNavigation){
+                            if (!RootCommands.DeleteFileRoot(allEntry.getAbsolutePath())){
+                                return false;
+                            }
+                        }else {
+                            return false;
+                        }
+                    }
+                } else {
+                    if (!allEntry.delete()) {
+                        if (ReLaunch.selectRootNavigation){
+                            if (!RootCommands.DeleteFileRoot(allEntry.getAbsolutePath())){
+                                return false;
+                            }
+                        }else {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        if (nameFile.delete()){
+            return true;
+        }else if (ReLaunch.selectRootNavigation){
+            if (!RootCommands.DeleteFileRoot(nameFile.getAbsolutePath())){
+                return false;
+            }
+        }else {
+            return false;
+        }
 
-	// Remove directory
-	public boolean removeDirectory(String dr, String fn) {
-		boolean rc = false;
-		String dname = dr + "/" + fn;
-		File d = new File(dname);
-		File[] allEntries = d.listFiles();
-		for (File f : allEntries) {
-			if (f.isDirectory()) {
-				if (!removeDirectory(dname, f.getName()))
-					return false;
-			} else {
-				if (!removeFile(dname, f.getName()))
-					return false;
-			}
-		}
-		try {
-			rc = d.delete();
-		} catch (SecurityException e) {
-		}
-		return rc;
-	}
+        return true;
+    }
+    public void fileRemoveAllList(String dr, String fn) {
+        removeFromList("lastOpened", dr, fn);
+        saveList("lastOpened");
+        removeFromList("favorites", dr, fn);
+        saveList("favorites");
+        removeFromList("history", dr, fn);
+        history.remove(dr + "/" + fn);
+        saveList("history");
+    }
 
 	//Copy file src to dst
 	public boolean copyFile(String from, String to, boolean rewrite) {
 		File srcFile = new File(from);
 		File dstFile = new File(to);
-		FileChannel src = null;
-		FileChannel dst = null;
-		boolean ret;
-//		if ((!srcFile.canRead()) || (!dstFile.canWrite()) || (dstFile.exists()))
+		FileChannel src;
+		FileChannel dst;
+
 		if ((!srcFile.canRead()) || ((dstFile.exists()) && (!rewrite)))
 			return false;
 		try {
-			dstFile.createNewFile();
-			src = new FileInputStream(srcFile).getChannel();
-			dst = new FileOutputStream(dstFile).getChannel();
-			dst.transferFrom(src, 0, src.size());
-			src.close();
-			dst.close();
-			ret = true;
+			if(dstFile.createNewFile()) {
+                src = new FileInputStream(srcFile).getChannel();
+                dst = new FileOutputStream(dstFile).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+            }else if (ReLaunch.selectRootNavigation){
+                if (!RootCommands.CopyFileRoot(from, to)){
+                    return false;
+                }
+            }else {
+                return false;
+            }
 		} catch (IOException e) {
-			ret = false;
+			return false;
 		}
-		return ret;
+		return true;
 	}
-	
+    public boolean copyDir(String from, String to) {
+        File toDir = new File(to);
+        String[] strDirList = (new File(from)).list();
+
+        if(!toDir.exists()){
+            if(!createDir(to)){
+                return false;
+            }
+        }
+        for (String aStrDirList1 : strDirList) {
+            File f1 = new File(from +"/" + aStrDirList1);
+            if (f1.isFile()) {
+                if (!copyFile(from +"/" + aStrDirList1, to +"/" + aStrDirList1, false)){
+                    return false;
+                }
+            } else {
+                if (!copyDir(from +"/" + aStrDirList1, to + "/" +aStrDirList1)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean copyAll(String from, String to, boolean rewrite) {
+        File source = new File(from);
+        if (source.isFile()) {
+            if (!copyFile(from, to, rewrite)) {
+                return false;
+            }
+        } else {
+            if (!copyDir(from, to)) {
+                return false;
+            }
+        }
+        return true;
+    }
 	//Move file src to dst
 	public boolean moveFile(String from, String to) {
-		boolean ret = false;
+
+		boolean ret;
 		if (from.split("/")[0].equalsIgnoreCase(to.split("/")[0])) {
 			File src = new File(from);
 			File dst = new File(to);
 			ret = src.renameTo(dst);
 		} else {
-			if (copyFile(from, to, false))
-				ret = removeFile(from);
+            File file = new File(from);
+            ret = file.renameTo(new File(to));
 		}
+        if (!ret && ReLaunch.selectRootNavigation){
+            ret = RootCommands.MoveFileRoot(from, to);
+        }
 		return ret;
 	}
-	
 	public boolean createDir(String dst) {
-		File dir = new File(dst);
-		return dir.mkdir();
+        File dir = new File(dst);
+        if (!dir.mkdirs()){
+            return RootCommands.CreateDirRoot(dst);
+        }else{
+            return true;
+        }
+
 	}
 	
 	// common utility - get intent by label, null if not found
 	public Intent getIntentByLabel(String label) {
-		String[] labelp = label.split("\\%");
-		Intent i = new Intent();
-		i.setComponent(new ComponentName(labelp[0], labelp[1]));
-		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-				| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		return i;
+		String[] labelp = label.split("%");
+		if (labelp.length > 1) {
+			return createIntent(labelp[0], labelp[1]);
+		} else {
+			return null;
+		}
+	}
+	public Intent getIntentByLabel(AppInfo appInfo) {
+		if (appInfo != null) {
+			return createIntent(appInfo.appPackage, appInfo.appActivity);
+		}else {
+			return null;
+		}
+	}
+	private Intent createIntent(String appPackage, String appActivity){
+		if(appPackage != null && appActivity != null) {
+			Intent i = new Intent();
+			i.setComponent(new ComponentName(appPackage, appActivity));
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | 0x20000000);
+			return i;
+		}else {
+			return null;
+		}
 	}
 
 	// common utility - return intent to launch reader by reader name and full
@@ -558,8 +583,7 @@ public class ReLaunchApp extends Application {
 		if (re.length == 2 && re[0].equals("Intent")) {
 			Intent i = new Intent();
 			i.setAction(Intent.ACTION_VIEW);
-			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | 0x20000000);
 			i.setDataAndType(Uri.parse("file:///" + Uri.encode(file.substring(1))), re[1]);
 			addToList("lastOpened", file, false);
 			saveList("lastOpened");
@@ -572,21 +596,14 @@ public class ReLaunchApp extends Application {
 			Intent i = getIntentByLabel(name);
 			if (i == null)
 				// "Activity \"" + name + "\" not found!"
-				Toast.makeText(
-						this,
-						getResources().getString(R.string.jv_rla_activity)
+				Toast.makeText(this,getResources().getString(R.string.jv_rla_activity)
 								+ " \""
 								+ name
 								+ "\" "
-								+ getResources().getString(
-										R.string.jv_rla_not_found),
+								+ getResources().getString(R.string.jv_rla_not_found),
 						Toast.LENGTH_SHORT).show();
 			else {
 				i.setAction(Intent.ACTION_VIEW);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-						| Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				// i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); - ALREADY DONE! in
-				// getIntentByLabel
 				i.setData(Uri.parse("file:///" + Uri.encode(file.substring(1))));
 				addToList("lastOpened", file, false);
 				saveList("lastOpened");
@@ -599,25 +616,19 @@ public class ReLaunchApp extends Application {
 		}
 		return null;
 	}
-
-	// compare by second element of String[]
-	public class o1Comparator implements java.util.Comparator<String[]> {
-		public int compare(String[] o1, String[] o2) {
-			int rc = o1[1].compareTo(o2[1]);
-			if (rc == 0)
-				return o1[0].compareTo(o2[0]);
-			else
-				return rc;
+	public AppInfo searchApp(String appName){
+		AppInfo appFinded = new AppInfo();
+		for (AppInfo anAppsArray : appInfoArrayList) {
+			if (anAppsArray.appName.equals(appName)){
+				appFinded = anAppsArray;
+				break;
+			}
 		}
-	}
-
-	public o1Comparator getO1Comparator() {
-		return new o1Comparator();
+		return appFinded;
 	}
 
 	// FILTER
-	public boolean filterFile1(String dname, String fname, Integer method,
-			String value) {
+	public boolean filterFile1(String dname, String fname, Integer method, String value) {
 		if (method == FLT_STARTS)
 			return fname.startsWith(value);
 		else if (method == FLT_ENDS)
@@ -630,10 +641,7 @@ public class ReLaunchApp extends Application {
 			return !history.containsKey(dname + "/" + fname);
 		else if (method == FLT_NEW_AND_READING) {
 			String fullName = dname + "/" + fname;
-			if (history.containsKey(fullName))
-				return history.get(fullName) != FINISHED;
-			else
-				return true;
+			return  !(history.containsKey(fullName)&& history.get(fullName) == FINISHED);
 		} else
 			return false;
 	}
@@ -646,6 +654,7 @@ public class ReLaunchApp extends Application {
 				try {
 					filtMethod = Integer.parseInt(f[0]);
 				} catch (NumberFormatException e) {
+                    //emply
 				}
 				if (filters_and) {
 					// AND all filters
@@ -657,27 +666,17 @@ public class ReLaunchApp extends Application {
 						return true;
 				}
 			}
-			return filters_and ? true : false;
+			return filters_and;
 		} else
 			return true;
-	}
-
-	public Drawable specialIcon(String s, boolean isDir) {
-		if (isDir)
-			return getResources().getDrawable(R.drawable.dir_ok);
-		if (s.endsWith(".apk"))
-			return getResources().getDrawable(R.drawable.install);
-		return null;
 	}
 
 	public boolean specialAction(Activity a, String s) {
 		if (s.endsWith(".apk")) {
 			// Install application
 			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.parse("file://" + s),
-					"application/vnd.android.package-archive");
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-					| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.setDataAndType(Uri.parse("file://" + s), "application/vnd.android.package-archive");
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			a.startActivity(intent);
 			return true;
 		}
@@ -692,9 +691,16 @@ public class ReLaunchApp extends Application {
 
 	public void About(final Activity a) {
 		String vers = "<version>";
+        PackageInfo temp;
+        PackageManager temp2;
 		try {
-			vers = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            temp2 = getPackageManager();
+            if (temp2 != null) {
+                temp = temp2.getPackageInfo(getPackageName(), 0);
+                vers = temp.versionName;
+            }
 		} catch (Exception e) {
+            //emply
 		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		WebView wv = new WebView(a);
@@ -710,7 +716,7 @@ public class ReLaunchApp extends Application {
 		wv.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
 		builder.setView(wv);
 		// "Ok"
-		builder.setPositiveButton(getResources().getString(R.string.jv_rla_ok),
+		builder.setPositiveButton(getResources().getString(R.string.app_ok),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						dialog.dismiss();
@@ -721,24 +727,20 @@ public class ReLaunchApp extends Application {
 				getResources().getString(R.string.jv_rla_see_changelog),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						AlertDialog.Builder builder1 = new AlertDialog.Builder(
-								a);
+						AlertDialog.Builder builder1 = new AlertDialog.Builder(a);
 						WebView wv = new WebView(a);
 						wv.loadDataWithBaseURL(
 								null,
 								getResources().getString(R.string.about_help)
-										+ getResources().getString(
-												R.string.about_appr)
-										+ getResources().getString(
-												R.string.whats_new),
+										+ getResources().getString(R.string.about_appr)
+										+ getResources().getString(R.string.whats_new),
 								"text/html", "utf-8", null);
 						// "What's new"
-						builder1.setTitle(getResources().getString(
-								R.string.jv_rla_whats_new_title));
+						builder1.setTitle(getResources().getString(R.string.jv_rla_whats_new_title));
 						builder1.setView(wv);
 						// "Ok"
 						builder1.setPositiveButton(
-								getResources().getString(R.string.jv_rla_ok),
+								getResources().getString(R.string.app_ok),
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog,
 											int whichButton) {
@@ -752,14 +754,16 @@ public class ReLaunchApp extends Application {
 	}
 
 	public void setFullScreenIfNecessary(Activity a) {
-		if (fullScreen) {
+		if (!hideTitle) {
 			a.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
+		if (fullScreen) {
+			a.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+
 	}
 
-	public void generalOnResume(String name, Activity a) {
+	public void generalOnResume(String name) {
 		Log.d(TAG, "--- onResume(" + name + ")");
 	}
 
@@ -772,39 +776,64 @@ public class ReLaunchApp extends Application {
 			if (!toDir.mkdir())
 				return false;
 		File tDir = new File(toDir.getAbsolutePath() + "/files"); 
-		if (!tDir.exists())
-			if (!tDir.mkdir())
-				return false;
+		if (!tDir.exists()) {
+            if (!tDir.mkdir())
+                return false;
+        }else{
+            fileRemove(new File(toDir.getAbsolutePath() + "/files"));
+            if (!tDir.mkdir())
+                return false;
+        }
+        tDir = new File(toDir.getAbsolutePath() + "/databases");
+        if (!tDir.exists()) {
+            if (!tDir.mkdir())
+                return false;
+        }else{
+            fileRemove(new File(toDir.getAbsolutePath() + "/databases"));
+            if (!tDir.mkdir())
+                return false;
+        }
 		tDir = new File(toDir.getAbsolutePath() + "/shared_prefs"); 
-		if (!tDir.exists())
+		if (!tDir.exists()){
 			if (!tDir.mkdir())
 				return false;
+        }else{
+            fileRemove(new File(toDir.getAbsolutePath() + "/shared_prefs"));
+            if (!tDir.mkdir())
+                return false;
+        }
 		String[] files = {"AppFavorites.txt", "AppLruFile.txt", "Columns.txt", "Filters.txt", "History.txt", "LruFile.txt"};
 		for (String f : files) {
 			String src = fromDir.getAbsolutePath() + "/files/" + f;
 			String dst = toDir.getAbsolutePath() + "/files/" + f;
-			copyFile(src, dst, true);
+            File file = new File(src);
+            if(file.exists()) {
+                copyAll(src, dst, true);
+            }
 		}
+
+        File dirName = new File(fromDir.getAbsolutePath() + "/databases");
+        String[] DBlist = dirName.list();
+        for (String aDBlist : DBlist) {
+            String src = fromDir.getAbsolutePath() + "/databases/" + aDBlist;
+            String dst = toDir.getAbsolutePath() + "/databases/" + aDBlist;
+            copyAll(src, dst, true);
+        }
+
 		String src = fromDir.getAbsolutePath() + "/shared_prefs/com.harasoft.relaunch_preferences.xml";
 		String dst = toDir.getAbsolutePath() + "/shared_prefs/com.harasoft.relaunch_preferences.xml";
-//		boolean ret = copyFile(src, dst, true);
-		if (!copyFile(src, dst, true))
-			return false;
-		return true;
-	}
+
+        return copyAll(src, dst, true);
+    }
 
 	public boolean isStartDir(String dir) {
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
-		String startDirs = prefs.getString("startDir", "/sdcard,/media/My Files");
-		if (startDirs.contains(dir))
-			return true;
-		return false;
-	}
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		String startDirs = prefs.getString("startDir", "");
+        return startDirs.contains(dir);
+    }
 
 	public void setStartDir(String dir) {
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putString("startDir", dir);
 		editor.putBoolean("showAddStartDir", false);
@@ -812,12 +841,360 @@ public class ReLaunchApp extends Application {
 	}
 
 	public void addStartDir(String dir) {
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		SharedPreferences.Editor editor = prefs.edit();
-		String oldStart = prefs.getString("startDir", "/sdcard,/media/My Files");
+		String oldStart = prefs.getString("startDir", "");
 		editor.putString("startDir", oldStart + "," + dir);
 		editor.commit();
 	}
 
+	public String[] loadStartDirs(){
+		// для доступа к настройкам получаем объект
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		// получаем список домашних папок
+		ArrayList<String> arrayListDir = new ArrayList<String>(Arrays.asList(prefs.getString("startDir", "").split(",")));
+		// из списка выкидываем папку с дропбоксом, чтобы понимать сколько остальных
+		if (arrayListDir.size() > 0){
+			String delDir = "Dropbox| ";
+			for (int i = 0, k = arrayListDir.size(); i < k; i++) {
+				if (delDir.equals(arrayListDir.get(i))) {
+					arrayListDir.remove(i);
+				}
+			}
+		}
+		if (arrayListDir.get(0).trim().length() == 0){
+			arrayListDir.remove(0);
+		}
+		// если папок ноль, то ищем возможные корневые иначе добавляем самый корень
+		if (arrayListDir.size() == 0){
+			String findDir = getLocalCard();
+			if (findDir.length() == 0){
+				arrayListDir.add("/");
+			}else {
+				arrayListDir.addAll(Arrays.asList(findDir.split(",")));
+			}
+		}
+		// если стоит флаг возвращаем папку дропа
+		if(prefs.getBoolean("showDropbox", false)){
+			addStartDir("Dropbox| ");
+			arrayListDir.add("Dropbox| ");
+		}
+		// массив превращаем в строку для сохранения
+		StringBuilder tempStartDirs = new StringBuilder();
+		for (int i = 0, k = arrayListDir.size(); i < k; i++) {
+			tempStartDirs.append(arrayListDir.get(i));
+			if ((i + 1) < k ){
+				tempStartDirs.append(",");
+			}
+		}
+
+		// теперь необходимо сохранить всё, что наворотили
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString("startDir", tempStartDirs.toString());
+		editor.commit();
+		// возвращаем полученный массив
+		return arrayListDir.toArray(new String[arrayListDir.size()]);
+	}
+
+    public void showToast(String msg) {
+        Toast error = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        error.show();
+    }
+    // автоматический подбор числа колонок
+    public int getAutoColsNum(List<HashMap<String, String>> itemsArray, String polName, String columnsAlgIntensity) {
+        // implementation - via percentiles len
+        int auto_cols_num = 1;
+        ArrayList<Integer> tmp = new ArrayList<Integer>();
+
+        if (itemsArray.size() > 0) {
+            int factor ;
+            for (HashMap<String, String> anItemsArray : itemsArray) {
+                if (anItemsArray != null) {
+                    tmp.add(anItemsArray.get(polName).length());
+                }
+            }
+            String[] spat = columnsAlgIntensity.split("[\\s\\:]+");
+            int quantile = Integer.parseInt(spat[0]);
+            factor = Percentile(tmp, quantile);
+            for (int i = 1; i < spat.length; i = i + 2) {
+                try {
+                    double fval = Double.parseDouble(spat[i]);
+                    int cval = Integer.parseInt(spat[i + 1]);
+                    if (factor <= fval) {
+                        auto_cols_num = cval;
+                        break;
+                    }
+                } catch (Exception e) {
+                    // emply
+                }
+            }
+        }
+        if (auto_cols_num > itemsArray.size())
+            auto_cols_num = itemsArray.size();
+        return auto_cols_num;
+    }
+    private int Percentile(ArrayList<Integer> values, int Quantile){
+    // not fully "mathematical proof", but not too difficult and working
+        Collections.sort(values);
+        int index = (values.size() * Quantile) / 100;
+        return values.get(index);
+    }
+
+    public String getLocalCard(){
+        BufferedReader buf_reader = null;
+        StringBuilder listDrive = new StringBuilder();
+
+        try {
+            buf_reader = new BufferedReader(new FileReader("/proc/mounts"));
+            String line;
+
+            while ((line = buf_reader.readLine()) != null) {
+                if (line.contains("vfat") || line.contains("/mnt")) {
+                    if (line.contains("/dev/block/vold") || line.contains("/dev/block//vold")) {
+                        if (!line.contains("/mnt/secure")
+                                && !line.contains("/mnt/asec")
+                                && !line.contains("/mnt/obb")
+                                && !line.contains("/dev/mapper")
+                                && !line.contains("tmpfs")) {
+                            StringTokenizer tokens = new StringTokenizer(line, " ");
+                            tokens.nextToken(); //device
+                            String mount_point = tokens.nextToken(); //mount point
+                            if (listDrive.length() > 1){
+                                listDrive.append(",");
+                            }
+							if (mount_point.trim().length() > 0) {
+								listDrive.append(mount_point);
+							}
+                        }
+                    }
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (buf_reader != null) {
+                try {
+                    buf_reader.close();
+                } catch (IOException ex) {
+                    //emply
+                }
+            }
+        }
+
+        return listDrive.toString();
+    }
+
+    public Bitmap JobIcon(String job){
+        int iconID;
+        if ("FAVDOCN".equals(job)) {// страница фаворитов документов
+            iconID = R.drawable.ci_fav;
+        } else if ("LRUN".equals(job)) {// страница запущенных ДОКУМЕНТОВ
+            iconID = R.drawable.ci_lre;
+        } else if ("HOMEN".equals(job)) {// страница домашних папок
+            iconID = R.drawable.ci_home;
+        } else if ("HOMEMENU".equals(job)) {// всплывающее меню домашних папок
+            iconID = R.drawable.ci_home;
+        } else if ("HOMESCREEN".equals(job)) {// экран домашних папок
+            iconID = R.drawable.ci_home;
+        } else if ("LRUMENU".equals(job)) {// всплывающее меню запущенных документов
+            iconID = R.drawable.ci_lre;
+        } else if ("LRUSCREEN".equals(job)) {// экран запущенных документов
+            iconID = R.drawable.ci_lre;
+        } else if ("FAVDOCMENU".equals(job)) {// всплывающее меню фаворитов документов
+            iconID = R.drawable.ci_fav;
+        } else if ("FAVDOCSCREEN".equals(job)) {// экран фаворитов документов
+            iconID = R.drawable.ci_fav;
+        } else if ("ADVANCED".equals(job)) {// расширенные настройки
+            iconID = R.drawable.ci_tools;
+        } else if ("SETTINGS".equals(job)) {// настройки
+            iconID = R.drawable.relaunch_settings;
+        } else if ("APPMANAGER".equals(job)) {// все приложения
+            iconID = R.drawable.ci_cpu;
+        } else if ("BATTERY".equals(job)) {// показ расхода по приложениям
+            iconID = R.drawable.bat1_big;
+        } else if ("FAVAPP".equals(job)) {// всплывающее меню фаворитов приложений
+            iconID = R.drawable.ci_fava;
+        } else if ("ALLAPP".equals(job)) {// все приложения
+            iconID = R.drawable.ci_grid;
+        } else if ("LASTAPP".equals(job)) {// последние запущенные приложения
+            iconID = R.drawable.ci_lrea;
+        } else if ("SEARCH".equals(job)) {// поиск
+            iconID = R.drawable.ci_search;
+        } else if ("LOCK".equals(job)) {// блокировка устройства
+            iconID = R.drawable.ci_lock;
+        } else if ("POWEROFF".equals(job)) { // выключение устройства
+            iconID = R.drawable.ci_power;
+		} else if ("REBOOT".equals(job)) { // выключение устройства
+			iconID = R.drawable.ci_reboot;
+        } else if ("SWITCHWIFI".equals(job)) {// выключение WiFi
+            WifiManager wifiManager;
+            wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+            if (wifiManager.isWifiEnabled()) {
+                iconID = R.drawable.ci_wifi_on;
+            }else{
+                iconID = R.drawable.ci_wifi_off;
+            }
+        } else if ("DROPBOX".equals(job)) {// запуск Dropbox
+            iconID = R.drawable.ci_dropbox;
+        } else if ("OPDS".equals(job)) {// запуск OPDS
+            iconID = R.drawable.ci_books;
+        } else if ("FTP".equals(job)) {// запуск FTP
+            iconID = R.drawable.ci_ftp;
+        } else if ("SYSSETTINGS".equals(job)) {// системные настройки
+            iconID = R.drawable.ci_gear2;
+        } else if ("UPDIR".equals(job)) {// в родительскую папку
+            iconID = R.drawable.ci_levelup_big;
+        } else if ("UPSCROOL".equals(job)) {// пролистывание на экран вверх
+            iconID = R.drawable.ci_arrowup_big;
+        } else if ("DOWNSCROOL".equals(job)) {// пролистывае на экран вниз
+            iconID = R.drawable.ci_arrowdown_big;
+        } else{
+			iconID = R.drawable.file_notok;
+		}
+
+        return BitmapFactory.decodeResource(getResources(), iconID);
+    }
+
+	//===== Прокрутка списка на один экран вниз =====
+	public void TapDownScrool(GridView gridView, int gVsize) {
+		if (N2DeviceInfo.EINK_NOOK) { // nook special
+			NOOKScrool(gridView, true);
+		} else { // other devices
+			int first = gridView.getFirstVisiblePosition();
+			int last = gridView.getLastVisiblePosition();
+			int shift = 0;
+			// для ониксов уменьшаем число пролистываемых элементов
+			if (N2DeviceInfo.EINK_ONYX || N2DeviceInfo.EINK_GMINI || N2DeviceInfo.EINK_BOEYE){
+				shift = -1;
+			}
+			if (gVsize != last + 1) {
+				int target = last + 1;
+				if (target > (gVsize - 1)) {
+					target = gVsize - 1;
+				}
+				RepeatedDownScroll(gridView, first, target, shift);
+			}
+		}
+	}
+	//===== Прокрутка списка на один экран вверх =====
+	public void TapUpScrool(GridView gridView, int gVsize) {
+		if (N2DeviceInfo.EINK_NOOK) { // nook
+			NOOKScrool(gridView, false);
+		} else { // other devices
+			int first = gridView.getFirstVisiblePosition();
+			int visible = gridView.getLastVisiblePosition() - first + 1;
+			first -= visible;
+			// для ониксов уменьшаем число пролистываемых элементов
+			if (N2DeviceInfo.EINK_ONYX || N2DeviceInfo.EINK_GMINI || N2DeviceInfo.EINK_BOEYE){
+				first++;
+			}
+			if (first < 0) {
+				first = 0;
+			}
+			gridView.setSelection(first);
+			// some hack workaround against not scrolling in some cases
+			if (gVsize > 0) {
+				gridView.requestFocusFromTouch();
+				gridView.setSelection(first);
+			}
+		}
+	}
+	private void NOOKScrool(GridView gridView, boolean downScrool) {// nook special
+			MotionEvent ev;
+			int actionUp, actionMove, actionDown;
+		if (downScrool){
+			actionDown = 200;
+			actionMove = 100;
+			actionUp = 100;
+		}else{
+			actionDown = 100;
+			actionMove = 200;
+			actionUp = 200;
+		}
+			ev = MotionEvent.obtain(SystemClock.uptimeMillis(),
+					SystemClock.uptimeMillis(),
+					MotionEvent.ACTION_DOWN, 200, actionDown, 0);
+			if (ev != null) {
+				gridView.dispatchTouchEvent(ev);
+			}
+			ev = MotionEvent.obtain(SystemClock.uptimeMillis(),
+					SystemClock.uptimeMillis() + 100,
+					MotionEvent.ACTION_MOVE, 200, actionMove, 0);
+			if (ev != null) {
+				gridView.dispatchTouchEvent(ev);
+			}
+			SystemClock.sleep(100);
+			ev = MotionEvent.obtain(SystemClock.uptimeMillis(),
+					SystemClock.uptimeMillis(), MotionEvent.ACTION_UP,
+					200, actionUp, 0);
+			if (ev != null) {
+				gridView.dispatchTouchEvent(ev);
+			}
+	}
+	public void RepeatedDownScroll(GridView gridView, int first, int target, int shift) {
+		int total = gridView.getCount();
+		int last = gridView.getLastVisiblePosition();
+		if (total == last + 1)
+			return;
+		final int ftarget = target + shift;
+		gridView.clearFocus();
+		final GridView finalTempGV = gridView;
+		gridView.post(new Runnable() {
+			public void run() {
+				finalTempGV.setSelection(ftarget);
+			}
+		});
+		final int ffirst = first;
+		final int fshift = shift;
+		final GridView finalTempGV1 = gridView;
+		gridView.postDelayed(new Runnable() {
+			public void run() {
+				int nfirst = finalTempGV1.getFirstVisiblePosition();
+				if (nfirst == ffirst) {
+					RepeatedDownScroll(finalTempGV1, ffirst, ftarget, fshift + 1);
+				}
+			}
+		}, 150);
+	}
+
+	//===============
+	public void LaunchReader(String fullFileName){
+		if (askIfAmbiguous) {
+			List<String> rdrs = readerNames(fullFileName);
+			if (rdrs.size() == 1) {
+				start(launchReader(rdrs.get(0), fullFileName));
+			}else if (rdrs.size() > 1){
+				final CharSequence[] applications = rdrs.toArray(new CharSequence[rdrs.size()]);
+				final String rdr1 = fullFileName;
+				AlertDialog.Builder builder = new AlertDialog.Builder(ReLaunchApp.this);
+				// "Select application"
+				builder.setTitle(getResources().getString( R.string.jv_relaunch_select_application));
+				builder.setSingleChoiceItems(applications, -1,
+						new DialogInterface.OnClickListener() {
+							public void onClick(
+									DialogInterface dialog,
+									int i) {
+								start(launchReader((String) applications[i],rdr1));
+								dialog.dismiss();
+							}
+						});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+		} else{
+			start(launchReader(readerName(fullFileName),fullFileName));
+		}
+	}
+	private void start(Intent i) {
+		if (i != null)
+			try {
+				startActivity(i);
+			} catch (ActivityNotFoundException e) {
+				Toast.makeText(ReLaunchApp.this,getResources().getString(R.string.jv_relaunch_activity_not_found),
+						Toast.LENGTH_LONG).show();
+			}
+	}
 }

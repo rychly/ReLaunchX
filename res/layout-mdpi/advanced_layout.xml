@@ -30,7 +30,6 @@
             android:gravity="left|center_vertical"
             android:inputType="textMultiLine"
             android:paddingLeft="8dp"
-            android:text="Text View"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" />
@@ -66,7 +65,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="4dp"
@@ -79,7 +78,6 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/main_button"
-            android:drawableTop="@drawable/ci_wifiscan"
             android:paddingBottom="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -95,9 +93,7 @@
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
-            android:drawableLeft="@drawable/wifi_off"
-            android:drawableRight="@drawable/wifi_off"
-            android:drawableTop="@drawable/ci_wifi"
+            android:drawableTop="@drawable/ci_wifi_on"
             android:paddingBottom="16dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -123,7 +119,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout3"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="8dp"
@@ -141,7 +137,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout4"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="8dp"
@@ -154,7 +150,6 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/main_button"
-            android:drawableTop="@drawable/ci_lock"
             android:paddingBottom="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -170,7 +165,6 @@
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
-            android:drawableTop="@drawable/ci_reboot"
             android:paddingBottom="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -186,7 +180,6 @@
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
-            android:drawableTop="@drawable/ci_power"
             android:paddingBottom="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"

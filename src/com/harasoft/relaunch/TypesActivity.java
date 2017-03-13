@@ -9,8 +9,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -28,9 +26,7 @@ import android.widget.Toast;
 public class TypesActivity extends Activity {
 	final String TAG = "Types";
 	final String INTENT_PREFIX = "Intent:";
-	HashMap<String, Drawable> icons;
-	PackageManager pm;
-	List<String> applicationsArray;
+
 	CharSequence[] applications;
 	CharSequence[] happlications;
 	List<HashMap<String, String>> itemsArray;
@@ -57,27 +53,23 @@ public class TypesActivity extends Activity {
 			return 0;
 		}
 
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			View v = convertView;
 			if (v == null) {
-				LayoutInflater vi = (LayoutInflater) getApplicationContext()
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = vi.inflate(R.layout.types_layout, null);
+				LayoutInflater vi = (LayoutInflater) app.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				v = vi.inflate(R.layout.types_layout, parent, false);
 			}
 			final HashMap<String, String> item = itemsArray.get(position);
-			if (item != null) {
+			if (item != null && v != null) {
 				ImageView iv = (ImageView) v.findViewById(R.id.types_img);
 
 				// Setting up button
 				ImageButton upBtn = (ImageButton) v.findViewById(R.id.types_up);
 				if (position == 0) {
-					upBtn.setImageDrawable(getResources().getDrawable(
-							android.R.drawable.checkbox_off_background));
+					upBtn.setImageDrawable(getResources().getDrawable(android.R.drawable.checkbox_off_background));
 					upBtn.setEnabled(false);
 				} else {
-					upBtn.setImageDrawable(getResources().getDrawable(
-							R.drawable.ci_arrowup));
+					upBtn.setImageDrawable(getResources().getDrawable(R.drawable.ci_arrowup));
 					upBtn.setEnabled(true);
 				}
 				upBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,15 +82,12 @@ public class TypesActivity extends Activity {
 				});
 
 				// Setting down button
-				ImageButton downBtn = (ImageButton) v
-						.findViewById(R.id.types_down);
+				ImageButton downBtn = (ImageButton) v.findViewById(R.id.types_down);
 				if (position == (itemsArray.size() - 1)) {
-					downBtn.setImageDrawable(getResources().getDrawable(
-							android.R.drawable.checkbox_off_background));
+					downBtn.setImageDrawable(getResources().getDrawable(android.R.drawable.checkbox_off_background));
 					downBtn.setEnabled(false);
 				} else {
-					downBtn.setImageDrawable(getResources().getDrawable(
-							R.drawable.ci_arrowdown));
+					downBtn.setImageDrawable(getResources().getDrawable(R.drawable.ci_arrowdown));
 					downBtn.setEnabled(true);
 				}
 				downBtn.setOnClickListener(new View.OnClickListener() {
@@ -111,8 +100,7 @@ public class TypesActivity extends Activity {
 				});
 
 				// Setting remove button
-				ImageButton rmBtn = (ImageButton) v
-						.findViewById(R.id.types_delete);
+				ImageButton rmBtn = (ImageButton) v.findViewById(R.id.types_delete);
 				rmBtn.setEnabled(itemsArray.size() > 1);
 				rmBtn.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View v) {
@@ -122,8 +110,7 @@ public class TypesActivity extends Activity {
 				});
 
 				// Setting extension title
-				TextView ext_title = (TextView) v
-						.findViewById(R.id.types_ext_title);
+				TextView ext_title = (TextView) v.findViewById(R.id.types_ext_title);
 				// "Suffix (" + (position+1) + "/" + (itemsArray.size()) + ")"
 				ext_title.setText(getResources().getString(
 						R.string.jv_types_suffix)
@@ -139,8 +126,7 @@ public class TypesActivity extends Activity {
 				extName.setOnClickListener(new View.OnClickListener() {
 
 					public void onClick(View v) {
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								cntx);
+						AlertDialog.Builder builder = new AlertDialog.Builder(cntx);
 						// "File suffix"
 						builder.setTitle(getResources().getString(
 								R.string.jv_types_file_suffix));
@@ -150,12 +136,11 @@ public class TypesActivity extends Activity {
 
 						// "Ok"
 						builder.setPositiveButton(
-								getResources().getString(R.string.jv_types_ok),
+								getResources().getString(R.string.app_ok),
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog,
 											int whichButton) {
-										String value = input.getText()
-												.toString();
+										String value = String.valueOf(input.getText());
 										if (value.equals(""))
 											// "Can't be empty!"
 											Toast.makeText(
@@ -165,8 +150,7 @@ public class TypesActivity extends Activity {
 																	R.string.jv_types_cant_be_empty),
 													Toast.LENGTH_LONG).show();
 										else {
-											itemsArray.get(position).put("ext",
-													value);
+											itemsArray.get(position).put("ext",value);
 											adapter.notifyDataSetChanged();
 											dialog.dismiss();
 										}
@@ -176,7 +160,7 @@ public class TypesActivity extends Activity {
 						// "Cancel"
 						builder.setNegativeButton(
 								getResources().getString(
-										R.string.jv_types_cancel),
+										R.string.app_cancel),
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog,
 											int whichButton) {
@@ -190,19 +174,19 @@ public class TypesActivity extends Activity {
 
 				// Setting application name
 				Button appName = (Button) v.findViewById(R.id.types_app);
-				String app = item.get("rdr");
-				String[] appp = app.split("\\%");
+				String appR = item.get("rdr");
+				String[] appp = appR.split("%");
 				if (appp.length > 2) {
 					appName.setText(appp[2]);
 				} else {
-					appName.setText(app);
+					appName.setText(appR);
 				}
-				if (icons.containsKey(app))
-					iv.setImageDrawable(icons.get(app));
-				else
-					iv.setImageDrawable(getResources().getDrawable(
-							R.drawable.icon));
-
+				ReLaunchApp.AppInfo findApp = app.searchApp(appR);
+				if (findApp != null) {
+                    iv.setImageDrawable(findApp.appIcon);
+                }else {
+                    iv.setImageDrawable(getResources().getDrawable(R.drawable.icon_list));
+                }
 				appName.setOnClickListener(new View.OnClickListener() {
 
 					public void onClick(View v) {
@@ -250,23 +234,18 @@ public class TypesActivity extends Activity {
 
 						// "General intent"
 						builder1.setNeutralButton(
-								getResources().getString(
-										R.string.jv_types_general_intent),
+								getResources().getString(R.string.jv_types_general_intent),
 								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int which) {
-										AlertDialog.Builder builder3 = new AlertDialog.Builder(
-												cntx);
+									public void onClick(DialogInterface dialog, int which) {
+										AlertDialog.Builder builder3 = new AlertDialog.Builder(cntx);
 										// "Intent type"
 										builder3.setTitle(getResources()
 												.getString(
 														R.string.jv_types_intent_type));
-										final EditText input = new EditText(
-												cntx);
+										final EditText input = new EditText(cntx);
 										String v = item.get("rdr");
 										if (v.startsWith(INTENT_PREFIX))
-											v = v.substring(INTENT_PREFIX
-													.length());
+											v = v.substring(INTENT_PREFIX.length());
 										else
 											v = "application/";
 										input.setText(v);
@@ -274,14 +253,12 @@ public class TypesActivity extends Activity {
 										// "Ok"
 										builder3.setPositiveButton(
 												getResources().getString(
-														R.string.jv_types_ok),
+														R.string.app_ok),
 												new DialogInterface.OnClickListener() {
 													public void onClick(
 															DialogInterface dialog,
 															int whichButton) {
-														String value = input
-																.getText()
-																.toString();
+														String value = String.valueOf(input.getText());
 														if (value.equals(""))
 															// "Can't be empty!"
 															Toast.makeText(
@@ -304,10 +281,7 @@ public class TypesActivity extends Activity {
 												});
 
 										// "Cancel"
-										builder3.setNegativeButton(
-												getResources()
-														.getString(
-																R.string.jv_types_cancel),
+										builder3.setNegativeButton(getResources().getString(R.string.app_cancel),
 												new DialogInterface.OnClickListener() {
 													public void onClick(
 															DialogInterface dialog,
@@ -321,16 +295,12 @@ public class TypesActivity extends Activity {
 								});
 
 						// "Cancel"
-						builder1.setNegativeButton(
-								getResources().getString(
-										R.string.jv_types_cancel),
+						builder1.setNegativeButton(getResources().getString(R.string.app_cancel),
 								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int which) {
+									public void onClick(DialogInterface dialog, int which) {
 										dialog.dismiss();
 									}
 								});
-
 						builder1.show();
 					}
 				});
@@ -347,20 +317,15 @@ public class TypesActivity extends Activity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		// Global storage
 		app = ((ReLaunchApp) getApplicationContext());
-		app.setFullScreenIfNecessary(this);
+        if(app == null ) {
+            finish();
+        }
+        app.setFullScreenIfNecessary(this);
 		setContentView(R.layout.types_view);
-		icons = app.getIcons();
 
-		applicationsArray = app.getApps();
-		applications = applicationsArray
-				.toArray(new CharSequence[applicationsArray.size()]);
-		happlications = app.getApps().toArray(
-				new CharSequence[app.getApps().size()]);
-		for (int j = 0; j < happlications.length; j++) {
-			String happ = (String) happlications[j];
-			String[] happp = happ.split("\\%");
-			happlications[j] = happp[2];
-		}
+        List<String> applicationsArray = app.getAppList();
+		applications = applicationsArray.toArray(new CharSequence[applicationsArray.size()]);
+		happlications = app.getAppList().toArray(new CharSequence[app.getAppList().size()]);
 
 		// Fill listview with our info
 		ListView lv = (ListView) findViewById(R.id.types_lv);
@@ -429,6 +394,6 @@ public class TypesActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		app.generalOnResume(TAG, this);
+		app.generalOnResume(TAG);
 	}
 }
