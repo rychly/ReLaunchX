@@ -81,7 +81,8 @@
         android:textColor="@color/normal_fg"
         android:textStyle="bold" >
     </Button>
-
+
+
     <LinearLayout
     	android:id="@+id/linearLayoutNavigate"
     	android:layout_width="fill_parent"
@@ -97,6 +98,7 @@
             android:drawableLeft="@drawable/ci_levelup"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:textColor="@color/normal_fg"
             android:text="@string/main_launcher_nb_layout_go_one_level_up" >
         </Button>
 
@@ -109,6 +111,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_arrowup"
             android:paddingLeft="8dp"
+            android:textColor="@color/normal_fg"
             android:text="0%" >
         </Button>
 
@@ -121,6 +124,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_arrowdown"
             android:paddingLeft="8dp"
+            android:textColor="@color/normal_fg"
             android:text="0%" >
         </Button>
 
@@ -153,7 +157,8 @@
             android:stretchMode="columnWidth" >
         </GridView>
     </LinearLayout>
-
+
+
     <LinearLayout
     	android:id="@+id/linearLayoutBottom"
     	android:layout_width="fill_parent"

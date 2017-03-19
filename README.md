@@ -71,6 +71,10 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 1.1.0
+ * Added more file sorting options
+ * Added new setting for File Manager 'Show file details'
+ * Minor bugfixes
 * 1.0.0
  * fixed partition size and free space view for Onyx Boox Max
  * added Onyx Boox Max to supported devices

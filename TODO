@@ -3,9 +3,9 @@
 ===============
 - connect to Callibre server
 - add cloud storage support
-- fix or add preference setting for full screen mode with Android OS toolbar
-- fix blank screen (screen not refreshed until tapped) on startup, happens on Onyx Boox Max
-- fix file system space info in Advanced view hang (currently disabled to prevent app misbehavior)
+- (DONE)fix or add preference setting for full screen mode with Android OS toolbar
+- (DONE)fix blank screen (screen not refreshed until tapped) on startup, happens on Onyx Boox Max
+- (DONE)fix file system space info in Advanced view hang (currently disabled to prevent app misbehavior)
 
 DONE
 - (DONE) fixed partition size and free space view for Onyx Boox Max
