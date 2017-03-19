@@ -30,15 +30,15 @@ public class ListActions {
 			if (!prefs.getBoolean("filterResults", false)
 					|| app.filterFile(n[0], n[1])) {
 				HashMap<String, String> item = new HashMap<String, String>();
-				item.put("dname", n[0]);
-				item.put("fname", n[1]);
+				item.put("directoryName", n[0]);
+				item.put("fullPathName", n[1]);
 				if (n[1].equals(app.DIR_TAG)) {
 					int ind = n[0].lastIndexOf('/');
 					if (ind == -1) {
-						item.put("fname", "");
+						item.put("fullPathName", "");
 					} else {
-						item.put("fname", n[0].substring(ind + 1));
-						item.put("dname", n[0].substring(0, ind));
+						item.put("fullPathName", n[0].substring(ind + 1));
+						item.put("directoryName", n[0].substring(0, ind));
 					}
 					item.put("type", "dir");
 				} else
@@ -115,9 +115,9 @@ public class ListActions {
 			final CharSequence[] lnames = new CharSequence[itemsArray.size()];
 			for (int i = 0; i < itemsArray.size(); i++) {
 				HashMap<String, String> item = itemsArray.get(i);
-				String fname = item.get("fname");
-				String sname = item.get("fname");
-				String dname = item.get("dname");
+				String fname = item.get("fullPathName");
+				String sname = item.get("fullPathName");
+				String dname = item.get("directoryName");
 				// clean extension, if needed
 				if (prefs.getBoolean("hideKnownExts", false)) {
 					for (int j = 0; j < exts.size(); j++) {
@@ -171,7 +171,7 @@ public class ListActions {
 
 		HashMap<String, String> item = itemsArray.get(position);
 
-		String fullName = item.get("dname") + "/" + item.get("fname");
+		String fullName = item.get("directoryName") + "/" + item.get("fullPathName");
 		if (item.get("type").equals("dir")) {
 			Intent intent = new Intent(act, ReLaunch.class);
 			intent.putExtra("dirviewer", false);
@@ -182,14 +182,14 @@ public class ListActions {
 			intent.putExtra("library", ReLaunch.useLibrary);
 			act.startActivityForResult(intent, ReLaunch.DIR_ACT);
 		} else {
-			String fileName = item.get("fname");
+			String fileName = item.get("fullPathName");
 			if (!app.specialAction(act, fullName)) {
 				if (app.readerName(fileName).equals("Nope"))
 					app.defaultAction(act, fullName);
 				else {
 					// Launch reader
 					if (app.askIfAmbiguous) {
-						List<String> rdrs = app.readerNames(item.get("fname"));
+						List<String> rdrs = app.readerNames(item.get("fullPathName"));
 						if (rdrs.size() < 1)
 							return;
 						else if (rdrs.size() == 1)

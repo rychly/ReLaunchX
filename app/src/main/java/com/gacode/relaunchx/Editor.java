@@ -72,7 +72,7 @@ public class Editor extends Activity implements TextWatcher {
 			// "Open failure"
 			builder.setTitle(getResources().getString(
 					R.string.jv_editor_openerr_title));
-			// "Can't open file \"" + fname + "\" for writting"
+			// "Can't open file \"" + fullPathName + "\" for writting"
 			builder.setMessage(getResources().getString(
 					R.string.jv_editor_openerr_text1)
 					+ " \""
@@ -102,7 +102,7 @@ public class Editor extends Activity implements TextWatcher {
 			// "Write failure"
 			builder.setTitle(getResources().getString(
 					R.string.jv_editor_writerr_title));
-			// "Can't write to file \"" + fname + "\""
+			// "Can't write to file \"" + fullPathName + "\""
 			builder.setMessage(getResources().getString(
 					R.string.jv_editor_writerr_text)
 					+ " \"" + fname + "\"");
@@ -128,7 +128,7 @@ public class Editor extends Activity implements TextWatcher {
 			// "Close failure"
 			builder.setTitle(getResources().getString(
 					R.string.jv_editor_closerr_title));
-			// "Can't close file \"" + fname + "\""
+			// "Can't close file \"" + fullPathName + "\""
 			builder.setMessage(getResources().getString(
 					R.string.jv_editor_closerr_text)
 					+ " \"" + fname + "\"");
@@ -181,7 +181,7 @@ public class Editor extends Activity implements TextWatcher {
 			// "File too big"
 			builder.setTitle(getResources().getString(
 					R.string.jv_editor_file_too_big));
-			// "File \"" + fname + "\" is too big for editor (" + f.length() +
+			// "File \"" + fullPathName + "\" is too big for editor (" + f.length() +
 			// " bytes)\n"
 			// + "Maximal allowed size is " + app.editorMax + " bytes"
 			builder.setMessage(getResources()

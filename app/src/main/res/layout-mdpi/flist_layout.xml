@@ -68,6 +68,18 @@
 				android:text=""
 				android:textAppearance="?android:attr/textAppearanceSmall"
 				android:textColor="@color/normal_fg" />
+			<TextView
+				android:id="@+id/fl_SizeDate"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="top|left"
+				android:layout_marginLeft="4dp"
+				android:layout_weight="1"
+				android:background="@color/normal_transparent"
+				android:gravity="center_vertical"
+				android:text="Size: Date:"
+				android:textAppearance="?android:attr/textAppearanceSmall"
+				android:textColor="@color/normal_fg" />
 		</LinearLayout>
 	</LinearLayout>
 

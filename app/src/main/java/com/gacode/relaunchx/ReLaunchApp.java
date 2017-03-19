@@ -303,7 +303,7 @@ public class ReLaunchApp extends Application {
 				// existence anyway.
 				// directory name is a full file name in such case. filename is
 				// a READ/NEW mark
-				// File f = new File(dname);
+				// File f = new File(directoryName);
 				// if (!f.exists())
 				// return;
 				addToList_internal(listName, dname, fname, addToEnd);

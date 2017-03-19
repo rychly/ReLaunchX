@@ -230,11 +230,11 @@
 	<string name="jv_relaunchx_switch_titles_on">Show book titles</string>
 	<string name="jv_relaunchx_switch_titles_off">Show file names</string>
 	<string name="jv_relaunchx_tags_rename">Rename file with fb2/epub tags...</string>
-	<string name="jv_relaunchx_sort_header">Sort the files in the order by</string>
-	<string name="jv_relaunchx_sort_file_dir">filename A-Z</string>
-	<string name="jv_relaunchx_sort_file_rev">filename Z-A</string>
-	<string name="jv_relaunchx_sort_title_dir">by alphabetical order A-Z</string>
-	<string name="jv_relaunchx_sort_title_rev">by alphabetical order Z-A</string>
+	<string name="jv_relaunchx_sort_header">Sort order:</string>
+	<string name="jv_relaunchx_sort_file_dir">↓ File Name</string>
+	<string name="jv_relaunchx_sort_file_rev">↑ File Name</string>
+	<string name="jv_relaunchx_sort_title_dir">↓ Book Title</string>
+	<string name="jv_relaunchx_sort_title_rev">↑ Book Title</string>
 	<string name="jv_relaunchx_bookinfo">Show annotation</string>
 	<string name="jv_relaunchx_fileinfo">Properties</string>
 	<string name="jv_relaunchx_fileinfo_title">File Properties</string>
@@ -314,7 +314,7 @@
 	<string name="pref_i_filterResults_off">Show all files</string>
 	<string name="pref_i_fullScreen_title">Full screen</string>
 	<string name="pref_i_fullScreen_on">Work in full screen mode</string>
-	<string name="pref_i_fullScreen_off">Show upper title bar</string>
+	<string name="pref_i_fullScreen_off">Show Android status bar</string>
 	<string name="pref_i_showAddStartDir_title">Turn on selection of start directory</string>
 	<string name="pref_i_showAddStartDir_on">Show item in folder context menu</string>
 	<string name="pref_i_showAddStartDir_off">Don\'t show item in folder context menu</string>
@@ -596,9 +596,17 @@
 	<string name="bookinfo_authors">Authors:</string>
 	<string name="bookinfo_series">Series:</string>
 	<string name="bookinfo_title">Title:</string>
-	<string name="jv_relaunchx_sort_extension_dir">filetype A-Z</string>
-	<string name="jv_relaunchx_sort_extension_rev">filetype Z-A</string>
-	<string name="jv_relaunchx_sort_date_dir">date newest</string>
-	<string name="jv_relaunchx_sort_date_rev">date oldest</string>
+	<string name="jv_relaunchx_sort_extension_dir">↓ File Extension</string>
+	<string name="jv_relaunchx_sort_extension_rev">↑ File Extension</string>
+	<string name="jv_relaunchx_sort_date_dir">↓ File Modification Date</string>
+	<string name="jv_relaunchx_sort_date_rev">↑ File Modification Date</string>
+	<string name="jv_advanced_mount_loading">Loading filesystem info...</string>
+	<string name="jv_relaunchx_sort_size_dir">↓ File Size</string>
+	<string name="jv_relaunchx_sort_size_rev">↑ File Size</string>
+	<string name="pref_i_showFileDetails_title">Show file details</string>
+	<string name="pref_i_showFileDetails_on">Show file size and file modification date.</string>
+	<string name="pref_i_showFileDetails_off">Don\'t show file size and file modification date.</string>
+	<string name="jv_bookbase_noauthor">(no author)</string>
+	<string name="jv_bookbase_notitle">(no title)</string>
 
 </resources>

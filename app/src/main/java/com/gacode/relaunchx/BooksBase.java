@@ -1,6 +1,7 @@
 package com.gacode.relaunchx;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.regex.Pattern;
 import ebook.EBook;
 import ebook.Person;
@@ -9,6 +10,7 @@ import ebook.parser.Parser;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -19,10 +21,6 @@ public class BooksBase {
 	Context context;
 	DbHelper dbHelper;
 	public static SQLiteDatabase db;
-
-	 private Pattern purgeBracketsPattern = Pattern.compile("\\[[\\s\\.\\-_]*\\]");
-//	private Pattern purgeBracketsPattern = Pattern
-//			.compile("\\[[\\[\\]\\s\\.\\-_]*\\]");
 
 	private class DbHelper extends SQLiteOpenHelper {
 		final static int VERSION = 1;
@@ -159,57 +157,6 @@ public class BooksBase {
 			book.isOk = false;
 		cursor.close();
 		return book;
-	}
-
-	public String getEbookName(String fileName, String format) {
-		EBook eBook;
-		String file = fileName.substring(fileName.lastIndexOf('/') + 1,
-				fileName.length());
-		if ((!file.endsWith("fb2")) && (!file.endsWith("fb2.zip"))
-				&& (!file.endsWith("epub")))
-			return file;
-		eBook = getBookByFileName(fileName);
-		if (!eBook.isOk) {
-			Parser parser = new InstantParser();
-			eBook = parser.parse(fileName);
-			if (eBook.isOk) {
-				if ((eBook.sequenceNumber != null)
-						&& (eBook.sequenceNumber.length() == 1))
-					eBook.sequenceNumber = "0" + eBook.sequenceNumber;
-				addBook(eBook);
-			}
-		}
-		if (eBook.isOk) {
-			String output = format;
-			if (eBook.authors.size() > 0) {
-				String author = "";
-				if (eBook.authors.get(0).firstName != null)
-					author += eBook.authors.get(0).firstName;
-				if (eBook.authors.get(0).lastName != null)
-					author += " " + eBook.authors.get(0).lastName;
-				output = output.replace("%a", author);
-			}
-			if (eBook.title != null)
-				output = output.replace("%t", eBook.title);
-			if (eBook.sequenceName != null)
-				output = output.replace("%s", eBook.sequenceName);
-			else
-				output = output.replace("%s", "");
-			if (eBook.sequenceNumber != null)
-				output = output.replace("%n", eBook.sequenceNumber);
-			else
-				output = output.replace("%n", "");
-			output = output.replace("%f", fileName);
-			output = purgeBracketsPattern.matcher(output).replaceAll("");
-			output = output.replace("[", "");
-			output = output.replace("]", "");
-			return output;
-		} else
-			return file;
-	}
-
-	public String getEbookName(String dir, String file, String format) {
-		return getEbookName(dir + "/" + file, format);
 	}
 
 	public void resetDb() {

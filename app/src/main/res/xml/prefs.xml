@@ -179,7 +179,7 @@
 					android:title="@string/pref_i_einkUpdateInterval_title" />
 
 				<CheckBoxPreference
-					android:defaultValue="true"
+					android:defaultValue="false"
 					android:key="fullScreen"
 					android:layout="@+layout/pref_child"
 					android:persistent="true"
@@ -227,7 +227,7 @@
 					android:title="@string/pref_i_firstLineIconSizePx_title" />
 
 				<CheckBoxPreference
-					android:defaultValue="false"
+					android:defaultValue="true"
 					android:key="showFullDirPath"
 					android:layout="@+layout/pref_child"
 					android:persistent="true"
@@ -356,7 +356,15 @@
 					android:summaryOn="@string/pref_i_showHidden_on"
 					android:title="@string/pref_i_showHidden_title" />
 				<CheckBoxPreference
-					android:defaultValue="true"
+					android:defaultValue="false"
+					android:key="showFileDetails"
+					android:layout="@+layout/pref_child"
+					android:persistent="true"
+					android:summaryOff="@string/pref_i_showFileDetails_off"
+					android:summaryOn="@string/pref_i_showFileDetails_on"
+					android:title="@string/pref_i_showFileDetails_title" />
+				<CheckBoxPreference
+					android:defaultValue="false"
 					android:key="hideKnownExts"
 					android:layout="@+layout/pref_child"
 					android:persistent="true"

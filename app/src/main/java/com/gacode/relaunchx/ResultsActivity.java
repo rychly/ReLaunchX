@@ -224,10 +224,10 @@ public class ResultsActivity extends Activity {
 			}
 			HashMap<String, String> item = itemsArray.get(position);
 			if (item != null) {
-				String fname = item.get("fname");
-				String sname = item.get("sname");
-				String dname = item.get("dname");
-				String sdname = item.get("dname");
+				String fname = item.get("fullPathName");
+				String sname = item.get("displayName");
+				String dname = item.get("directoryName");
+				String sdname = item.get("directoryName");
 				String fullName = dname + "/" + fname;
 				boolean setBold = false;
 				boolean useFaces = prefs.getBoolean("showNew", true);
@@ -334,9 +334,9 @@ public class ResultsActivity extends Activity {
 					}
 				}
 
-				// special cases in dname & fname
-				// dname empty - in root dir
-				// fname empty with dname empty - root dir as is
+				// special cases in directoryName & fullPathName
+				// directoryName empty - in root dir
+				// fullPathName empty with directoryName empty - root dir as is
 				if (dname.equals("")) {
 					dname = "/";
 					sdname = "/";
@@ -404,7 +404,7 @@ public class ResultsActivity extends Activity {
 		if (itemsArray.size() > 0) {
 			Integer factor = 0;
 			for (Integer i = 0; i < itemsArray.size(); i++) {
-				tmp.add(itemsArray.get(i).get("fname").length());
+				tmp.add(itemsArray.get(i).get("fullPathName").length());
 			}
 			String pattern = prefs.getString("columnsAlgIntensity",
 					"70 3:5 7:4 15:3 48:2"); // default - medium
@@ -434,7 +434,7 @@ public class ResultsActivity extends Activity {
 			List<HashMap<String, String>> newItemsArray = new ArrayList<HashMap<String, String>>();
 
 			for (HashMap<String, String> item : itemsArray) {
-				if (app.filterFile(item.get("dname"), item.get("fname"))
+				if (app.filterFile(item.get("directoryName"), item.get("fullPathName"))
 						|| item.get("type").equals("dir"))
 					newItemsArray.add(item);
 			}
@@ -487,24 +487,24 @@ public class ResultsActivity extends Activity {
 							.filterFile(n[0], n[1]))
 					|| (n[1].equals(app.DIR_TAG))) {
 				HashMap<String, String> item = new HashMap<String, String>();
-				item.put("dname", n[0]);
-				item.put("fname", n[1]);
-				item.put("sname", n[1]);
+				item.put("directoryName", n[0]);
+				item.put("fullPathName", n[1]);
+				item.put("displayName", n[1]);
 				if (n[1].equals(app.DIR_TAG)) {
 					int ind = n[0].lastIndexOf('/');
 					if (ind == -1) {
-						item.put("fname", "");
-						item.put("sname", "");
+						item.put("fullPathName", "");
+						item.put("displayName", "");
 					} else {
-						item.put("fname", n[0].substring(ind + 1));
-						item.put("sname", n[0].substring(ind + 1));
-						item.put("dname", n[0].substring(0, ind));
+						item.put("fullPathName", n[0].substring(ind + 1));
+						item.put("displayName", n[0].substring(ind + 1));
+						item.put("directoryName", n[0].substring(0, ind));
 					}
 					item.put("type", "dir");
 				} else {
 					item.put("type", "file");
 					if (prefs.getBoolean("showBookTitles", false))
-						item.put("sname", getEbookName(n[0], n[1]));
+						item.put("displayName", getEbookName(n[0], n[1]));
 				}
 				itemsArray.add(item);
 			}
@@ -786,7 +786,7 @@ public class ResultsActivity extends Activity {
 
 				HashMap<String, String> item = itemsArray.get(position);
 
-				String fullName = item.get("dname") + "/" + item.get("fname");
+				String fullName = item.get("directoryName") + "/" + item.get("fullPathName");
 				currentPosition = parent.getFirstVisiblePosition();
 				if (item.get("type").equals("dir")) {
 					Intent intent = new Intent(ResultsActivity.this,
@@ -800,7 +800,7 @@ public class ResultsActivity extends Activity {
 					oldHome = ReLaunch.useHome;
 					startActivityForResult(intent, ReLaunch.DIR_ACT);
 				} else {
-					String fileName = item.get("fname");
+					String fileName = item.get("fullPathName");
 					if (!app.specialAction(ResultsActivity.this, fullName)) {
 						if (app.readerName(fileName).equals("Nope"))
 							app.defaultAction(ResultsActivity.this, fullName);
@@ -808,7 +808,7 @@ public class ResultsActivity extends Activity {
 							// Launch reader
 							if (app.askIfAmbiguous) {
 								List<String> rdrs = app.readerNames(item
-										.get("fname"));
+										.get("fullPathName"));
 								if (rdrs.size() < 1)
 									return;
 								else if (rdrs.size() == 1)
@@ -1139,8 +1139,8 @@ public class ResultsActivity extends Activity {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
 		int pos = info.position;
 		HashMap<String, String> i = itemsArray.get(pos);
-		final String dr = i.get("dname");
-		final String fn = i.get("fname");
+		final String dr = i.get("directoryName");
+		final String fn = i.get("fullPathName");
 		String fullName = dr + "/" + fn;
 
 		if (listName.equals("homeList")) {
@@ -1267,8 +1267,8 @@ public class ResultsActivity extends Activity {
 				.getMenuInfo();
 		final int pos = info.position;
 		HashMap<String, String> i = itemsArray.get(pos);
-		final String dname = i.get("dname");
-		final String fname = i.get("fname");
+		final String dname = i.get("directoryName");
+		final String fname = i.get("fullPathName");
 		String fullName = dname + "/" + fname;
 
 		switch (item.getItemId()) {
@@ -1338,7 +1338,7 @@ public class ResultsActivity extends Activity {
 				// "Delete file warning"
 				builder.setTitle(getResources().getString(
 						R.string.jv_results_delete_file_title));
-				// "Are you sure to delete file \"" + fname + "\" ?");
+				// "Are you sure to delete file \"" + fullPathName + "\" ?");
 				builder.setMessage(getResources().getString(
 						R.string.jv_results_delete_file_text1)
 						+ " \""
@@ -1383,7 +1383,7 @@ public class ResultsActivity extends Activity {
 					// "Delete empty directory warning"
 					builder.setTitle(getResources().getString(
 							R.string.jv_results_delete_em_dir_title));
-					// "Are you sure to delete empty directory \"" + fname +
+					// "Are you sure to delete empty directory \"" + fullPathName +
 					// "\" ?");
 					builder.setMessage(getResources().getString(
 							R.string.jv_results_delete_em_dir_text1)
@@ -1425,7 +1425,7 @@ public class ResultsActivity extends Activity {
 					// "Delete non empty directory warning"
 					builder.setTitle(getResources().getString(
 							R.string.jv_results_delete_ne_dir_title));
-					// "Are you sure to delete non-empty directory \"" + fname +
+					// "Are you sure to delete non-empty directory \"" + fullPathName +
 					// "\" (dangerous) ?");
 					builder.setMessage(getResources().getString(
 							R.string.jv_results_delete_ne_dir_text1)

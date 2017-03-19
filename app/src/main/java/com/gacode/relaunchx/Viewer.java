@@ -92,7 +92,7 @@ public class Viewer extends Activity {
 			// "File too big"
 			builder.setTitle(getResources().getString(
 					R.string.jv_viewer_file_too_big));
-			// "File \"" + fname + "\" is too big for viewer (" + f.length() +
+			// "File \"" + fullPathName + "\" is too big for viewer (" + f.length() +
 			// " bytes)\n"
 			// + "Maximal allowed size is " + app.viewerMax + " bytes"
 			builder.setMessage(getResources()
@@ -132,7 +132,7 @@ public class Viewer extends Activity {
 						// "File too big"
 						builder.setTitle(getResources().getString(
 								R.string.jv_editor_file_too_big));
-						// "File \"" + fname + "\" is too big for editor (" +
+						// "File \"" + fullPathName + "\" is too big for editor (" +
 						// fileSize + " bytes)"
 						// "Maximal allowed size is " + app.editorMax + " bytes"
 						builder.setMessage(getResources().getString(
