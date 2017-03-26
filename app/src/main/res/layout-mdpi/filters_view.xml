@@ -79,6 +79,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_ok"
             android:gravity="center"
+            android:textColor="@color/normal_fg"
             android:text="@string/filters_view_layout_ok" >
         </Button>
 
@@ -92,6 +93,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_add"
             android:gravity="center"
+            android:textColor="@color/normal_fg"
             android:text="@string/filters_view_layout_add_new" >
         </Button>
 
@@ -116,6 +118,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_del"
             android:gravity="center"
+            android:textColor="@color/normal_fg"
             android:text="@string/filters_view_layout_cancel" >
         </Button>
     </LinearLayout>

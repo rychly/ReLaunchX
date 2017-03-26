@@ -76,6 +76,7 @@
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_ok"
+            android:textColor="@color/normal_fg"
             android:text="@string/types_view_layout_ok" >
         </Button>
 
@@ -88,6 +89,7 @@
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_add"
+            android:textColor="@color/normal_fg"
             android:text="@string/types_view_layout_add_new" >
         </Button>
 
@@ -100,6 +102,7 @@
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_del"
+            android:textColor="@color/normal_fg"
             android:text="@string/types_view_layout_cancel" >
         </Button>
     </LinearLayout>

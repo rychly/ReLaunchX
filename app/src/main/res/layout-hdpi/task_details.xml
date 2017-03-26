@@ -21,6 +21,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_kill"
             android:paddingRight="5.3dp"
+            android:textColor="@color/normal_fg"
             android:text="@string/service_details_layout_kill" >
         </Button>
 
@@ -34,6 +35,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_ok"
             android:gravity="center"
+            android:textColor="@color/normal_fg"
             android:text="@string/service_details_layout_ok" >
         </Button>
     </LinearLayout>

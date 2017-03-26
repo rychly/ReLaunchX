@@ -14,8 +14,7 @@ import android.widget.Toast;
 public class PowerFunctions {
 
 	public static boolean actionLock(Activity act) {
-		File isrooted = new File("/system/bin", "su");
-		if (isrooted.exists()) {
+		if (DeviceInfo.isRooted()) {
 			try {
 				Process p = Runtime.getRuntime().exec(
 						act.getResources().getString(R.string.shell));
@@ -46,8 +45,7 @@ public class PowerFunctions {
 	}
 
 	public static void actionReboot(Activity act) {
-		File isrooted = new File("/system/bin", "su");
-		if (isrooted.exists()) {
+		if (DeviceInfo.isRooted()) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(act);
 			// "Reboot confirmation"
 			builder.setTitle(act.getResources().getString(
@@ -106,8 +104,7 @@ public class PowerFunctions {
 	}
 
 	public static void actionPowerOff(Activity act) {
-		File isrooted = new File("/system/bin", "su");
-		if (isrooted.exists()) {
+		if (DeviceInfo.isRooted()) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(act);
 			// "Reboot confirmation"
 			builder.setTitle(act.getResources().getString(

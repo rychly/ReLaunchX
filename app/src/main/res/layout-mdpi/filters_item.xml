@@ -98,6 +98,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
+                    android:textColor="@color/normal_fg"
                     android:paddingLeft="8dp" >
                 </Button>
             </LinearLayout>
@@ -115,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Value:"
+                android:textColor="@color/normal_fg"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:visibility="invisible" >
             </TextView>

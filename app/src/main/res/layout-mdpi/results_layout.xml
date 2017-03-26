@@ -72,6 +72,7 @@
             android:drawableLeft="@drawable/ci_levelup"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:textColor="@color/normal_fg"
             android:text="@string/main_launcher_nb_layout_go_one_level_up" >
         </Button>
 
@@ -84,6 +85,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_arrowup"
             android:paddingLeft="8dp"
+            android:textColor="@color/normal_fg"
             android:text="0%" >
         </Button>
 
@@ -96,6 +98,7 @@
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_arrowdown"
             android:paddingLeft="8dp"
+            android:textColor="@color/normal_fg"
             android:text="0%" >
         </Button>
 

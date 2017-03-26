@@ -51,6 +51,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="2.7dp"
                     android:layout_weight="1"
+                    android:textColor="@color/normal_fg"
                     android:gravity="center_vertical" >
                 </Button>
 
@@ -115,6 +116,7 @@
                     android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="2.7dp"
+                    android:textColor="@color/normal_fg"
                     android:layout_weight="1" >
                 </Button>
 

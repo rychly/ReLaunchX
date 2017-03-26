@@ -7,8 +7,8 @@ android {
         applicationId 'com.gacode.relaunchx'
         minSdkVersion 7
         targetSdkVersion 15
-        versionCode 100100000
-        versionName '1.1.0'
+        versionCode 100200000
+        versionName '1.2.0'
     }
     buildTypes {
         release {

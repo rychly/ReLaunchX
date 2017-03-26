@@ -73,6 +73,7 @@
             android:drawableLeft="@drawable/ci_save"
             android:minWidth="96dp"
             android:paddingRight="8dp"
+            android:textColor="@color/normal_fg"
             android:text="@string/editor_layout_save" >
         </Button>
 
@@ -86,6 +87,7 @@
             android:drawableLeft="@drawable/ci_del"
             android:minWidth="96dp"
             android:paddingRight="8dp"
+            android:textColor="@color/normal_fg"
             android:text="@string/editor_layout_cancel" >
         </Button>
     </LinearLayout>

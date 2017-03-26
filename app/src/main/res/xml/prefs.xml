@@ -246,6 +246,16 @@
 					android:title="@string/pref_i_doNotHyph_title" >
 				</CheckBoxPreference>
 
+				<CheckBoxPreference
+					android:defaultValue="false"
+					android:key="filesystemDetails"
+					android:layout="@+layout/pref_child"
+					android:persistent="true"
+					android:summaryOff="@string/pref_i_filesystemDetails_off"
+					android:summaryOn="@string/pref_i_filesystemDetails_on"
+					android:title="@string/pref_i_filesystemDetails_title" >
+				</CheckBoxPreference>
+
 				<ListPreference
 					android:defaultValue="-1"
 					android:enabled="true"

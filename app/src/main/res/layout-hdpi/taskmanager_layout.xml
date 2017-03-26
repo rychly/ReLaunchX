@@ -104,6 +104,7 @@
             android:drawableLeft="@drawable/ci_ram"
             android:paddingRight="5.3dp"
             android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:textColor="@color/normal_fg"
             android:text="@string/taskmanager_layout_sort_by_size" >
         </Button>
 
@@ -117,6 +118,7 @@
             android:drawableLeft="@drawable/ci_cpu"
             android:paddingRight="5.3dp"
             android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:textColor="@color/normal_fg"
             android:text="@string/taskmanager_layout_sort_by_cpu" >
         </Button>
 
@@ -130,6 +132,7 @@
             android:drawableLeft="@drawable/ci_az"
             android:paddingRight="5.3dp"
             android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:textColor="@color/normal_fg"
             android:text="@string/taskmanager_layout_sort_by_alpha" >
         </Button>
     </LinearLayout>

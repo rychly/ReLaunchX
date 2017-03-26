@@ -51,6 +51,7 @@
                     android:layout_gravity="center_vertical|center"
                     android:layout_marginLeft="2.7dp"
                     android:layout_weight="1"
+                    android:textColor="@color/normal_fg"
                     android:paddingLeft="5.3dp" >
                 </Spinner>
 
@@ -98,6 +99,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="2.7dp"
                     android:layout_weight="1"
+                    android:textColor="@color/normal_fg"
                     android:paddingLeft="5.3dp" >
                 </Button>
             </LinearLayout>
@@ -115,6 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Value:"
+                android:textColor="@color/normal_fg"
                 android:textAppearance="@style/sonyTextAppearanceMedium"
                 android:visibility="invisible" >
             </TextView>

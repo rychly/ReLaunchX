@@ -3960,33 +3960,40 @@ public class ReLaunch extends Activity {
 		tv.setText(file.length() + " bytes");
 		tv = (TextView) dialog.findViewById(R.id.tvTime);
 		tv.setText((new Date(file.lastModified())).toLocaleString());
-		String fileAttr = null;
-		try {
-			Runtime rt = Runtime.getRuntime();
-			String[] args = {"ls", "-l", filename};
-			Process proc = rt.exec(args);
-			String str = filename.replace(" ", "\\ ");
-			BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-			int read;
-			char[] buffer = new char[4096];
-			StringBuffer output = new StringBuffer();
-			while ((read = br.read(buffer)) > 0) {
-				output.append(buffer, 0, read);
-			}
-			br.close();
-		    proc.waitFor();
-		    fileAttr = output.toString();
-		} catch (Throwable t) {
-		}
-		fileAttr = fileAttr.replaceAll(" +", " ");
-		int iPerm = fileAttr.indexOf(" ");
-		int iOwner = fileAttr.indexOf(" ", iPerm+1);
-		int iGroup = fileAttr.indexOf(" ", iOwner+1);
-		tv = (TextView) dialog.findViewById(R.id.tvPerm);
-		tv.setText(fileAttr.substring(1, iPerm));
-		tv = (TextView) dialog.findViewById(R.id.tvOwner);
-		tv.setText(fileAttr.substring(iPerm + 1, iOwner)+ "/" + fileAttr.substring(iOwner + 1, iGroup));
-		
+        if (DeviceInfo.isRooted()) {
+            String fileAttr = null;
+            try {
+                Runtime rt = Runtime.getRuntime();
+                String[] args = {"ls", "-l", filename};
+                Process proc = rt.exec(args);
+                BufferedReader br = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+                int read;
+                char[] buffer = new char[4096];
+                StringBuffer output = new StringBuffer();
+                while ((read = br.read(buffer)) > 0) {
+                    output.append(buffer, 0, read);
+                }
+                br.close();
+                proc.waitFor();
+                fileAttr = output.toString();
+            } catch (Throwable t) {
+            }
+            if (!"".equals(fileAttr)) {
+                fileAttr = fileAttr.replaceAll(" +", " ");
+                int iPerm = fileAttr.indexOf(" ");
+                int iOwner = fileAttr.indexOf(" ", iPerm + 1);
+                int iGroup = fileAttr.indexOf(" ", iOwner + 1);
+                tv = (TextView) dialog.findViewById(R.id.tvPerm);
+                tv.setText(fileAttr.substring(1, iPerm));
+                tv = (TextView) dialog.findViewById(R.id.tvOwner);
+                tv.setText(fileAttr.substring(iPerm + 1, iOwner) + "/" + fileAttr.substring(iOwner + 1, iGroup));
+            }
+        } else {
+            dialog.findViewById(R.id.tvPerm).setVisibility(View.GONE);
+            dialog.findViewById(R.id.tvPermLabel).setVisibility(View.GONE);
+            dialog.findViewById(R.id.tvOwner).setVisibility(View.GONE);
+            dialog.findViewById(R.id.tvOwnerLabel).setVisibility(View.GONE);
+        }
 		Button btn = (Button) dialog.findViewById(R.id.btnOk);
 		btn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

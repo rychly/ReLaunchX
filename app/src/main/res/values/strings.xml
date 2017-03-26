@@ -98,7 +98,7 @@
 	<string name="jv_advanced_poweroff_confirm_text">Are you sure to power off your device ? </string>
 	<string name="jv_advanced_mount_diskspartitions">Disks/partitions</string>
 	<string name="jv_advanced_mount_mountpoint">Mount point:</string>
-	<string name="jv_advanced_mount_FS">FS</string>
+	<string name="jv_advanced_mount_FS">FS:</string>
 	<string name="jv_advanced_mount_total">Total:</string>
 	<string name="jv_advanced_mount_used">Used:</string>
 	<string name="jv_advanced_mount_free">Free:</string>
@@ -609,5 +609,8 @@
 	<string name="jv_bookbase_notitle">(no title)</string>
 	<string name="jv_advanced_mount_storage">Storage info</string>
 	<string name="jv_advanced_mount_details">tap to see details</string>
+	<string name="pref_i_filesystemDetails_on">Show additional filesystem details</string>
+	<string name="pref_i_filesystemDetails_off">Show standard storage usage summary</string>
+	<string name="pref_i_filesystemDetails_title">Storage info view</string>
 
 </resources>

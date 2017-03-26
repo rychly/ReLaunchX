@@ -72,6 +72,7 @@
             android:drawableLeft="@drawable/ci_edit"
             android:minWidth="96dp"
             android:paddingRight="5.3dp"
+            android:textColor="@color/normal_fg"
             android:text="@string/viewer_layout_edit" >
         </Button>
 

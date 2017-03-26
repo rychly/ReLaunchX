@@ -422,62 +422,41 @@ public class Advanced extends Activity {
         List<String> fileSystemsToSkip = Arrays.asList(
                 getResources().getStringArray(R.array.filesystems_to_ignore));
         List<FileSystem.MountInfo> fsInfo = FileSystem.getFilesytemInfo(fileSystemsToSkip);
-        final int width = infoPanelView.getWidth();
-        final int padding = width > 1000 ? 25 : 5;
         StringBuilder sb = new StringBuilder()
-                .append("<style>")
-                .append("td { padding:0px ").append(padding).append("px; text-align: right;}")
-                .append("th {text-align: center;}")
-                .append("</style>")
-                .append("<h3><center>")
-                .append(getResources().getString(R.string.jv_advanced_mount_diskspartitions))
-                .append("</center></h3>")
                 .append("<table>")
                 .append("<tr>")
-                .append("<th>")
+                .append("<th style='text-align:left'>")
                 .append(getResources().getString(R.string.jv_advanced_mount_mountpoint))
-                .append("</th>")
-                .append("<th>")
+                .append("</th><th>")
                 .append(getResources().getString(R.string.jv_advanced_mount_FS))
-                .append("</th>")
-                .append("<th>")
+                .append("</th><th>")
                 .append(getResources().getString(R.string.jv_advanced_mount_total))
-                .append("</th>")
-                .append("<th>")
+                .append("</th><th>")
                 .append(getResources().getString(R.string.jv_advanced_mount_used))
-                .append("</th>")
-                .append("<th>")
+                .append("</th><th>")
                 .append(getResources().getString(R.string.jv_advanced_mount_free))
-                .append("</th>")
-                .append("<th>")
+                .append("</th><th>")
                 .append(getResources().getString(R.string.jv_advanced_mount_rorw))
-                .append("</th>")
                 .append("</tr>");
         for (FileSystem.MountInfo i : fsInfo) {
             sb.append("<tr>")
                     .append("<td style='text-align:left'>")
                     .append(i.mpoint)
-                    .append("</td>")
-                    .append("<td>")
+                    .append("</td><td id='val'>")
                     .append(i.fs)
-                    .append("</td>")
-                    .append("<td>")
+                    .append("</td><td id='val'>")
                     .append(FileSystem.bytesToString(i.total))
-                    .append("</td>")
-                    .append("<td>")
+                    .append("</td><td id='val'>")
                     .append(FileSystem.bytesToString(i.used))
-                    .append("</td>")
-                    .append("<td>")
+                    .append("</td><td id='val'>")
                     .append(FileSystem.bytesToString(i.free))
-                    .append("</td>")
-                    .append("<td>")
+                    .append("</td><td id='val'>")
                     .append((i.ro ? getResources().getString(R.string.jv_advanced_mount_ro)
                             : getResources().getString(R.string.jv_advanced_mount_rw)))
                     .append("</td>")
                     .append("</tr>");
         }
         sb.append("</table>");
-        //filesystemInfoPanelContent = sb.toString();
         return sb.toString();
     }
 
@@ -500,10 +479,13 @@ public class Advanced extends Activity {
 
         //On physically bigger screens I want to make the bars proportionally thicker
         int barHeight = (int)(display.getHeight() / displayMetrics.density)/32;
+        int fontSize = 100 + (int)((display.getWidth() / displayMetrics.density)/20 - 20);
         Resources r = getResources();
         StringBuilder sb = new StringBuilder()
                 .append("<style>")
+                .append("h2, h3, p, td, th {font-size: " + fontSize + "%;}")
                 .append("h2, h3 {text-align: center;}")
+                .append("th, #val {text-align: right;}")
                 .append("table, td, th {border:1px solid white;}")
                 .append("table {border-collapse: collapse; width: 100%;}")
                 .append("td, div {}")
@@ -544,8 +526,11 @@ public class Advanced extends Activity {
             .append("<td colspan='4' id='bar'><div id='ext'/></td>")
             .append("</tr>");
         }
-        sb.append("</table>")
-        .append("<p>" + r.getString(R.string.jv_advanced_mount_details) + "</p>");
+        sb.append("</table>");
+
+        if (prefs.getBoolean("filesystemDetails", false)) {
+            return sb.toString() + "<br/>" + getStorageUsageDetailedInfo();
+        }
 
         return sb.toString();
     }

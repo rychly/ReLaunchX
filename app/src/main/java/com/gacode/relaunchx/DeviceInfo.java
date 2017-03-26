@@ -8,6 +8,8 @@ package com.gacode.relaunchx;
 import android.os.Build;
 import android.util.Log;
 
+import java.io.File;
+
 public class DeviceInfo {
 
 	public final static String MANUFACTURER;
@@ -53,6 +55,14 @@ public class DeviceInfo {
 																		// autodetect
 		FORCE_LIGHT_THEME = EINK_SCREEN;
 		USE_CUSTOM_TOAST = EINK_SCREEN;
+	}
+
+	public static boolean isRooted() {
+		File isrooted = new File("/system/bin", "su");
+		if (isrooted.exists()) {
+			return true;
+		}
+		return false;
 	}
 
 	private static String getBuildField(String fieldName) {

@@ -250,6 +250,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="4"
             android:imeOptions="actionSearch"
+            android:textColor="@color/normal_fg"
             android:textAppearance="@style/sonyTextAppearanceMedium" >
         </EditText>
 
@@ -263,6 +264,7 @@
             android:drawableLeft="@drawable/ci_run"
             android:minWidth="64dp"
             android:paddingRight="10.7dp"
+            android:textColor="@color/normal_fg"
             android:text="@string/search_layout_search" >
         </Button>
     </LinearLayout>
@@ -278,6 +280,7 @@
         android:paddingLeft="80dp"
         android:paddingRight="80dp"
         android:paddingTop="5.3dp"
+        android:textColor="@color/normal_fg"
         android:text="@string/search_layout_show_all_books" >
     </Button>
 

@@ -71,6 +71,11 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 1.2.0
+ * Added nice graphical storage info view.
+ * Added preference "Advanced Settings > Appearance > Storage Info View", enabled adds the old filesystem details print to Storage info view.
+ * Fixed app hungs due to signal interrupted exec() by using Android API.
+ * Fixed text visibility on a few views (in few places text was white on white).
 * 1.1.0
  * Added more file sorting options
  * Added new setting for File Manager 'Show file details'
