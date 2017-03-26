@@ -7,17 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.text.SpannableString;
-import android.util.Log;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +31,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,14 +59,6 @@ public class Advanced extends Activity {
     BroadcastReceiver b1;
     BroadcastReceiver b2;
     String connectedSSID;
-
-    // I don't like to keep here the static objects but on my device sporadically
-    // the process Runtime.getRuntime().exec(cmd) hangs indefinitely so I had no better choice
-    // to avoid crash and/or device reboot (the hung thread becomes invincible). In other words
-    // I have chosen to keep the "loading..." message when it happens until device reboot.
-    static Handler filesystemInfoUpdate;
-    static Thread filesystemInfoThread;
-    static String filesystemInfoPanelContent;
 
     private void setEinkController() {
         if (prefs != null) {
@@ -164,16 +154,6 @@ public class Advanced extends Activity {
                 return -1;
             return o1.SSID.compareToIgnoreCase(o2.SSID);
         }
-    }
-
-    static class FilesystemVolumeInfo {
-        String dev;
-        String mpoint;
-        String fs;
-        String total;
-        String used;
-        String free;
-        boolean ro;
     }
 
     static class ViewHolder {
@@ -319,129 +299,6 @@ public class Advanced extends Activity {
         return "[\u25A1\u25A1\u25A1\u25A1\u25A1]";
     }
 
-    // Read file and return result as list of strings
-    private List<String> readFile(String fname) {
-        BufferedReader br;
-        String readLine;
-        List<String> rc = new ArrayList<String>();
-        try {
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    fname)), 1000);
-        } catch (FileNotFoundException e) {
-            return rc;
-        }
-        try {
-            while ((readLine = br.readLine()) != null)
-                rc.add(readLine);
-        } catch (IOException e) {
-            try {
-                br.close();
-            } catch (IOException e1) {
-                //emply
-            }
-            return rc;
-        }
-        try {
-            br.close();
-        } catch (IOException e) {
-            //emply
-        }
-
-        return rc;
-    }
-
-    // Execute foreground command and return result as list of strings
-    private List<String> execFg(String cmd) {
-        List<String> rc = new ArrayList<String>();
-        try {
-            Process p = Runtime.getRuntime().exec(cmd);
-            try {
-                BufferedReader stdout = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                while (true) {
-                    String s = stdout.readLine();
-                    if (s == null) break;
-                    rc.add(s);
-                }
-            } finally {
-                if (p != null) {
-                    p.destroy();
-                }
-            }
-        } catch (IOException e) {
-            Log.e("execFg", "Problem executing cmd \"" + cmd + "\"... :" + e);
-        }
-        return rc;
-    }
-
-    private List<FilesystemVolumeInfo> getFilesytemInfo() {
-        String[] ingnoreFs = getResources()
-                .getStringArray(R.array.filesystems_to_ignore);
-
-        ArrayList<FilesystemVolumeInfo> fsInfo = new ArrayList<FilesystemVolumeInfo>();
-        for (String line : readFile("/proc/mounts")) {
-            String[] fsMount = line.split("\\s+");
-            if (fsMount.length < 4) {
-                continue;
-            }
-            String fs = fsMount[2];
-            String flagsString = fsMount[3];
-            boolean ignore = false;
-            for (String ingnoreF : ingnoreFs) {
-                if (ingnoreF.equals(fs)) {
-                    ignore = true;
-                    break;
-                }
-            }
-            if (ignore)
-                continue;
-            FilesystemVolumeInfo in = new FilesystemVolumeInfo();
-            in.dev = fsMount[0];
-            in.mpoint = fsMount[1];
-            in.fs = fs;
-            String[] flags = flagsString.split(",");
-            for (String flag : flags) {
-                if (flag.equals("ro")) {
-                    in.ro = true;
-                    break;
-                } else if (flag.equals("rw")) {
-                    in.ro = false;
-                    break;
-                }
-            }
-            in.total = "-";
-            in.used = "-";
-            in.free = "-";
-            fsInfo.add(in);
-        }
-
-        for (FilesystemVolumeInfo in : fsInfo) {
-            int totalPos = 0;
-            int usedPos = 0;
-            int freePos = 0;
-            List<String> output = execFg("df " + in.mpoint);
-            for (int i = 0; i < output.size(); i++) {
-                String[] dfLine = output.get(i).split("\\s+");
-                if (i == 0) {
-                    //parse the header
-                    for (int j = 0; j < dfLine.length; j++) {
-                        if (dfLine[j].compareToIgnoreCase("Size") == 0) {
-                            totalPos = j;
-                        } else if (dfLine[j].compareToIgnoreCase("Used") == 0) {
-                            usedPos = j;
-                        } else if (dfLine[j].compareToIgnoreCase("Free") == 0) {
-                            freePos = j;
-                        }
-                    }
-                    continue;
-                }
-                in.total = totalPos == 0 ? "-" : dfLine[totalPos];
-                in.used = usedPos == 0 ? "-" : dfLine[usedPos];
-                in.free = freePos == 0 ? "-" : dfLine[freePos];
-            }
-        }
-        return fsInfo;
-    }
-
     private List<NetInfo> readScanResults(WifiManager w) {
         List<NetInfo> rc = new ArrayList<NetInfo>();
         List<ScanResult> rc1 = w.getScanResults();
@@ -561,74 +418,136 @@ public class Advanced extends Activity {
         }
     }
 
-    public void startGetVolumesInfoThread() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                List<FilesystemVolumeInfo> fsInfo = getFilesytemInfo();
-                final int width = infoPanelView.getWidth();
-                final int padding = width > 1000 ? 25 : 5;
-                StringBuilder sb = new StringBuilder()
-                        .append("<style>")
-                        .append("td { padding:0px ").append(padding).append("px; text-align: right;}")
-                        .append("th {text-align: center;}")
-                        .append("</style>")
-                        .append("<h3><center>")
-                        .append(getResources().getString(R.string.jv_advanced_mount_diskspartitions))
-                        .append("</center></h3>")
-                        .append("<table>")
-                        .append("<tr>")
-                        .append("<th>")
-                        .append(getResources().getString(R.string.jv_advanced_mount_mountpoint))
-                        .append("</th>")
-                        .append("<th>")
-                        .append(getResources().getString(R.string.jv_advanced_mount_FS))
-                        .append("</th>")
-                        .append("<th>")
-                        .append(getResources().getString(R.string.jv_advanced_mount_total))
-                        .append("</th>")
-                        .append("<th>")
-                        .append(getResources().getString(R.string.jv_advanced_mount_used))
-                        .append("</th>")
-                        .append("<th>")
-                        .append(getResources().getString(R.string.jv_advanced_mount_free))
-                        .append("</th>")
-                        .append("<th>")
-                        .append(getResources().getString(R.string.jv_advanced_mount_rorw))
-                        .append("</th>")
-                        .append("</tr>");
-                for (FilesystemVolumeInfo i : fsInfo) {
-                    sb.append("<tr>")
-                            .append("<td style='text-align:left'>")
-                            .append(i.mpoint)
-                            .append("</td>")
-                            .append("<td>")
-                            .append(i.fs)
-                            .append("</td>")
-                            .append("<td>")
-                            .append(i.total)
-                            .append("</td>")
-                            .append("<td>")
-                            .append(i.used)
-                            .append("</td>")
-                            .append("<td>")
-                            .append(i.free)
-                            .append("</td>")
-                            .append("<td>")
-                            .append((i.ro ? getResources().getString(R.string.jv_advanced_mount_ro)
-                                    : getResources().getString(R.string.jv_advanced_mount_rw)))
-                            .append("</td>")
-                            .append("</tr>");
-                }
-                sb.append("</table>");
-                filesystemInfoPanelContent = sb.toString();
-                filesystemInfoUpdate.sendEmptyMessage(0);
-            }
-        };
+    public String getStorageUsageDetailedInfo() {
+        List<String> fileSystemsToSkip = Arrays.asList(
+                getResources().getStringArray(R.array.filesystems_to_ignore));
+        List<FileSystem.MountInfo> fsInfo = FileSystem.getFilesytemInfo(fileSystemsToSkip);
+        final int width = infoPanelView.getWidth();
+        final int padding = width > 1000 ? 25 : 5;
+        StringBuilder sb = new StringBuilder()
+                .append("<style>")
+                .append("td { padding:0px ").append(padding).append("px; text-align: right;}")
+                .append("th {text-align: center;}")
+                .append("</style>")
+                .append("<h3><center>")
+                .append(getResources().getString(R.string.jv_advanced_mount_diskspartitions))
+                .append("</center></h3>")
+                .append("<table>")
+                .append("<tr>")
+                .append("<th>")
+                .append(getResources().getString(R.string.jv_advanced_mount_mountpoint))
+                .append("</th>")
+                .append("<th>")
+                .append(getResources().getString(R.string.jv_advanced_mount_FS))
+                .append("</th>")
+                .append("<th>")
+                .append(getResources().getString(R.string.jv_advanced_mount_total))
+                .append("</th>")
+                .append("<th>")
+                .append(getResources().getString(R.string.jv_advanced_mount_used))
+                .append("</th>")
+                .append("<th>")
+                .append(getResources().getString(R.string.jv_advanced_mount_free))
+                .append("</th>")
+                .append("<th>")
+                .append(getResources().getString(R.string.jv_advanced_mount_rorw))
+                .append("</th>")
+                .append("</tr>");
+        for (FileSystem.MountInfo i : fsInfo) {
+            sb.append("<tr>")
+                    .append("<td style='text-align:left'>")
+                    .append(i.mpoint)
+                    .append("</td>")
+                    .append("<td>")
+                    .append(i.fs)
+                    .append("</td>")
+                    .append("<td>")
+                    .append(FileSystem.bytesToString(i.total))
+                    .append("</td>")
+                    .append("<td>")
+                    .append(FileSystem.bytesToString(i.used))
+                    .append("</td>")
+                    .append("<td>")
+                    .append(FileSystem.bytesToString(i.free))
+                    .append("</td>")
+                    .append("<td>")
+                    .append((i.ro ? getResources().getString(R.string.jv_advanced_mount_ro)
+                            : getResources().getString(R.string.jv_advanced_mount_rw)))
+                    .append("</td>")
+                    .append("</tr>");
+        }
+        sb.append("</table>");
+        //filesystemInfoPanelContent = sb.toString();
+        return sb.toString();
+    }
 
-        filesystemInfoThread = new Thread(runnable);
-        filesystemInfoThread.setName("GetVolumesInfoThread");
-        filesystemInfoThread.start();
+    private String getStorageUsageInfo() {
+        FileSystem.MountInfo primaryStorage = FileSystem.getExternalStorageInfo();
+        FileSystem.MountInfo secondaryStorage = FileSystem.getSecondaryStorageInfo();
+        DecimalFormat df = new DecimalFormat("#");
+        String primaryStorageUsage = "0";
+        String secondaryStorageUsage = "0";
+        if (primaryStorage != null) {
+            primaryStorageUsage = df.format(100 * ((double)primaryStorage.used / primaryStorage.total));
+        }
+        if (secondaryStorage != null) {
+            secondaryStorageUsage = df.format(100 * ((double)secondaryStorage.used / secondaryStorage.total));
+        }
+
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        display.getMetrics(displayMetrics);
+
+        //On physically bigger screens I want to make the bars proportionally thicker
+        int barHeight = (int)(display.getHeight() / displayMetrics.density)/32;
+        Resources r = getResources();
+        StringBuilder sb = new StringBuilder()
+                .append("<style>")
+                .append("h2, h3 {text-align: center;}")
+                .append("table, td, th {border:1px solid white;}")
+                .append("table {border-collapse: collapse; width: 100%;}")
+                .append("td, div {}")
+                .append("div {background-color:gray;}")
+                .append("#int {height: " + barHeight + "px;width: " + primaryStorageUsage + "%;}")
+                .append("#ext {height: " + barHeight + "px;width: " + secondaryStorageUsage + "%;}")
+                .append("#bar {background-color:lightgray;}")
+                .append("p {text-decoration: underline;}")
+                .append("</style>")
+
+                .append("<h3>" + r.getString(R.string.jv_advanced_mount_storage) +"</h3>")
+                .append("<table>");
+
+        if (primaryStorage != null) {
+            String headline = MessageFormat.format("<td>{0}</td><td>{1} {2}</td><td>{3} {4}</td><td>{5} {6}</td>",
+                    "1:",
+                    r.getString(R.string.jv_advanced_mount_total), FileSystem.bytesToString(primaryStorage.total),
+                    r.getString(R.string.jv_advanced_mount_used), FileSystem.bytesToString(primaryStorage.used),
+                    r.getString(R.string.jv_advanced_mount_free), FileSystem.bytesToString(primaryStorage.free));
+            sb.append("<tr>")
+            .append(headline)
+            .append("</tr>")
+            .append("<tr>")
+            .append("<td colspan='4' id='bar'><div id='int'/></td>")
+            .append("</tr>");
+        }
+
+        if (secondaryStorage != null) {
+            String headline = MessageFormat.format("<td>{0}</td><td>{1} {2}</td><td>{3} {4}</td><td>{5} {6}</td>",
+                    "2:",
+                    r.getString(R.string.jv_advanced_mount_total), FileSystem.bytesToString(secondaryStorage.total),
+                    r.getString(R.string.jv_advanced_mount_used), FileSystem.bytesToString(secondaryStorage.used),
+                    r.getString(R.string.jv_advanced_mount_free), FileSystem.bytesToString(secondaryStorage.free));
+            sb.append("<tr>")
+            .append(headline)
+            .append("</tr>")
+            .append("<tr>")
+            .append("<td colspan='4' id='bar'><div id='ext'/></td>")
+            .append("</tr>");
+        }
+        sb.append("</table>")
+        .append("<p>" + r.getString(R.string.jv_advanced_mount_details) + "</p>");
+
+        return sb.toString();
     }
 
     @Override
@@ -815,22 +734,7 @@ public class Advanced extends Activity {
 
         // Web info view
         infoPanelView = (WebView) findViewById(R.id.info_panel_web_view);
-        StringBuilder sb = new StringBuilder()
-                .append("<h3><center>")
-                .append(getResources().getString(R.string.jv_advanced_mount_loading))
-                .append("</center></h3>");
-        infoPanelView.loadDataWithBaseURL(null, sb.toString(), "text/html", "utf-8", null);
-
-        filesystemInfoUpdate = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                infoPanelView.loadDataWithBaseURL(null, filesystemInfoPanelContent, "text/html", "utf-8", null);
-            }
-        };
-
-        if (filesystemInfoThread == null || filesystemInfoThread.isAlive() == false) {
-            startGetVolumesInfoThread();
-        }
+        infoPanelView.loadDataWithBaseURL(null, getStorageUsageInfo(), "text/html", "utf-8", null);
 
         ScreenOrientation.set(this, prefs);
     }
@@ -839,8 +743,6 @@ public class Advanced extends Activity {
     protected void onDestroy() {
         unregisterReceiver(b1);
         unregisterReceiver(b2);
-        filesystemInfoThread.interrupt();
-        filesystemInfoThread = null;
         super.onDestroy();
     }
 

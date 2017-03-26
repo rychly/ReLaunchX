@@ -82,6 +82,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.gacode.relaunchx.FileSystem.bytesToString;
+
 
 public class ReLaunch extends Activity {
 
@@ -643,18 +645,7 @@ public class ReLaunch extends Activity {
 
                 String fileSizeDate = "";
                 if (displayFileSizeAndDate && item.type == FsItemType.File) {
-                    if (item.size / 104857.6 > 0) {
-                        String size = String.valueOf((int) (item.size / 104857.6));
-                        size = size.substring(0, size.length() - 1) + "." + size.substring(size.length() - 1);
-                        fileSizeDate += getResources().getString(R.string.jv_relaunchx_fileinfo_size) + " " + size + " MB";
-                    } else if (item.size / 102.4 > 0) {
-                        String size = String.valueOf((int) (item.size / 102.4));
-                        size = size.substring(0, size.length() - 1) + "." + size.substring(size.length() - 1);
-                        fileSizeDate += getResources().getString(R.string.jv_relaunchx_fileinfo_size) + " " + size + " KB";
-                    } else {
-                        String size = String.valueOf(item.size);
-                        fileSizeDate += getResources().getString(R.string.jv_relaunchx_fileinfo_size) + " " + size + " B ";
-                    }
+                    fileSizeDate += getResources().getString(R.string.jv_relaunchx_fileinfo_size) + " " + bytesToString(item.size);
                     final SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy.MM.dd");
                     fileSizeDate += " " + getResources().getString(R.string.jv_relaunchx_fileinfo_date)
                             + " " + String.valueOf(fileDateFormat.format(item.date));

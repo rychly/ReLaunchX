@@ -97,12 +97,12 @@
 	<string name="jv_advanced_poweroff_confirm_title">Power Off confirmation</string>
 	<string name="jv_advanced_poweroff_confirm_text">Are you sure to power off your device ? </string>
 	<string name="jv_advanced_mount_diskspartitions">Disks/partitions</string>
-	<string name="jv_advanced_mount_mountpoint">Mount point</string>
+	<string name="jv_advanced_mount_mountpoint">Mount point:</string>
 	<string name="jv_advanced_mount_FS">FS</string>
-	<string name="jv_advanced_mount_total">total</string>
-	<string name="jv_advanced_mount_used">used</string>
-	<string name="jv_advanced_mount_free">free</string>
-	<string name="jv_advanced_mount_rorw">RO/RW</string>
+	<string name="jv_advanced_mount_total">Total:</string>
+	<string name="jv_advanced_mount_used">Used:</string>
+	<string name="jv_advanced_mount_free">Free:</string>
+	<string name="jv_advanced_mount_rorw">RO/RW:</string>
 	<string name="jv_advanced_mount_ro">RO</string>
 	<string name="jv_advanced_mount_rw">RW</string>
 	<string name="jv_advanced_nook_only">Implemented only on NOOK Simple Touch.</string>
@@ -600,7 +600,6 @@
 	<string name="jv_relaunchx_sort_extension_rev">↑ File Extension</string>
 	<string name="jv_relaunchx_sort_date_dir">↓ File Modification Date</string>
 	<string name="jv_relaunchx_sort_date_rev">↑ File Modification Date</string>
-	<string name="jv_advanced_mount_loading">Loading filesystem info...</string>
 	<string name="jv_relaunchx_sort_size_dir">↓ File Size</string>
 	<string name="jv_relaunchx_sort_size_rev">↑ File Size</string>
 	<string name="pref_i_showFileDetails_title">Show file details</string>
@@ -608,5 +607,7 @@
 	<string name="pref_i_showFileDetails_off">Don\'t show file size and file modification date.</string>
 	<string name="jv_bookbase_noauthor">(no author)</string>
 	<string name="jv_bookbase_notitle">(no title)</string>
+	<string name="jv_advanced_mount_storage">Storage info</string>
+	<string name="jv_advanced_mount_details">tap to see details</string>
 
 </resources>
