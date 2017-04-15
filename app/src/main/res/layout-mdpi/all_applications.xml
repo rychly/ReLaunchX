@@ -7,9 +7,9 @@
     android:padding="8dp" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayoutTop"
         android:layout_width="fill_parent"
-        android:layout_height="56dp" >
+        android:layout_height="wrap_content" >
 
         <ImageView
             android:id="@+id/app_icon"

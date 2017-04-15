@@ -712,6 +712,7 @@ public class TaskManager extends Activity {
 		final String localName = p.name;
 
 		dialog.setContentView(R.layout.service_details);
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, dialog.findViewById(R.id.linearLayoutTop));
 		// "Service details"
 		dialog.setTitle(getResources().getString(
 				R.string.jv_taskman_service_details));
@@ -1156,6 +1157,8 @@ public class TaskManager extends Activity {
 		setSorting(sortMethod);
 		startCPUUpdate();
 		ScreenOrientation.set(this, prefs);
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutNavigate));
 	}
 
 	@Override

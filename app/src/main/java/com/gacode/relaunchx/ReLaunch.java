@@ -148,10 +148,6 @@ public class ReLaunch extends Activity {
 	boolean useDirViewer = false;
 	static public boolean filterMyself = true;
 	static public String selfName = "com.gacode.relaunchx.Main";
-	String[] allowedModels;
-	String[] allowedDevices;
-	String[] allowedManufacts;
-	String[] allowedProducts;
 	boolean addSView = true;
 
 	// multicolumns per directory configuration
@@ -313,22 +309,9 @@ public class ReLaunch extends Activity {
 		}
 	}
 
-	private boolean checkField(String[] a, String f) {
-		for (int i = 0; i < a.length; i++)
-			if (a[i].equals("*") || a[i].equals(f))
-				return true;
-		return false;
-	}
-
 	private void checkDevice(String dev, String man, String model,
 			String product) {
-		if (checkField(allowedModels, model))
-			return;
-		if (checkField(allowedDevices, dev))
-			return;
-		if (checkField(allowedManufacts, man))
-			return;
-		if (checkField(allowedProducts, product))
+		if (DeviceInfo.isCompatibleDevice(app))
 			return;
 
 		if (!prefs.getBoolean("allowDevice", false)) {
@@ -1916,14 +1899,6 @@ public class ReLaunch extends Activity {
 			useLibrary = data.getBooleanExtra("library", false);
 			useDirViewer = data.getBooleanExtra("dirviewer", false);
 		}
-		
-		// Global arrays
-		allowedModels = getResources().getStringArray(R.array.allowed_models);
-		allowedDevices = getResources().getStringArray(R.array.allowed_devices);
-		allowedManufacts = getResources().getStringArray(
-				R.array.allowed_manufacturers);
-		allowedProducts = getResources().getStringArray(
-				R.array.allowed_products);
 
 		// Create global storage with values
 		app = (ReLaunchApp) getApplicationContext();
@@ -1939,8 +1914,7 @@ public class ReLaunch extends Activity {
 
 		// Preferences
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		if (prefs.getString("startMode", "UNKNOWN").equalsIgnoreCase("LAUNCHER"))
-			useHome = true;
+
 		String typesString = prefs.getString("types", defReaders);
 		try {
 			app.scrollStep = Integer.parseInt(prefs.getString("scrollPerc",
@@ -2019,6 +1993,7 @@ public class ReLaunch extends Activity {
 			if (!prefs.getBoolean("showButtons", true)) {
 				hideLayout(R.id.linearLayoutTop);
 			}
+
 			if (useHome) {
 				app.readFile("app_last", APP_LRU_FILE, ":");
 				app.readFile("app_favorites", APP_FAV_FILE, ":");
@@ -2734,6 +2709,11 @@ public class ReLaunch extends Activity {
 		}
 
 		ScreenOrientation.set(this, prefs);
+
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.title_txt));
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutNavigate));
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutBottom));
 	}
 
 	@Override
@@ -3511,44 +3491,16 @@ public class ReLaunch extends Activity {
 		if (keyCode == KeyEvent.KEYCODE_HOME)
 			return true;
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (prefs.getBoolean("useBackButton", true)) {
-				String[] rootDirs = prefs.getString("startDir", "/sdcard").split(",");
-				for (int i = 0; i < rootDirs.length; i++) {
-					if (rootDirs[i].equalsIgnoreCase(currentRoot))
-						isRoot = true;
-				}
-				if (currentRoot.equalsIgnoreCase("/"))
+			String[] rootDirs = prefs.getString("startDir", "/sdcard").split(",");
+			for (int i = 0; i < rootDirs.length; i++) {
+				if (rootDirs[i].equalsIgnoreCase(currentRoot))
 					isRoot = true;
-				if (!isRoot) {
-					String newRoot = currentRoot.substring(0, currentRoot.lastIndexOf("/"));
-					drawDirectory(newRoot, -1);
-				}
 			}
-			if ((isRoot) || (!prefs.getBoolean("useBackButton", true))) {
-			// Ask the user if they want to quit
-				new AlertDialog.Builder(this)
-					.setIcon(android.R.drawable.ic_dialog_alert)
-					// "This is a launcher!"
-					.setTitle(
-							getResources().getString(
-									R.string.jv_relaunchx_launcher))
-					// "Are you sure you want to quit ?"
-					.setMessage(
-							getResources().getString(
-									R.string.jv_relaunchx_launcher_text))
-					// "YES"
-					.setPositiveButton(
-							getResources().getString(R.string.jv_relaunchx_yes),
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									finish();
-								}
-							})
-					// "NO"
-					.setNegativeButton(
-							getResources().getString(R.string.jv_relaunchx_no),
-							null).show();
+			if (currentRoot.equalsIgnoreCase("/"))
+				isRoot = true;
+			if (!isRoot) {
+				String newRoot = currentRoot.substring(0, currentRoot.lastIndexOf("/"));
+				drawDirectory(newRoot, -1);
 			}
 			return true;
 		} else {
@@ -3878,7 +3830,8 @@ public class ReLaunch extends Activity {
 		final Dialog dialog = new Dialog(this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
 		dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.bookinfo);
-		
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, dialog.findViewById(R.id.linearLayoutTop));
+
 		Parser parser = new InstantParser();
 		EBook eBook = parser.parse(file, true);
 		if (eBook.cover != null) {
@@ -3941,6 +3894,7 @@ public class ReLaunch extends Activity {
 			}
 		});
 
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
 		dialog.show();
 	}
 

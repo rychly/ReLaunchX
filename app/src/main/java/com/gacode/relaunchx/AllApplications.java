@@ -361,6 +361,7 @@ public class AllApplications extends Activity {
 			}
 		});
 		ScreenOrientation.set(this, prefs);
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
 	}
 
 	@Override

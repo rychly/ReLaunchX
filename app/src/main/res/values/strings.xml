@@ -235,7 +235,7 @@
 	<string name="jv_relaunchx_sort_file_rev">↑ File Name</string>
 	<string name="jv_relaunchx_sort_title_dir">↓ Book Title</string>
 	<string name="jv_relaunchx_sort_title_rev">↑ Book Title</string>
-	<string name="jv_relaunchx_bookinfo">Show annotation</string>
+	<string name="jv_relaunchx_bookinfo">Show book details</string>
 	<string name="jv_relaunchx_fileinfo">Properties</string>
 	<string name="jv_relaunchx_fileinfo_title">File Properties</string>
 	<string name="jv_relaunchx_fileinfo_name">Name:</string>
@@ -577,9 +577,6 @@
 	<string name="arr_screen_orientation_names_1">Don\'t change</string>
 	<string name="arr_screen_orientation_names_2">Force to portrait</string>
 	<string name="arr_screen_orientation_names_3">Force to landscape</string>
-	<string name="arr_start_mode_names_1">Start as launcher</string>
-	<string name="arr_start_mode_names_2">Start as usual program</string>
-	<string name="arr_start_mode_names_3">Defined by advanced settings</string>
 	<string name="arr_work_mode_names_1">File manager mode</string>
 	<string name="arr_work_mode_names_2">Library mode</string>
 	<string name="arr_work_mode_names_3">Defined by advanced settings</string>
@@ -612,5 +609,7 @@
 	<string name="pref_i_filesystemDetails_on">Show additional filesystem details</string>
 	<string name="pref_i_filesystemDetails_off">Show standard storage usage summary</string>
 	<string name="pref_i_filesystemDetails_title">Storage info view</string>
+	<string name="pref_i_button_minHeight_sum">Makes buttons higher. Reasonable value 30 - 100.</string>
+	<string name="pref_i_button_minHeight_title">Buttons bar height</string>
 
 </resources>

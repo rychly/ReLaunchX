@@ -17,7 +17,7 @@
     </ImageView>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayoutTop"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginLeft="4dp"

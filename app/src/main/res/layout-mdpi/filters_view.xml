@@ -7,10 +7,9 @@
     android:padding="8dp" >
 
     <LinearLayout
-        android:id="@+id/LinearLayoutTitle"
+        android:id="@+id/linearLayoutTop"
         android:layout_width="fill_parent"
-        android:layout_height="56dp"
-        android:minHeight="32dp" >
+        android:layout_height="wrap_content" >
 
         <ImageView
             android:id="@+id/filters_icon"
@@ -63,9 +62,9 @@
     </ListView>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayoutBottom"
         android:layout_width="fill_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@color/normal_bg"
         android:baselineAligned="false" >

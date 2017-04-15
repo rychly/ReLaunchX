@@ -9,8 +9,7 @@
     	android:id="@+id/linearLayoutTop"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:layout_gravity="center"
-    	android:minHeight="32dp" >
+    	android:layout_gravity="center" >
 
         <ImageButton
             android:id="@+id/home_btn"
@@ -86,7 +85,7 @@
     <LinearLayout
     	android:id="@+id/linearLayoutNavigate"
     	android:layout_width="fill_parent"
-    	android:layout_height="56dp"
+    	android:layout_height="wrap_content"
     	android:layout_marginTop="8dp" >
 
         <Button
@@ -162,7 +161,7 @@
     <LinearLayout
     	android:id="@+id/linearLayoutBottom"
     	android:layout_width="fill_parent"
-    	android:layout_height="56dp"
+    	android:layout_height="wrap_content"
     	android:layout_gravity="center"
     	android:layout_marginTop="8dp" >
 

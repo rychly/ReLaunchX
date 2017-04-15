@@ -215,17 +215,6 @@
         <item>@string/arr_screen_orientation_names_2</item>
         <item>@string/arr_screen_orientation_names_3</item>
     </string-array>
-
-    <string-array name="start_mode_values">
-        <item>LAUNCHER</item>
-        <item>PROGRAM</item>
-        <item>UNKNOWN</item>
-    </string-array>
-    <string-array name="start_mode_names">
-        <item>@string/arr_start_mode_names_1</item>
-        <item>@string/arr_start_mode_names_2</item>
-        <item>@string/arr_start_mode_names_3</item>
-    </string-array>
     <string-array name="work_mode_values">
         <item>FILES</item>
         <item>BOOKS</item>

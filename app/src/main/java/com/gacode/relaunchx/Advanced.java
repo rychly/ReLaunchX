@@ -722,6 +722,7 @@ public class Advanced extends Activity {
         infoPanelView.loadDataWithBaseURL(null, getStorageUsageInfo(), "text/html", "utf-8", null);
 
         ScreenOrientation.set(this, prefs);
+        ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
     }
 
     @Override

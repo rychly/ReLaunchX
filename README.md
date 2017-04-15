@@ -71,6 +71,10 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 1.2.1
+ * Added setting to adjust buttons size (height).
+ * Fixed launcher mode: back button does not cause about to quit message.
+ * Simplified run mode: removed the setting about start mode. When started from another launcher the app always works in file manager mode. When started as launcher (at boot time or by pressing home button) it works as launcher.
 * 1.2.0
  * Added nice graphical storage info view.
  * Added preference "Advanced Settings > Appearance > Storage Info View", enabled adds the old filesystem details print to Storage info view.
