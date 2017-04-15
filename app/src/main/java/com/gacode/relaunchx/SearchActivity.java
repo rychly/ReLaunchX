@@ -357,6 +357,9 @@ public class SearchActivity extends Activity {
 				});
 
 		ScreenOrientation.set(this, prefs);
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutBottom));
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.search_all));
 	}
 
 	@Override

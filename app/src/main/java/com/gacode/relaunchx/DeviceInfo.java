@@ -5,6 +5,7 @@ package com.gacode.relaunchx;
  * http://http://sourceforge.net/projects/crengine/
  */
 
+import android.app.Application;
 import android.os.Build;
 import android.util.Log;
 
@@ -62,6 +63,34 @@ public class DeviceInfo {
 		if (isrooted.exists()) {
 			return true;
 		}
+		return false;
+	}
+
+	public static boolean isCompatibleDevice(Application app) {
+		String[] allowedModels = app.getApplicationContext().getResources()
+				.getStringArray(R.array.allowed_models);
+		String[] allowedDevices = app.getApplicationContext().getResources()
+				.getStringArray(R.array.allowed_devices);
+		String[] allowedManufacts = app.getApplicationContext().getResources()
+				.getStringArray(R.array.allowed_manufacturers);
+		String[] allowedProducts = app.getApplicationContext().getResources()
+				.getStringArray(R.array.allowed_products);
+
+		if (!checkField(allowedModels, Build.MODEL))
+			return false;
+		if (!checkField(allowedDevices, Build.DEVICE))
+			return false;
+		if (!checkField(allowedManufacts, Build.MANUFACTURER))
+			return false;
+		if (!checkField(allowedProducts, Build.PRODUCT))
+			return false;
+		return true;
+	}
+
+	private static boolean checkField(String[] a, String f) {
+		for (int i = 0; i < a.length; i++)
+			if (a[i].equals("*") || a[i].equals(f))
+				return true;
 		return false;
 	}
 

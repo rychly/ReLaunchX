@@ -601,9 +601,6 @@
 	<string name="arr_screen_orientation_names_1">Не изменяется</string>
 	<string name="arr_screen_orientation_names_2">Принудительная книжная</string>
 	<string name="arr_screen_orientation_names_3">Принудительная альбомная</string>
-	<string name="arr_start_mode_names_1">Запускать как рабочий стол</string>
-	<string name="arr_start_mode_names_2">Запускать как обычную программу</string>
-	<string name="arr_start_mode_names_3">Определяется расширенными настройками</string>
 	<string name="arr_work_mode_names_1">Режим файлового менеджера</string>
 	<string name="arr_work_mode_names_2">Режим библиотеки</string>
 	<string name="arr_work_mode_names_3">Определяется расширенными настройками</string>

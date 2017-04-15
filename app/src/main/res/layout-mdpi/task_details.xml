@@ -7,10 +7,9 @@
     android:padding="8dp" >
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayoutTop"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="72dp" >
+        android:layout_height="wrap_content" >
 
         <Button
             android:id="@+id/tm1_kill"
@@ -135,7 +134,7 @@
                 android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -148,7 +147,7 @@
                 android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -161,7 +160,7 @@
                 android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -174,7 +173,7 @@
                 android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>

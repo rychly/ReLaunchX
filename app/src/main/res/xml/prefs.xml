@@ -3,16 +3,6 @@
 
 	<PreferenceCategory android:title="@string/pref_c_mGeneral_title" >
 		<ListPreference
-			android:defaultValue="LAUNCHER"
-			android:enabled="true"
-			android:entries="@array/start_mode_names"
-			android:entryValues="@array/start_mode_values"
-			android:key="startMode"
-			android:layout="@+layout/pref_child"
-			android:persistent="true"
-			android:selectable="true"
-			android:title="@string/pref_i_startMode_title" />
-		<ListPreference
 			android:defaultValue="FILES"
 			android:enabled="true"
 			android:entries="@array/work_mode_names"
@@ -52,6 +42,16 @@
 			android:selectable="true"
 			android:summary="@string/pref_i_fileFontSize_sum"
 			android:title="@string/pref_i_fileFontSize_title" />
+		<EditTextPreference
+			android:defaultValue="30"
+			android:enabled="true"
+			android:key="buttonMinHeight"
+			android:layout="@+layout/pref_child"
+			android:numeric="integer"
+			android:persistent="true"
+			android:selectable="true"
+			android:summary="@string/pref_i_button_minHeight_sum"
+			android:title="@string/pref_i_button_minHeight_title" />
 	</PreferenceCategory>
 	<PreferenceCategory
 		android:key="categoryAdvanced"

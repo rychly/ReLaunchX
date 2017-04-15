@@ -700,7 +700,7 @@ public class ReLaunchApp extends Application {
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		WebView wv = new WebView(a);
 
-		builder.setTitle("ReLaunch");
+        builder.setTitle("ReLaunch");
 		// String str = "<h1><center>ReLaunch</center></h1>"
 		// + "<center><b>Reader launcher for Nook Simple Touch</b></center><br>"
 		// + "<center>Version: <b>" + vers + "</b></center><br>"
@@ -708,6 +708,16 @@ public class ReLaunchApp extends Application {
 		// "<center>Source code: <a href=\"https://github.com/yiselieren/ReLaunch\">git://github.com/yiselieren/ReLaunch.git</a></center>";
 		String str = getResources().getString(R.string.jv_rla_about_prev)
 				+ vers + getResources().getString(R.string.jv_rla_about_post);
+        if (!DeviceInfo.isCompatibleDevice(a.getApplication())) {
+            str += "<hr><u>This e-reader is not approved yet:</u>"
+					+ "<table>"
+					+ "<tr><td><b>DEVICE:</b></td><td>" + Build.DEVICE + "</td></tr>"
+                    + "<tr><td><b>MANUFACTURER:&nbsp</b></td><td>" + Build.MANUFACTURER + "</td></tr>"
+                    + "<tr><td><b>MODEL:</b></td><td>" + Build.MODEL + "</td></tr>"
+                    + "<tr><td><b>PRODUCT:</b></td><td>" + Build.PRODUCT + "</td></tr>"
+					+ "</table>"
+            ;
+        }
 		wv.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
 		builder.setView(wv);
 		// "Ok"

@@ -7,10 +7,9 @@
     android:padding="5.3dp" >
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayoutTop"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp" >
+        android:layout_height="wrap_content" >
 
         <Button
             android:id="@+id/tm2_kill"
@@ -173,7 +172,7 @@
                 android:layout_marginBottom="0.7dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="@style/sonyTextAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -186,7 +185,7 @@
                 android:layout_marginBottom="0.7dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="@style/sonyTextAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -199,7 +198,7 @@
                 android:layout_marginBottom="0.7dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="@style/sonyTextAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -212,7 +211,7 @@
                 android:layout_marginBottom="0.7dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="@style/sonyTextAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -225,7 +224,7 @@
                 android:layout_marginBottom="0.7dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="@style/sonyTextAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -238,7 +237,7 @@
                 android:layout_marginBottom="0.7dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="@style/sonyTextAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -251,7 +250,7 @@
                 android:layout_marginBottom="0.7dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="@style/sonyTextAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
@@ -264,7 +263,7 @@
                 android:layout_marginBottom="0.7dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="TextView"
+                android:text=""
                 android:textAppearance="@style/sonyTextAppearanceMedium"
                 android:textColor="#000000" >
             </TextView>

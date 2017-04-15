@@ -261,7 +261,7 @@ public class PrefsActivity extends PreferenceActivity implements
 
 		oldPrefs = prefs.getAll();
 
-		findViewById(R.id.LLbuttons).setVisibility(View.GONE);
+		findViewById(R.id.linearLayoutBottom).setVisibility(View.GONE);
 
 		findPreference("cleanupDatabase").setOnPreferenceClickListener(
 				new Preference.OnPreferenceClickListener() {
@@ -642,6 +642,8 @@ public class PrefsActivity extends PreferenceActivity implements
 		}
 
 		ScreenOrientation.set(this, prefs);
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
+		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutBottom));
 	}
 
 	@Override
@@ -690,32 +692,7 @@ public class PrefsActivity extends PreferenceActivity implements
 		}
 
 		if (do_pref_subrequest) {
-			if (key.equals("startMode")) {
-				String value = sharedPreferences.getString(key, "UNKNOWN");
-				if (value.equals("LAUNCHER")) {
-					do_pref_subrequest = false;
-					((CheckBoxPreference) findPreference("fullScreen"))
-							.setChecked(true);
-					((CheckBoxPreference) findPreference("homeMode"))
-							.setChecked(true);
-					((CheckBoxPreference) findPreference("libraryMode"))
-							.setChecked(true);
-					((CheckBoxPreference) findPreference("shopMode"))
-							.setChecked(true);
-					do_pref_subrequest = false;
-				} else if (value.equals("PROGRAM")) {
-					do_pref_subrequest = false;
-					((CheckBoxPreference) findPreference("fullScreen"))
-							.setChecked(false);
-					((CheckBoxPreference) findPreference("homeMode"))
-							.setChecked(false);
-					((CheckBoxPreference) findPreference("libraryMode"))
-							.setChecked(false);
-					((CheckBoxPreference) findPreference("shopMode"))
-							.setChecked(false);
-					do_pref_subrequest = true;
-				}
-			} else if (key.equals("workMode")) {
+				if (key.equals("workMode")) {
 				String value = sharedPreferences.getString(key, "UNKNOWN");
 				if (value.equals("FILES")) {
 					do_pref_subrequest = false;
@@ -781,12 +758,6 @@ public class PrefsActivity extends PreferenceActivity implements
 				do_pref_subrequest = true;
 			}
 
-			if ((key.equals("fullScreen")) || (key.equals("homeMode"))
-					|| (key.equals("libraryMode")) || (key.equals("shopMode"))) {
-				do_pref_subrequest = false;
-				((ListPreference) findPreference("startMode")).setValueIndex(2);
-				do_pref_subrequest = true;
-			}
 			if ((key.equals("showBookTitles"))
 					|| (key.equals("useFileManagerFunctions"))) {
 				do_pref_subrequest = false;
@@ -1466,6 +1437,8 @@ public class PrefsActivity extends PreferenceActivity implements
 			LayoutInflater inflater = (LayoutInflater) getApplicationContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			final View prefView = inflater.inflate(R.layout.prefs_main, null);
+			ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, prefView.findViewById(R.id.linearLayoutTop));
+			ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, prefView.findViewById(R.id.linearLayoutBottom));
 			prefScreen.getDialog().setContentView(prefView);
 			final ListView prefListView = (ListView) prefView
 					.findViewById(android.R.id.list);

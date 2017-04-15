@@ -7,9 +7,9 @@
 	android:padding="8dp" >
 
 	<LinearLayout
-		android:id="@+id/linearLayout1"
+		android:id="@+id/linearLayoutTop"
 		android:layout_width="fill_parent"
-		android:layout_height="37dp" >
+		android:layout_height="wrap_content" >
 
 		<ImageView
 			android:id="@+id/book_icon"
@@ -28,7 +28,7 @@
 			android:gravity="left|center_vertical"
 			android:inputType="textMultiLine"
 			android:paddingLeft="5.3dp"
-			android:text="TextView"
+			android:text="Book details"
 			android:textAppearance="@style/sonyTextAppearanceMedium"
 			android:textColor="@color/normal_fg"
 			android:textStyle="bold" >
@@ -129,13 +129,13 @@
 
 			<LinearLayout
 				android:layout_width="fill_parent"
-				android:layout_height="fill_parent" >
+				android:layout_height="wrap_content" >
 
 				<TextView
 					android:id="@+id/tvAnnotation"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
-					android:text="TextView"
+					android:text=""
 					android:textColor="@color/normal_fg"
 					android:textAppearance="@style/sonyTextAppearanceMedium" />
 			</LinearLayout>

@@ -8,10 +8,9 @@
     android:padding="5.3dp" >
 
     <LinearLayout
-        android:id="@+id/LinearLayoutTitle"
+        android:id="@+id/linearLayoutTop"
         android:layout_width="fill_parent"
-        android:layout_height="37.3dp"
-        android:minHeight="21.3dp" >
+        android:layout_height="wrap_content" >
 
         <ImageView
             android:id="@+id/imageView1"
@@ -70,9 +69,9 @@
         </ListView>
 
         <LinearLayout
-            android:id="@+id/LLbuttons"
+            android:id="@+id/linearLayoutBottom"
             android:layout_width="fill_parent"
-            android:layout_height="37.3dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5.3dp" >
 
             <ImageButton
