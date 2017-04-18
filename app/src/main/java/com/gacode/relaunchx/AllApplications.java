@@ -206,7 +206,6 @@ public class AllApplications extends Activity {
 		setEinkController();
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.all_applications);
 		icons = app.getIcons();
 

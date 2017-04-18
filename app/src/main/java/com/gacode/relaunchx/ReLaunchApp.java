@@ -29,6 +29,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -715,6 +717,8 @@ public class ReLaunchApp extends Application {
                     + "<tr><td><b>MANUFACTURER:&nbsp</b></td><td>" + Build.MANUFACTURER + "</td></tr>"
                     + "<tr><td><b>MODEL:</b></td><td>" + Build.MODEL + "</td></tr>"
                     + "<tr><td><b>PRODUCT:</b></td><td>" + Build.PRODUCT + "</td></tr>"
+					+ "<tr><td><b>Android:</b></td><td>" + Build.VERSION.RELEASE + "</td></tr>"
+					+ "<tr><td><b>API level:</b></td><td>" + Build.VERSION.SDK + "</td></tr>"
 					+ "</table>"
             ;
         }

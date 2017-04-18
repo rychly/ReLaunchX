@@ -71,6 +71,9 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 1.2.2
+ * Fix for crash on Boyue T63. Changed method to hide app window status bar.
+ * Added action to Settings button - Open Options Menu. Active on long tap by default.
 * 1.2.1
  * Added setting to adjust buttons size (height).
  * Fixed launcher mode: back button does not cause about to quit message.

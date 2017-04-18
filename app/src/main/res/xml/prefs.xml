@@ -536,7 +536,7 @@
 					android:selectable="true"
 					android:title="@string/pref_i_settingsButtonDT_title" />
 				<ListPreference
-					android:defaultValue="NOTHING"
+					android:defaultValue="OPTIONSMENU"
 					android:enabled="true"
 					android:entries="@array/settings_button_actions_names"
 					android:entryValues="@array/settings_button_actions_values"

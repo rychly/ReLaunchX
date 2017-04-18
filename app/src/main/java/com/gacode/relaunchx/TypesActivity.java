@@ -349,7 +349,6 @@ public class TypesActivity extends Activity {
 		// Global storage
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.types_view);
 		icons = app.getIcons();
 

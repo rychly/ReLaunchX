@@ -548,7 +548,6 @@ public class Advanced extends Activity {
             finish();
         }
         app.setFullScreenIfNecessary(this);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.advanced_layout);
 
         // "Advanced functions, info, etc."

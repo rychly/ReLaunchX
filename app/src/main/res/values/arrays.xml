@@ -138,6 +138,7 @@
         <item>POWEROFF</item>
         <item>SWITCHWIFI</item>
         <item>RUN</item>
+        <item>OPTIONSMENU</item>
     </string-array>
     <string-array name="settings_button_actions_names">
         <item>@string/arr_settings_button_actions_names_1</item>
@@ -146,6 +147,7 @@
         <item>@string/arr_settings_button_actions_names_4</item>
         <item>@string/arr_settings_button_actions_names_5</item>
         <item>@string/arr_settings_button_actions_names_6</item>
+        <item>@string/arr_settings_button_actions_names_7</item>
     </string-array>
     <string-array name="mem_button_actions_values">
         <item>NOTHING</item>

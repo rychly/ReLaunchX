@@ -157,7 +157,6 @@ public class Editor extends Activity implements TextWatcher {
 
 		app = (ReLaunchApp) getApplicationContext();
 		app.setFullScreenIfNecessary(this);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.editor_layout);
 
 		// Read parameters
