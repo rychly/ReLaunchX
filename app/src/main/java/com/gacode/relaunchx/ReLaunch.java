@@ -1537,7 +1537,6 @@ public class ReLaunch extends Activity {
 				    }
 				});
 				AlertDialog alert = builder.create();
-				alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
 				alert.show();
 			}
 		};
@@ -1942,7 +1941,6 @@ public class ReLaunch extends Activity {
 			useHome = true;
 		app.fullScreen = prefs.getBoolean("fullScreen", true);
 		app.setFullScreenIfNecessary(this);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		if (app.dataBase == null)
 			app.dataBase = new BooksBase(this);
@@ -2247,6 +2245,9 @@ public class ReLaunch extends Activity {
 									"RELAUNCH").equals("RUN")) {
 								actionRun(prefs.getString(
 										"settingsButtonLTapp", "%%"));
+							} else if (prefs.getString("settingsButtonLT",
+									"RELAUNCH").equals("OPTIONSMENU")) {
+								openOptionsMenu();
 							}
 						}
 					}
@@ -3828,7 +3829,6 @@ public class ReLaunch extends Activity {
 		final int COVER_MAX_W = 280;
 		Bitmap cover = null;
 		final Dialog dialog = new Dialog(this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
-		dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.bookinfo);
 		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, dialog.findViewById(R.id.linearLayoutTop));
 
@@ -3902,16 +3902,20 @@ public class ReLaunch extends Activity {
 		File file = new File(filename);
 
 		final Dialog dialog = new Dialog(this);
-		dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-//		dialog.setTitle(getString(R.string.jv_relaunchx_fileinfo_title));
+		if (file.isDirectory()) {
+			dialog.setTitle(getString(R.string.jv_relaunchx_fileinfo_title2));
+		} else {
+			dialog.setTitle(getString(R.string.jv_relaunchx_fileinfo_title));
+		}
 		dialog.setContentView(R.layout.fileinfo);
+
 		LinearLayout llSize = (LinearLayout) dialog.findViewById(R.id.llSize);
 		if (file.isDirectory())
 			llSize.setVisibility(View.GONE);
 		TextView tv = (TextView) dialog.findViewById(R.id.tvName);
 		tv.setText(file.getName());
 		tv = (TextView) dialog.findViewById(R.id.tvSize);
-		tv.setText(file.length() + " bytes");
+		tv.setText(FileSystem.bytesToString(file.length()) + " (" + file.length() + " bytes)");
 		tv = (TextView) dialog.findViewById(R.id.tvTime);
 		tv.setText((new Date(file.lastModified())).toLocaleString());
         if (DeviceInfo.isRooted()) {

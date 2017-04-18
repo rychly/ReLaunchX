@@ -522,7 +522,6 @@ public class ResultsActivity extends Activity {
 
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.results_layout);
 
 		icons = app.getIcons();

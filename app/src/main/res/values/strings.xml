@@ -237,7 +237,7 @@
 	<string name="jv_relaunchx_sort_title_rev">↑ Book Title</string>
 	<string name="jv_relaunchx_bookinfo">Show book details</string>
 	<string name="jv_relaunchx_fileinfo">Properties</string>
-	<string name="jv_relaunchx_fileinfo_title">File Properties</string>
+	<string name="jv_relaunchx_fileinfo_title">File</string>
 	<string name="jv_relaunchx_fileinfo_name">Name:</string>
 	<string name="jv_relaunchx_fileinfo_size">Size:</string>
 	<string name="jv_relaunchx_fileinfo_date">Date:</string>
@@ -553,6 +553,7 @@
 	<string name="arr_settings_button_actions_names_4">Power Off device</string>
 	<string name="arr_settings_button_actions_names_5">Switch WiFi state</string>
 	<string name="arr_settings_button_actions_names_6">Run application</string>
+	<string name="arr_settings_button_actions_names_7">Open Options menu</string>
 	<string name="arr_mem_button_actions_names_1">Nothing</string>
 	<string name="arr_mem_button_actions_names_2">Open \"Application manager\" window</string>
 	<string name="arr_mem_button_actions_names_3">Lock device</string>
@@ -611,5 +612,6 @@
 	<string name="pref_i_filesystemDetails_title">Storage info view</string>
 	<string name="pref_i_button_minHeight_sum">Makes buttons higher. Reasonable value 30 - 100.</string>
 	<string name="pref_i_button_minHeight_title">Buttons bar height</string>
+	<string name="jv_relaunchx_fileinfo_title2">Directory</string>
 
 </resources>

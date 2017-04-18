@@ -297,7 +297,6 @@ public class SearchActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.search);
 
 		SEARCH_FILE = getResources().getInteger(R.integer.SEARCH_FILE);

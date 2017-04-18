@@ -1012,7 +1012,6 @@ public class TaskManager extends Activity {
 		app = ((ReLaunchApp) getApplicationContext());
 		app.setFullScreenIfNecessary(this);
 		pm = getPackageManager();
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.taskmanager_layout);
 
 		doNotKillLabels = getResources().getStringArray(
