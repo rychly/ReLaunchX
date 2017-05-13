@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.widget.Toast;
 

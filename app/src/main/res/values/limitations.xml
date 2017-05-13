@@ -10,6 +10,7 @@
         <item>BarnesAndNobble</item>
         <item>sony</item>
         <item>ONYX</item>
+        <item>Onyx</item>
     </string-array>
     <string-array name="allowed_models">
         <item>NOOK</item>

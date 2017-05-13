@@ -383,11 +383,15 @@ public class Advanced extends Activity {
                     .getDrawable(R.drawable.wifi_off), null);
             wifiOnOff.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    wfm.setWifiEnabled(false);
-                    // "Turning WiFi off"
-                    wifiOnOff.setText(getResources().getString(
-                            R.string.jv_advanced_turning_wifi_off));
-                    wifiOnOff.setEnabled(false);
+                    try {
+                        wfm.setWifiEnabled(false);
+                        // "Turning WiFi off"
+                        wifiOnOff.setText(getResources().getString(
+                                R.string.jv_advanced_turning_wifi_off));
+                        wifiOnOff.setEnabled(false);
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             wifiNetworks = readScanResults(wfm);
@@ -404,11 +408,15 @@ public class Advanced extends Activity {
                     .getDrawable(R.drawable.wifi_on), null);
             wifiOnOff.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    wfm.setWifiEnabled(true);
-                    // "Turning WiFi on"
-                    wifiOnOff.setText(getResources().getString(
-                            R.string.jv_advanced_turning_wifi_on));
-                    wifiOnOff.setEnabled(false);
+                    try {
+                        wfm.setWifiEnabled(true);
+                        // "Turning WiFi on"
+                        wifiOnOff.setText(getResources().getString(
+                                R.string.jv_advanced_turning_wifi_on));
+                        wifiOnOff.setEnabled(false);
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             wifiNetworks.clear();

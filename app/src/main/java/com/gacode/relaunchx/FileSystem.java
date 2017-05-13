@@ -163,6 +163,30 @@ public class FileSystem {
                 }
             }
         }
+
+        //Fallback to guessing, just check if there is anything like
+        //  /mnt/extsd
+        //  /mnt/extSdCard
+        //  /mnt/ext_sd
+
+        File mnt = new File("/mnt");
+        if (mnt.isDirectory()) {
+            for (String dir : mnt.list()) {
+                if (dir.toLowerCase().contains("ext") && dir.toLowerCase().contains("sd")) {
+                    return new File("/mnt/" + dir);
+                }
+            }
+        }
+
+        File storage = new File("/storage");
+        if (storage.isDirectory()) {
+            for (String dir : storage.list()) {
+                if (dir.toLowerCase().contains("ext") && dir.toLowerCase().contains("sd")) {
+                    return new File("/storage/" + dir);
+                }
+            }
+        }
+
         return null;
     }
 
