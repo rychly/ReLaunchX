@@ -6,10 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.media.ToneGenerator;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,6 +25,7 @@ import android.widget.Toast;
 
 public class LockScreen extends Service implements View.OnClickListener {
 
+    private final String TAG = "ReLaunchX";
     public final static String ACTION_LOCK_SCREEN = "com.gacode.relaunch.ACTION_LOCK_SCREEN";
     public final int MAX_PASSWORD_LEN = 15;
 
@@ -65,6 +72,13 @@ public class LockScreen extends Service implements View.OnClickListener {
         lockView.findViewById(R.id.passwordButton7).setOnClickListener(this);
         lockView.findViewById(R.id.passwordButton8).setOnClickListener(this);
         lockView.findViewById(R.id.passwordButton9).setOnClickListener(this);
+
+//        try {
+//            ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
+//            toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void addDigit(String digit) {
@@ -120,7 +134,11 @@ public class LockScreen extends Service implements View.OnClickListener {
     public void onCreate() {
         super.onCreate();
 
+        Log.i(TAG, "Create Lock Screen");
+
         prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        IntentFilter bootCompleted = new IntentFilter(Intent.ACTION_BOOT_COMPLETED);
+        registerReceiver(screenReceiver, bootCompleted);
 
         IntentFilter screenOffFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
         registerReceiver(screenReceiver, screenOffFilter);
@@ -129,10 +147,6 @@ public class LockScreen extends Service implements View.OnClickListener {
 
         windowManager = ((WindowManager) getSystemService(WINDOW_SERVICE));
         int lockViewFlags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
-        if (Build.VERSION.SDK_INT >= 14) {
-            final int SYSTEM_UI_FLAG_HIDE_NAVIGATION = 0x00000002;
-            lockViewFlags |= SYSTEM_UI_FLAG_HIDE_NAVIGATION; //View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        }
         lockViewParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.TYPE_SYSTEM_ERROR, lockViewFlags);
     }

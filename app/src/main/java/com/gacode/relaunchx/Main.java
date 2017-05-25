@@ -13,8 +13,6 @@ public class Main extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		startService(new Intent(this, LockScreen.class));
-
 		app = ((ReLaunchApp) getApplicationContext());
 		app.RestartIntent = PendingIntent.getActivity(this, 0, getIntent(),
 				getIntent().getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);

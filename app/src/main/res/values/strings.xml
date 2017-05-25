@@ -616,5 +616,6 @@
 	<string name="pref_i_lock_passwd_title">Lock password</string>
 	<string name="pref_i_lock_passwd_sum">ReLaunchX Lock Screen</string>
 	<string name="lock_screen_incorrect_passwd">Incorrect</string>
+	<string name="lock_screen_empty_passwd">No password</string>
 
 </resources>

@@ -1,7 +1,6 @@
 package com.gacode.relaunchx;
 
 import java.io.DataOutputStream;
-import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -9,8 +8,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.PowerManager;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class PowerFunctions {
@@ -37,8 +37,15 @@ public class PowerFunctions {
 			}
 			return true;
 		} else {
-			Intent lockScreen = new Intent(LockScreen.ACTION_LOCK_SCREEN);
-			act.sendBroadcast(lockScreen);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act.getBaseContext());
+			final String lockPassword = prefs.getString("lockPassword", "");
+			if (lockPassword.length() == 0) {
+				Toast.makeText(act, act.getResources().getString(R.string.lock_screen_empty_passwd),
+						Toast.LENGTH_SHORT).show();
+			} else {
+				Intent lockScreen = new Intent(LockScreen.ACTION_LOCK_SCREEN);
+				act.sendBroadcast(lockScreen);
+			}
 			return true;
 		}
 	}

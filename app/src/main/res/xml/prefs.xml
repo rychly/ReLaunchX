@@ -43,7 +43,7 @@
 			android:summary="@string/pref_i_fileFontSize_sum"
 			android:title="@string/pref_i_fileFontSize_title" />
 		<EditTextPreference
-			android:defaultValue="30"
+			android:defaultValue="50"
 			android:enabled="true"
 			android:key="buttonMinHeight"
 			android:layout="@+layout/pref_child"

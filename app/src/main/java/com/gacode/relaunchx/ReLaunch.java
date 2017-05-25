@@ -87,7 +87,7 @@ import static com.gacode.relaunchx.FileSystem.bytesToString;
 
 public class ReLaunch extends Activity {
 
-	final static String TAG = "ReLaunch";
+	final static String TAG = "ReLaunchX";
 	static public final String APP_LRU_FILE = "AppLruFile.txt";
 	static public final String APP_FAV_FILE = "AppFavorites.txt";
 	static public final String LRU_FILE = "LruFile.txt";
@@ -1939,7 +1939,7 @@ public class ReLaunch extends Activity {
 			useHome = true;
 		if (useLibrary && prefs.getBoolean("libraryMode", true))
 			useHome = true;
-		app.fullScreen = prefs.getBoolean("fullScreen", true);
+		app.fullScreen = prefs.getBoolean("fullScreen", false);
 		app.setFullScreenIfNecessary(this);
 
 		if (app.dataBase == null)
@@ -3445,6 +3445,12 @@ public class ReLaunch extends Activity {
 		app.generalOnResume(TAG, this);
 		refreshBottomInfo();
 		redrawList();
+
+		//It has to be here to anyhow start the service upon device boot.
+		//I have tried with BOOT_COMPLETED broadcast receiver but it does not work on Onyx :(
+		//The drawback is that I don't know how else I can lock the screen upon boot, I cannot do it
+		//here obviosly.
+		startService(new Intent(this, LockScreen.class));
 	}
 
 	@Override
