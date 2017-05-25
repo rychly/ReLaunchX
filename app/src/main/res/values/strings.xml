@@ -613,5 +613,8 @@
 	<string name="pref_i_button_minHeight_sum">Makes buttons higher. Reasonable value 30 - 100.</string>
 	<string name="pref_i_button_minHeight_title">Buttons bar height</string>
 	<string name="jv_relaunchx_fileinfo_title2">Directory</string>
+	<string name="pref_i_lock_passwd_title">Lock password</string>
+	<string name="pref_i_lock_passwd_sum">ReLaunchX Lock Screen</string>
+	<string name="lock_screen_incorrect_passwd">Incorrect</string>
 
 </resources>

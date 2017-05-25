@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 public class PowerFunctions {
 
 	public static boolean actionLock(Activity act) {
-		if (DeviceInfo.isRooted()) {
+		if (DeviceInfo.isRooted() && DeviceInfo.EINK_NOOK) {
 			try {
 				Process p = Runtime.getRuntime().exec(
 						act.getResources().getString(R.string.shell));
@@ -36,12 +37,9 @@ public class PowerFunctions {
 			}
 			return true;
 		} else {
-			Toast.makeText(
-					act,
-					act.getResources()
-							.getString(R.string.jv_advanced_root_only),
-					Toast.LENGTH_LONG).show();
-			return false;
+			Intent lockScreen = new Intent(LockScreen.ACTION_LOCK_SCREEN);
+			act.sendBroadcast(lockScreen);
+			return true;
 		}
 	}
 

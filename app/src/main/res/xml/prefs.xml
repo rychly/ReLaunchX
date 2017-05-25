@@ -52,6 +52,16 @@
 			android:selectable="true"
 			android:summary="@string/pref_i_button_minHeight_sum"
 			android:title="@string/pref_i_button_minHeight_title" />
+		<EditTextPreference
+			android:enabled="true"
+			android:key="lockPassword"
+			android:layout="@+layout/pref_child"
+			android:numeric="integer"
+			android:persistent="true"
+			android:selectable="true"
+			android:password="true"
+			android:summary="@string/pref_i_lock_passwd_sum"
+			android:title="@string/pref_i_lock_passwd_title" />
 	</PreferenceCategory>
 	<PreferenceCategory
 		android:key="categoryAdvanced"

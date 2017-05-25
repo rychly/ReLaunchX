@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/normal_bg"
+    android:gravity="center"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:minHeight="90dp"
+        android:minWidth="90dp"
+        android:src="@drawable/ci_lock" />
+
+    <TextView
+        android:id="@+id/passwordView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text=""
+        android:textAppearance="@style/sonyTextAppearanceLarge"
+        android:textColor="@color/normal_fg"
+        android:textSize="40dp"
+        android:textStyle="bold"></TextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/passwordButton7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="7"
+                android:tag="7"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+
+            <Button
+                android:id="@+id/passwordButton8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="8"
+                android:tag="8"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+
+            <Button
+                android:id="@+id/passwordButton9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="9"
+                android:tag="9"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/passwordButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="4"
+                android:tag="4"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+
+            <Button
+                android:id="@+id/passwordButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="5"
+                android:tag="5"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+
+            <Button
+                android:id="@+id/passwordButton6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="6"
+                android:tag="6"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/passwordButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="1"
+                android:tag="1"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+
+            <Button
+                android:id="@+id/passwordButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="2"
+                android:tag="2"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+
+            <Button
+                android:id="@+id/passwordButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="3"
+                android:tag="3"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/deletePasswordButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="del"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+
+            <Button
+                android:id="@+id/passwordButton0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="0"
+                android:tag="0"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+
+            <Button
+                android:id="@+id/unlockPasswordButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="70dp"
+                android:minWidth="90dp"
+                android:padding="5dp"
+                android:text="OK"
+                android:textColor="@color/normal_fg"
+                android:textStyle="bold"></Button>
+        </LinearLayout>
+
+</LinearLayout>
