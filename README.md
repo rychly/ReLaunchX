@@ -71,6 +71,10 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 1.3.0
+ * Adds Lock Screen.
+* 1.2.3 
+ * Fixes for Boox Max on Android 4.4, WiFi button, SD card, compatibility list
 * 1.2.2
  * Fix for crash on Boyue T63. Changed method to hide app window status bar.
  * Added action to Settings button - Open Options Menu. Active on long tap by default.
