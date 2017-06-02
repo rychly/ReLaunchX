@@ -63,6 +63,17 @@ public class DeviceInfo {
 		if (isrooted.exists()) {
 			return true;
 		}
+
+		isrooted = new File("/system/xbin", "su");
+		if (isrooted.exists()) {
+			return true;
+		}
+
+		isrooted = new File ("/su/bin", "su");
+		if (isrooted.exists()){
+			return true;
+		}
+
 		return false;
 	}
 
