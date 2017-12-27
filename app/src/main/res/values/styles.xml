@@ -6,16 +6,16 @@
 		</item>
 	</style>
 	
-	<style name="sonyTextAppearanceSmall" parent="@android:attr/textAppearanceSmall">
+	<style name="sonyTextAppearanceSmall" parent="@android:style/TextAppearance.DeviceDefault.Small" >
 		<item name="android:textSize">10sp</item>
 	</style>
-	<style name="sonyTextAppearanceMedium" parent="@android:attr/textAppearanceMedium">
+	<style name="sonyTextAppearanceMedium" parent="@android:style/TextAppearance.DeviceDefault.Medium">
 		<item name="android:textSize">12sp</item>
 	</style>
-	<style name="sonyTextAppearanceLarge" parent="@android:attr/textAppearanceLarge">
+	<style name="sonyTextAppearanceLarge" parent="@android:style/TextAppearance.DeviceDefault.Large">
 		<item name="android:textSize">14sp</item>
 	</style>
-	<style name="sonyTextAppearanceMenu" parent="@android:attr/textAppearanceLarge">
+	<style name="sonyTextAppearanceMenu" parent="@android:style/TextAppearance.DeviceDefault.Large">
 		<item name="android:textSize">15sp</item>
 	</style>
 </resources>
