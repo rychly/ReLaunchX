@@ -2813,7 +2813,7 @@ public class ReLaunch extends Activity {
 			app.addStartDir(fullName);
 			break;
 		case CNTXT_MENU_ADD:
-			if (type.equals("file"))
+			if (type == FsItemType.File)
 				app.addToList("favorites", dname, fname, false);
 			else
 				app.addToList("favorites", fullName, app.DIR_TAG, false);
