@@ -230,11 +230,9 @@
 	<string name="jv_relaunchx_switch_titles_on">Show book titles</string>
 	<string name="jv_relaunchx_switch_titles_off">Show file names</string>
 	<string name="jv_relaunchx_tags_rename">Rename file with fb2/epub tags...</string>
-	<string name="jv_relaunchx_sort_header">Sort order:</string>
-	<string name="jv_relaunchx_sort_file_dir">↓ File Name</string>
-	<string name="jv_relaunchx_sort_file_rev">↑ File Name</string>
-	<string name="jv_relaunchx_sort_title_dir">↓ Book Title</string>
-	<string name="jv_relaunchx_sort_title_rev">↑ Book Title</string>
+	<string name="jv_relaunchx_sort_header">Order list by:</string>
+	<string name="jv_relaunchx_sort_file">File Name</string>
+	<string name="jv_relaunchx_sort_title">Book Title</string>
 	<string name="jv_relaunchx_bookinfo">Show book details</string>
 	<string name="jv_relaunchx_fileinfo">Properties</string>
 	<string name="jv_relaunchx_fileinfo_title">File</string>
@@ -365,15 +363,9 @@
 	<string name="pref_i_einkUpdateMode_title">EInk Screen Update Mode</string>
 	<string name="pref_i_einkUpdateInterval_title">EInk Screen Full Update Interval</string>
 	<string name="pref_i_einkUpdateInterval_sum">How often EInk will be fully updated</string>
-	<string name="pref_i_firstLineFontSizePx_title">Files and directories names font size</string>
-	<string name="pref_i_firstLineFontSizePx_sum">Font size for files and directories names in all
-		lists... px</string>
-	<string name="pref_i_secondLineFontSizePx_title">Additional font size for files... px
-	</string>
-	<string name="pref_i_secondLineFontSizePx_sum">Font size for additional line in file names</string>
-	<string name="pref_i_firstLineIconSizePx_title">Files and directories icons size</string>
-	<string name="pref_i_firstLineIconSizePx_sum">Icon size for files and directories... px (0 -
-		disable icon)</string>
+	<string name="pref_i_showIcon_title">Show icons in file list</string>
+	<string name="pref_i_showIcon_on">Show icons</string>
+	<string name="pref_i_showIcon_off">No icons</string>
 	<string name="pref_i_columnsDirsFiles_title">Files and directories list (default)</string>
 	<string name="pref_i_doNotHyph_off">Output filename in multi lines</string>
 	<string name="pref_i_doNotHyph_on">Output filename in single line</string>
@@ -385,7 +377,7 @@
 	<string name="pref_i_columnsAlgIntensity_title">Determining the number of columns</string>
 	<string name="pref_i_columnsAppAll_title">All applications</string>
 	<string name="pref_i_columnsAppFav_title">Favorites applications</string>
-	<string name="pref_i_rowSeparator_title">Show separator between rows in files list</string>
+	<string name="pref_i_rowSeparator_title">Show separator between rows in file list</string>
 	<string name="pref_i_homeButtonST_title">Home Button Single Tap</string>
 	<string name="pref_i_homeButtonDT_title">Home Button Double Tap</string>
 	<string name="pref_i_homeButtonLT_title">Home Button Long Tap</string>
@@ -581,8 +573,8 @@
 	<string name="arr_work_mode_names_1">File manager mode</string>
 	<string name="arr_work_mode_names_2">Library mode</string>
 	<string name="arr_work_mode_names_3">Defined by advanced settings</string>
-	<string name="pref_i_fileFontSize_sum">Font size of the files list</string>
-	<string name="pref_i_fileFontSize_title">Font size</string>
+	<string name="pref_i_fileFontSize_sum">Files and books view font size</string>
+	<string name="pref_i_fileFontSize_title">List font size</string>
 	<string name="pref_i_showFullDirPath_on">Show full directory path in title</string>
 	<string name="pref_i_showFullDirPath_off">Show current directory name in title</string>
 	<string name="pref_i_showFullDirPath_title">Show full directory path in title</string>
@@ -594,12 +586,9 @@
 	<string name="bookinfo_authors">Authors:</string>
 	<string name="bookinfo_series">Series:</string>
 	<string name="bookinfo_title">Title:</string>
-	<string name="jv_relaunchx_sort_extension_dir">↓ File Extension</string>
-	<string name="jv_relaunchx_sort_extension_rev">↑ File Extension</string>
-	<string name="jv_relaunchx_sort_date_dir">↓ File Modification Date</string>
-	<string name="jv_relaunchx_sort_date_rev">↑ File Modification Date</string>
-	<string name="jv_relaunchx_sort_size_dir">↓ File Size</string>
-	<string name="jv_relaunchx_sort_size_rev">↑ File Size</string>
+	<string name="jv_relaunchx_sort_extension">File Extension</string>
+	<string name="jv_relaunchx_sort_date">File Modification Date</string>
+	<string name="jv_relaunchx_sort_size">File Size</string>
 	<string name="pref_i_showFileDetails_title">Show file details</string>
 	<string name="pref_i_showFileDetails_on">Show file size and file modification date.</string>
 	<string name="pref_i_showFileDetails_off">Don\'t show file size and file modification date.</string>
@@ -610,12 +599,14 @@
 	<string name="pref_i_filesystemDetails_on">Show additional filesystem details</string>
 	<string name="pref_i_filesystemDetails_off">Show standard storage usage summary</string>
 	<string name="pref_i_filesystemDetails_title">Storage info view</string>
-	<string name="pref_i_button_minHeight_sum">Makes buttons higher. Reasonable value 30 - 100.</string>
-	<string name="pref_i_button_minHeight_title">Buttons bar height</string>
+	<string name="pref_i_button_minHeight_sum">Default 60. Warning: non-default slows down the app!</string>
+	<string name="pref_i_button_minHeight_title">Toolbar buttons height</string>
 	<string name="jv_relaunchx_fileinfo_title2">Directory</string>
 	<string name="pref_i_lock_passwd_title">Lock password</string>
 	<string name="pref_i_lock_passwd_sum">ReLaunchX Lock Screen</string>
 	<string name="lock_screen_incorrect_passwd">Incorrect</string>
 	<string name="lock_screen_empty_passwd">No password</string>
+	<string name="jv_relaunchx_sort_asc">↑ Ascending</string>
+	<string name="jv_relaunchx_sort_dsc">↓ Descending</string>
 
 </resources>

@@ -4,12 +4,11 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar" >
 
         <ImageView
             android:id="@+id/app_icon"
@@ -27,9 +26,9 @@
             android:focusable="false"
             android:gravity="left|center_vertical"
             android:inputType="textMultiLine"
-            android:paddingLeft="5.3dp"
+            android:paddingLeft="8dp"
             android:text="TextView"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
         </TextView>
@@ -39,11 +38,11 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginRight="1dp"
             android:layout_weight="2.8"
             android:background="@drawable/main_button"
-            android:minWidth="64dp"
+            android:minWidth="96dp"
             android:src="@drawable/ci_exit" >
         </ImageButton>
     </LinearLayout>
@@ -52,7 +51,7 @@
         android:id="@+id/app_grid_layout"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5.3dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1" >
 
         <GridView

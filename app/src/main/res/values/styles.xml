@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="Theme.Light.Hack" parent="@android:Theme.Light">
+	<style name="LinearLayoutToolbar" >
+		<item name="android:minHeight">60dp</item>
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<!--<item name="android:layout_gravity">center</item>-->
+	</style>
+
+	<style name="Theme.Light.Hack" parent="@android:style/Theme.Light">
 		<item name="android:textColorPrimaryInverse">
 		@android:color/primary_text_light
 		</item>

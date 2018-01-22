@@ -21,7 +21,6 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
@@ -729,7 +728,7 @@ public class Advanced extends Activity {
         infoPanelView.loadDataWithBaseURL(null, getStorageUsageInfo(), "text/html", "utf-8", null);
 
         ScreenOrientation.set(this, prefs);
-        ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
+        SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutTop));
     }
 
     @Override

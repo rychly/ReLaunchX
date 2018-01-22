@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -356,9 +355,9 @@ public class SearchActivity extends Activity {
 				});
 
 		ScreenOrientation.set(this, prefs);
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutBottom));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.search_all));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutBottom));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.search_all));
 	}
 
 	@Override

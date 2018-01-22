@@ -4,12 +4,11 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar">
 
         <ImageView
             android:id="@+id/results_icon"
@@ -29,9 +28,9 @@
             android:focusable="false"
             android:gravity="left|center_vertical"
             android:inputType="textMultiLine"
-            android:paddingLeft="5.3dp"
+            android:paddingLeft="8dp"
             android:text="Text View"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" />
 
@@ -40,8 +39,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
-            android:layout_marginRight="0.7dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="2.8"
             android:background="@drawable/main_button"
             android:minWidth="96dp"
@@ -53,10 +52,10 @@
         android:id="@+id/wifi_lv_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="5.3dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="0.4"
         android:background="@drawable/main_button"
-        android:padding="5.3dp" >
+        android:padding="8dp" >
 
         <ListView
             android:id="@+id/wifi_lv"
@@ -69,7 +68,7 @@
         android:id="@+id/linearLayout1a"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="2.7dp"
+        android:layout_marginTop="4dp"
         android:layout_weight="0.5" >
 
         <Button
@@ -80,11 +79,12 @@
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableTop="@drawable/ci_wifiscan"
-            android:paddingBottom="11dp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="5.3dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
             android:textColor="@color/normal_fg"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/advanced_layout_scan" >
         </Button>
 
@@ -93,17 +93,18 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/wifi_off"
             android:drawableRight="@drawable/wifi_off"
             android:drawableTop="@drawable/ci_wifi"
-            android:paddingBottom="11dp"
-            android:paddingLeft="5.3dp"
-            android:paddingRight="5.3dp"
-            android:paddingTop="5.3dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp"
             android:textColor="@color/normal_fg"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/advanced_layout_switch_wifi_off" >
         </Button>
 
@@ -112,15 +113,16 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableTop="@drawable/ci_wifisetup"
-            android:paddingBottom="11dp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="5.3dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
             android:textColor="@color/normal_fg"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/advanced_layout_setting_wifi" >
         </Button>
     </LinearLayout>
@@ -129,11 +131,11 @@
         android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="5.3dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="0.4"
         android:background="@drawable/main_button"
         android:orientation="vertical"
-        android:padding="2.7dp" >
+        android:padding="4dp" >
 
         <WebView
             android:id="@+id/info_panel_web_view"
@@ -147,7 +149,7 @@
         android:id="@+id/linearLayout2a"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="5.3dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="0.5" >
 
         <Button
@@ -158,11 +160,12 @@
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableTop="@drawable/ci_lock"
-            android:paddingBottom="11dp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="5.3dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
             android:textColor="@color/normal_fg"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/advanced_layout_lock" >
         </Button>
 
@@ -171,15 +174,16 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableTop="@drawable/ci_reboot"
-            android:paddingBottom="11dp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="5.3dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
             android:textColor="@color/normal_fg"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/advanced_layout_reboot" >
         </Button>
 
@@ -188,15 +192,16 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableTop="@drawable/ci_power"
-            android:paddingBottom="11dp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="5.3dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
             android:textColor="@color/normal_fg"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/advanced_layout_poweroff" >
         </Button>
     </LinearLayout>

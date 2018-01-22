@@ -4,12 +4,11 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar" >
 
         <ImageView
             android:id="@+id/types_icon"
@@ -28,9 +27,9 @@
             android:focusable="false"
             android:gravity="left|center_vertical"
             android:inputType="textMultiLine"
-            android:paddingLeft="5.3dp"
+            android:paddingLeft="8dp"
             android:text="@string/types_view_layout_title"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
 
@@ -42,8 +41,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
-            android:layout_marginRight="0.7dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="2.8"
             android:background="@drawable/main_button"
             android:minWidth="96dp"
@@ -54,7 +53,7 @@
         android:id="@+id/types_lv"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="5.3dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:divider="@color/normal_transparent"
         android:fadeScrollbars="false" >
@@ -62,9 +61,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutBottom"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2.7dp"
+        style="@style/LinearLayoutToolbar"
+        android:layout_marginTop="4dp"
         android:background="@color/normal_bg"
         android:baselineAligned="false" >
 
@@ -85,7 +83,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_add"
@@ -98,7 +96,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_del"

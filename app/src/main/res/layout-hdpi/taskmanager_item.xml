@@ -4,18 +4,18 @@
     android:layout_height="wrap_content"
     android:background="@color/normal_bg"
     android:orientation="horizontal"
-    android:paddingBottom="1.3dp"
-    android:paddingTop="1.3dp" >
+    android:paddingBottom="2dp"
+    android:paddingTop="2dp" >
 
     <ImageView
         android:id="@+id/tm_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="top|left"
-        android:layout_marginBottom="1.3dp"
-        android:layout_marginLeft="2.7dp"
-        android:layout_marginRight="1.3dp"
-        android:layout_marginTop="1.3dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp"
         android:background="@color/normal_bg"
         android:clickable="false"
         android:focusable="false"
@@ -24,9 +24,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2.7dp"
+        style="@style/LinearLayoutToolbar"
+        android:layout_marginLeft="4dp"
         android:background="@color/normal_bg"
         android:orientation="vertical" >
 
@@ -43,7 +42,7 @@
             android:gravity="center_vertical"
             android:inputType="textMultiLine"
             android:text="Filename"
-            android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000" >
         </EditText>
 
@@ -60,7 +59,7 @@
             android:gravity="center_vertical"
             android:inputType="textMultiLine"
             android:text="Full path"
-            android:textAppearance="@style/sonyTextAppearanceSmall"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#000000" >
         </EditText>
 
@@ -77,7 +76,7 @@
             android:gravity="center_vertical"
             android:inputType="textMultiLine"
             android:text="Full path"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#000000" >
         </EditText>
     </LinearLayout>

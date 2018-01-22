@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:paddingBottom="5.3dp" >
+    android:paddingBottom="8dp" >
 
     <TableLayout
         android:id="@+id/tableLayout1"
@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingBottom="0dp"
-        android:paddingRight="6.6dp"
-        android:paddingTop="3.3dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
         android:stretchColumns="1" >
 
         <TableRow
@@ -28,9 +28,9 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="right|center_vertical"
                 android:gravity="right|center_vertical"
-                android:paddingBottom="5.3dp"
+                android:paddingBottom="8dp"
                 android:text="@string/types_layout_file_suffix"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>
@@ -42,14 +42,14 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:paddingBottom="6.6dp" >
+                android:paddingBottom="10dp" >
 
                 <Button
                     android:id="@+id/types_ext"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="fill_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="2.7dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_weight="1"
                     android:textColor="@color/normal_fg"
                     android:gravity="center_vertical" >
@@ -57,30 +57,30 @@
 
                 <ImageButton
                     android:id="@+id/types_up"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="2.7dp"
+                    android:layout_marginLeft="4dp"
                     android:background="@drawable/main_button"
                     android:src="@drawable/ci_arrowup" >
                 </ImageButton>
 
                 <ImageButton
                     android:id="@+id/types_down"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="2.7dp"
+                    android:layout_marginLeft="4dp"
                     android:background="@drawable/main_button"
                     android:src="@drawable/ci_arrowdown" >
                 </ImageButton>
 
                 <ImageButton
                     android:id="@+id/types_delete"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="2.7dp"
+                    android:layout_marginLeft="4dp"
                     android:background="@drawable/main_button"
                     android:src="@drawable/ci_delsmall" >
                 </ImageButton>
@@ -99,7 +99,7 @@
                 android:layout_gravity="right|center_vertical"
                 android:gravity="right|center_vertical"
                 android:text="@string/types_layout_application"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>
@@ -113,9 +113,9 @@
                 <Button
                     android:id="@+id/types_app"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="2.7dp"
+                    android:layout_marginLeft="4dp"
                     android:textColor="@color/normal_fg"
                     android:layout_weight="1" >
                 </Button>
@@ -134,10 +134,10 @@
     <TextView
         android:id="@+id/types_separator"
         android:layout_width="fill_parent"
-        android:layout_height="1.3dp"
+        android:layout_height="2dp"
         android:layout_weight="1"
         android:background="#ffffff"
-        android:textAppearance="@style/sonyTextAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#ffffff" >
     </TextView>
 

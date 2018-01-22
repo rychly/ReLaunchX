@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -277,8 +276,8 @@ public class FiltersActivity extends Activity {
 			}
 		});
 		ScreenOrientation.set(this, prefs);
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutBottom));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutBottom));
 	}
 
 	@Override

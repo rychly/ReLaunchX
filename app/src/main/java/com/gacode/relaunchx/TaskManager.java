@@ -29,7 +29,6 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
@@ -712,7 +711,7 @@ public class TaskManager extends Activity {
 		final String localName = p.name;
 
 		dialog.setContentView(R.layout.service_details);
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, dialog.findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, dialog.findViewById(R.id.linearLayoutTop));
 		// "Service details"
 		dialog.setTitle(getResources().getString(
 				R.string.jv_taskman_service_details));
@@ -1156,8 +1155,8 @@ public class TaskManager extends Activity {
 		setSorting(sortMethod);
 		startCPUUpdate();
 		ScreenOrientation.set(this, prefs);
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutNavigate));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutNavigate));
 	}
 
 	@Override

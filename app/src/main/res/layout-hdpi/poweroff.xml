@@ -5,7 +5,7 @@
     android:background="@color/normal_bg"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <ImageView
         android:id="@+id/imageView1"
@@ -17,10 +17,10 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10.7dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/poweroff_layout_text"
-        android:textAppearance="@style/sonyTextAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/normal_fg"
         android:textStyle="bold" >
     </TextView>

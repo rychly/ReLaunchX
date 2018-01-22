@@ -8,8 +8,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar" >
 
         <LinearLayout
             android:id="@+id/linearLayout5"
@@ -91,8 +90,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutNavigate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/LinearLayoutToolbar"
         android:layout_marginTop="8dp" >
 
         <Button

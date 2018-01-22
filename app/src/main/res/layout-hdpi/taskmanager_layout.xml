@@ -4,16 +4,15 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar" >
 
         <LinearLayout
             android:id="@+id/linearLayout5"
-            android:layout_width="72dp"
+            android:layout_width="100dp"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
             android:background="@color/normal_bg_gray"
@@ -26,7 +25,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="@string/taskmanager_layout_memory"
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>
@@ -38,7 +37,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="@string/taskmanager_layout_cpu"
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>
@@ -60,7 +59,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/taskmanager_layout_wait"
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
 
@@ -70,7 +69,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
         </LinearLayout>
@@ -80,8 +79,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
-            android:layout_marginRight="0.7dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="2.12"
             android:background="@drawable/main_button"
             android:minWidth="96dp"
@@ -91,9 +90,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutNavigate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5.3dp" >
+        style="@style/LinearLayoutToolbar"
+        android:layout_marginTop="8dp" >
 
         <Button
             android:id="@+id/sort_size"
@@ -102,8 +100,7 @@
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_ram"
-            android:paddingRight="5.3dp"
-            android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:paddingRight="8dp"
             android:textColor="@color/normal_fg"
             android:text="@string/taskmanager_layout_sort_by_size" >
         </Button>
@@ -112,12 +109,11 @@
             android:id="@+id/sort_cpu"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_cpu"
-            android:paddingRight="5.3dp"
-            android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:paddingRight="8dp"
             android:textColor="@color/normal_fg"
             android:text="@string/taskmanager_layout_sort_by_cpu" >
         </Button>
@@ -126,12 +122,11 @@
             android:id="@+id/sort_abc"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_az"
-            android:paddingRight="5.3dp"
-            android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:paddingRight="8dp"
             android:textColor="@color/normal_fg"
             android:text="@string/taskmanager_layout_sort_by_alpha" >
         </Button>
@@ -141,7 +136,7 @@
         android:id="@+id/linearLayout3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2.7dp" >
+        android:layout_marginTop="4dp" >
 
         <TextView
             android:id="@+id/tm_tasks_title"
@@ -150,7 +145,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/taskmanager_layout_tasks"
-            android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
         </TextView>
@@ -162,7 +157,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/taskmanager_layout_services"
-            android:textAppearance="@style/sonyTextAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
         </TextView>
@@ -172,7 +167,7 @@
         android:id="@+id/linearLayout4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2.7dp" >
+        android:layout_marginTop="4dp" >
 
         <LinearLayout
             android:id="@+id/tasks_lv_layout"
@@ -184,7 +179,7 @@
                 android:id="@+id/tasks_lv"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginRight="5.3dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:divider="@color/normal_transparent"
                 android:fadeScrollbars="false" >
@@ -201,7 +196,7 @@
                 android:id="@+id/services_lv"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginLeft="5.3dp"
+                android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:divider="@color/normal_transparent"
                 android:fadeScrollbars="false" >

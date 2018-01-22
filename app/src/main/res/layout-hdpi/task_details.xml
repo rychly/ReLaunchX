@@ -4,12 +4,11 @@
     android:layout_height="wrap_content"
     android:background="@color/normal_transparent"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar" >
 
         <Button
             android:id="@+id/tm1_kill"
@@ -19,7 +18,7 @@
             android:layout_weight="1"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_kill"
-            android:paddingRight="5.3dp"
+            android:paddingRight="8dp"
             android:textColor="@color/normal_fg"
             android:text="@string/service_details_layout_kill" >
         </Button>
@@ -29,7 +28,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="0.5"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_ok"
@@ -44,10 +43,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10.7dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/task_details_layout_task_details"
-        android:textAppearance="@style/sonyTextAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/normal_fg"
         android:textStyle="bold" >
     </TextView>
@@ -56,13 +55,13 @@
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5.3dp" >
+        android:layout_marginTop="8dp" >
 
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginRight="0.7dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="1"
             android:orientation="vertical" >
 
@@ -71,11 +70,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginBottom="0.7dp"
+                android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="right"
                 android:text="@string/service_details_layout_piduid"
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
 
@@ -84,11 +83,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginBottom="0.7dp"
+                android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="right"
                 android:text="@string/service_details_layout_label"
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
 
@@ -97,11 +96,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginBottom="0.7dp"
+                android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="right"
                 android:text="@string/service_details_layout_name"
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
 
@@ -110,11 +109,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginBottom="0.7dp"
+                android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="right"
                 android:text="@string/service_details_layout_flags"
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
         </LinearLayout>
@@ -131,11 +130,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="0.7dp"
+                android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="center"
                 android:text=""
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
 
@@ -144,11 +143,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="0.7dp"
+                android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="center"
                 android:text=""
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
 
@@ -157,11 +156,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="0.7dp"
+                android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="center"
                 android:text=""
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
 
@@ -170,11 +169,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="0.7dp"
+                android:layout_marginBottom="1dp"
                 android:background="#ffffff"
                 android:gravity="center"
                 android:text=""
-                android:textAppearance="@style/sonyTextAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" >
             </TextView>
         </LinearLayout>
@@ -185,10 +184,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10.7dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/task_details_layout_related_packages"
-        android:textAppearance="@style/sonyTextAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/normal_fg"
         android:textStyle="bold" >
     </TextView>
@@ -197,7 +196,7 @@
         android:id="@+id/tm1_lv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5.3dp"
+        android:layout_marginTop="8dp"
         android:background="@color/normal_bg"
         android:fadeScrollbars="false" >
     </ListView>

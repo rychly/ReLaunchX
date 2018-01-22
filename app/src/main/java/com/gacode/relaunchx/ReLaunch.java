@@ -51,7 +51,6 @@ import android.text.SpannableString;
 import android.text.TextUtils.TruncateAt;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.KeyEvent;
@@ -63,7 +62,6 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.view.LayoutInflater;
@@ -79,6 +77,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -169,19 +168,21 @@ public class ReLaunch extends Activity {
 	String fileOpFile;
 	String fileOpDir;
 	int fileOp;
-    enum SortMode {
-        BookTitleAscending, //used only when Show Book Titles is on
-        BookTitleDescending,
-        FileNameAscending,
-        FileNameDescending,
-        FileExtensionAscending,
-        FileExtensionDescending,
-        FileSizeAscending,
-        FileSizeDescending,
-        FileDateAscending,
-        FileDateDescending
+
+	enum SortMode {
+		Ascending,
+		Descending
+	}
+	SortMode sortMode = SortMode.Ascending;
+
+    enum SortKey {
+        BookTitle, //used only when Show Book Titles is on
+        FileName,
+        FileExtension,
+        FileSize,
+        FileDate,
     }
-    SortMode sortMode = SortMode.FileNameAscending;
+    SortKey sortKey = SortKey.FileName;
 
     public enum FsItemType {
         File,
@@ -477,12 +478,9 @@ public class ReLaunch extends Activity {
 				boolean setBold = false;
 				boolean useFaces = prefs.getBoolean("showNew", true);
 
-				tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, Integer
-						.parseInt(prefs.getString("firstLineFontSizePx", "20")));
-				tv2.setTextSize(TypedValue.COMPLEX_UNIT_PX, Integer
-						.parseInt(prefs.getString("secondLineFontSizePx", "16")));
-                tvSizeDate.setTextSize(TypedValue.COMPLEX_UNIT_PX, Integer
-                        .parseInt(prefs.getString("secondLineFontSizePx", "16")));
+				SizeManipulation.AdjustWithPreferencesFileListLine1(app, prefs, tv);
+				SizeManipulation.AdjustWithPreferencesFileListLine2(app, prefs, tv2);
+				SizeManipulation.AdjustWithPreferencesFileListLine2(app, prefs, tvSizeDate);
 
                 if (item.type == FsItemType.Directory) {
 					tv2.setVisibility(View.GONE);
@@ -492,14 +490,7 @@ public class ReLaunch extends Activity {
 								R.color.dir_bg));
 						tv.setTextColor(getResources().getColor(R.color.dir_fg));
 					}
-					if (prefs.getString("firstLineIconSizePx", "48")
-							.equals("0")) {
-						iv.setVisibility(View.GONE);
-					} else {
-						iv.setImageBitmap(scaleDrawableById(R.drawable.dir_ok,
-								Integer.parseInt(prefs.getString(
-										"firstLineIconSizePx", "48"))));
-					}
+					SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.dir_ok);
 				} else {
 					if (useFaces) {
 						if (app.history.containsKey(fname)) {
@@ -539,54 +530,26 @@ public class ReLaunch extends Activity {
 					}
 
 					// setup icon
-					if (prefs.getString("firstLineIconSizePx", "48")
-							.equals("0")) {
-						iv.setVisibility(View.GONE);
-					} else {
+					if (SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv))
+					{
 						Drawable d = app.specialIcon(item.fullPathName, false);
 						if (d != null)
-							iv.setImageBitmap(scaleDrawable(d, Integer
-									.parseInt(prefs.getString(
-											"firstLineIconSizePx", "48"))));
+							SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, d);
 						else {
 							String rdrName = item.reader;
 							if (rdrName.equals("Nope")) {
 								File f = new File(item.fullPathName);
 								if (f.length() > app.viewerMax*1024)
-									iv.setImageBitmap(scaleDrawableById(
-											R.drawable.file_notok,
-											Integer.parseInt(prefs
-													.getString(
-															"firstLineIconSizePx",
-															"48"))));
+									SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.file_notok);
 								else
-									iv.setImageBitmap(scaleDrawableById(
-											R.drawable.file_ok,
-											Integer.parseInt(prefs
-													.getString(
-															"firstLineIconSizePx",
-															"48"))));
+									SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.file_ok);
 							} else if (rdrName.startsWith("Intent:"))
-								iv.setImageBitmap(scaleDrawableById(
-										R.drawable.icon, Integer.parseInt(prefs
-												.getString(
-														"firstLineIconSizePx",
-														"48"))));
+								SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.icon);
 							else {
 								if (app.getIcons().containsKey(rdrName))
-									iv.setImageBitmap(scaleDrawable(
-											app.getIcons().get(rdrName),
-											Integer.parseInt(prefs
-													.getString(
-															"firstLineIconSizePx",
-															"48"))));
+									SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, app.getIcons().get(rdrName));
 								else
-									iv.setImageBitmap(scaleDrawableById(
-											R.drawable.file_ok,
-											Integer.parseInt(prefs
-													.getString(
-															"firstLineIconSizePx",
-															"48"))));
+									SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.file_ok);
 							}
 						}
 					}
@@ -1181,12 +1144,12 @@ public class ReLaunch extends Activity {
 			item.type = FsItemType.File;
             item.date = new Date(f.lastModified());
             item.size = f.length();
-			item.reader = app.readerName(fname);
+			item.reader = app.readerName(fname.toLowerCase());
             fileItemsArray.add(item);
 		}
 
-		setSortMode(prefs.getInt("sortMode", 0));
-		fileItemsArray = sortFiles(fileItemsArray, sortMode);
+		setSortMode(prefs.getInt("sortKey", 0), prefs.getInt("sortMode", 0));
+		fileItemsArray = sortFiles(fileItemsArray, sortKey, sortMode);
 		itemsArray.addAll(fileItemsArray);
 		setUpButton(up, upDir, currentRoot);
 		final GridView gv = (GridView) findViewById(useDirViewer ? R.id.results_list
@@ -1882,7 +1845,7 @@ public class ReLaunch extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		final Activity relaunchx = this;
 		// If we called from Home launcher?
 		final Intent data = getIntent();
 		if (data.getExtras() == null) {
@@ -1971,7 +1934,7 @@ public class ReLaunch extends Activity {
 			else if (r[1].equals("FINISHED"))
 				app.history.put(r[0], app.FINISHED);
 		}
-		setSortMode(prefs.getInt("sortMode", 0));
+		setSortMode(prefs.getInt("sortKey", 0), prefs.getInt("sortMode", 0));
 		if (useDirViewer) {
 			String start_dir = null;
 			setContentView(R.layout.results_layout);
@@ -2247,7 +2210,10 @@ public class ReLaunch extends Activity {
 										"settingsButtonLTapp", "%%"));
 							} else if (prefs.getString("settingsButtonLT",
 									"RELAUNCH").equals("OPTIONSMENU")) {
-								openOptionsMenu();
+								if (Build.VERSION.SDK_INT > 14)
+									app.About(relaunchx);
+								else
+									openOptionsMenu();
 							}
 						}
 					}
@@ -2441,7 +2407,7 @@ public class ReLaunch extends Activity {
 			}
 
 			// Memory buttons (task manager activity)
-			final LinearLayout mem_l = (LinearLayout) findViewById(R.id.mem_layout);
+			final RelativeLayout mem_l = (RelativeLayout) findViewById(R.id.mem_layout);
 			if (mem_l != null) {
 				class MemlSimpleOnGestureListener extends
 						SimpleOnGestureListener {
@@ -2534,7 +2500,7 @@ public class ReLaunch extends Activity {
 			memTitle = (TextView) findViewById(R.id.mem_title);
 
 			// Battery Layout
-			final LinearLayout bat_l = (LinearLayout) findViewById(R.id.bat_layout);
+			final RelativeLayout bat_l = (RelativeLayout) findViewById(R.id.bat_layout);
 			if (bat_l != null) {
 				class BatlSimpleOnGestureListener extends
 						SimpleOnGestureListener {
@@ -2670,16 +2636,24 @@ public class ReLaunch extends Activity {
 			setEinkController();
 
 			// First directory to get to
-			if (data.getExtras() != null
-					&& data.getExtras().getString("start_dir") != null) {
+			if (data.getExtras() != null && data.getExtras().getString("start_dir") != null) {
 				drawDirectory(data.getExtras().getString("start_dir"), -1);
 			} else {
-				if (prefs.getBoolean("saveDir", true))
-					drawDirectory(prefs.getString("lastdir", "/sdcard"), -1);
+				String lastDirPath = prefs.getString("lastdir", "/sdcard");
+				File lastDir = new File(lastDirPath);
+				if (prefs.getBoolean("saveDir", true) && lastDir.exists())
+					drawDirectory(lastDirPath, -1);
 				else {
-					String[] startDirs = prefs.getString("startDir",
-							"/sdcard,/media/My Files").split("\\,");
-					drawDirectory(startDirs[0], -1);
+					String[] startDirs = prefs.getString("startDir","/sdcard,/media/My Files").split("\\,");
+					boolean dirFound = false;
+					for (String dir : startDirs) if (new File(dir).exists()) {
+						drawDirectory(dir, -1);
+						dirFound = true;
+						break;
+					}
+					if (dirFound == false) {
+						drawDirectory("/", -1);
+					}
 				}
 			}
 		}
@@ -2711,10 +2685,10 @@ public class ReLaunch extends Activity {
 
 		ScreenOrientation.set(this, prefs);
 
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.title_txt));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutNavigate));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutBottom));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.title_txt));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutNavigate));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutBottom));
 	}
 
 	@Override
@@ -3634,107 +3608,113 @@ public class ReLaunch extends Activity {
 		v.setLayoutParams(p);
 	}
 
-	private List<FileDetails> sortFiles(List<FileDetails> list, SortMode sortMode) {
+	private List<FileDetails> sortFiles(List<FileDetails> list, SortKey sortKey, SortMode sortMode) {
 		class FileDetailsComparator implements Comparator<Object> {
-			SortMode primaryKey = null;
-            SortMode secondaryKey = null;
+			SortKey primaryKey = null;
+            SortKey secondaryKey = null;
+            SortMode mode = null;
 
-			FileDetailsComparator(SortMode primarykey) {
-                this.primaryKey = primarykey;
-                if (primarykey == SortMode.FileExtensionAscending
-                        || primarykey == SortMode.FileExtensionDescending
-                        || primarykey == SortMode.FileDateAscending
-                        || primarykey == SortMode.FileDateDescending
-                        || primarykey == SortMode.FileSizeAscending
-                        || primarykey == SortMode.FileSizeDescending) {
-                    this.secondaryKey = SortMode.FileNameAscending;
+			FileDetailsComparator(SortKey primarykey, SortMode mode) {
+				this.mode = mode;
+				this.primaryKey = primarykey;
+                if (primarykey == SortKey.FileExtension
+                        || primarykey == SortKey.FileDate
+                        || primarykey == SortKey.FileSize) {
+                    this.secondaryKey = SortKey.FileName;
                 }
 			}
 
-			private int compareProperty(FileDetails lhs, FileDetails rhs, SortMode sortMode) {
-                switch(sortMode) {
-                    case BookTitleAscending:
-                        return lhs.displayName.compareToIgnoreCase(rhs.displayName);
-                    case BookTitleDescending:
-                        return (-1) * lhs.displayName.compareToIgnoreCase(rhs.displayName);
-                    case FileNameAscending:
-                        return lhs.name.compareToIgnoreCase(rhs.name);
-                    case FileNameDescending:
-                        return (-1) * lhs.name.compareToIgnoreCase(rhs.name);
-                    case FileExtensionAscending:
-                        return lhs.extension.compareToIgnoreCase(rhs.extension);
-                    case FileExtensionDescending:
-                        return (-1) * lhs.extension.compareToIgnoreCase(rhs.extension);
-                    case FileDateAscending:
-                        return lhs.date.compareTo(rhs.date);
-                    case FileDateDescending:
-                        return (-1) * lhs.date.compareTo(rhs.date);
-                    case FileSizeAscending:
-                        return ((Long)lhs.size).compareTo((Long)rhs.size);
-                    case FileSizeDescending:
-                        return (-1) * ((Long)lhs.size).compareTo((Long)rhs.size);
+			private int compareProperty(FileDetails lhs, FileDetails rhs, SortKey sortKey, SortMode sortMode) {
+				int ret = 0;
+                switch(sortKey) {
+                    case BookTitle:
+                        ret = lhs.displayName.compareToIgnoreCase(rhs.displayName);
+                        break;
+                    case FileName:
+                        ret = lhs.name.compareToIgnoreCase(rhs.name);
+                        break;
+                    case FileExtension:
+                        ret = lhs.extension.compareToIgnoreCase(rhs.extension);
+                        break;
+                    case FileDate:
+                        ret = lhs.date.compareTo(rhs.date);
+                        break;
+                    case FileSize:
+                        ret = ((Long)lhs.size).compareTo((Long)rhs.size);
+                        break;
                     default:
                         Log.e("FileDitailsCompare", "Comparator not implemented for mode: " + sortMode);
                 }
-                return 0;
-            }
+                return (sortMode == SortMode.Ascending)? ret : ret * -1;
+			}
 
 			public int compare(Object lhs, Object rhs) {
-                int eq = compareProperty((FileDetails) lhs, (FileDetails) rhs, primaryKey);
+                int eq = compareProperty((FileDetails) lhs, (FileDetails) rhs, primaryKey, mode);
                 if (eq == 0 && secondaryKey != null) {
-                    eq = compareProperty((FileDetails) lhs, (FileDetails) rhs, secondaryKey);
+                    eq = compareProperty((FileDetails) lhs, (FileDetails) rhs, secondaryKey, SortMode.Ascending);
                 }
 
                 return eq;
 			}
 		}
-		FileDetailsComparator comparator = new FileDetailsComparator(sortMode);
+		FileDetailsComparator comparator = new FileDetailsComparator(sortKey, sortMode);
 		Collections.sort(list, comparator);
 		return list;
 	}
 
 	private void menuSort() {
 		final String[] orderList;
+		final int currentSortKey[] = new int[1];
+
 		if (prefs.getBoolean("showBookTitles", false)) {
-			orderList = new String[4];
-            orderList[0] = getString(R.string.jv_relaunchx_sort_title_dir);
-            orderList[1] = getString(R.string.jv_relaunchx_sort_title_rev);
-			orderList[2] = getString(R.string.jv_relaunchx_sort_file_dir);
-			orderList[3] = getString(R.string.jv_relaunchx_sort_file_rev);
+			orderList = new String[2];
+            orderList[0] = getString(R.string.jv_relaunchx_sort_title);
+			orderList[1] = getString(R.string.jv_relaunchx_sort_file);
 		} else {
-			orderList = new String[8];
-			orderList[0] = getString(R.string.jv_relaunchx_sort_file_dir);
-			orderList[1] = getString(R.string.jv_relaunchx_sort_file_rev);
-			orderList[2] = getString(R.string.jv_relaunchx_sort_extension_dir);
-			orderList[3] = getString(R.string.jv_relaunchx_sort_extension_rev);
-			orderList[4] = getString(R.string.jv_relaunchx_sort_size_dir);
-			orderList[5] = getString(R.string.jv_relaunchx_sort_size_rev);
-            orderList[6] = getString(R.string.jv_relaunchx_sort_date_dir);
-            orderList[7] = getString(R.string.jv_relaunchx_sort_date_rev);
+			orderList = new String[4];
+			orderList[0] = getString(R.string.jv_relaunchx_sort_file);
+			orderList[1] = getString(R.string.jv_relaunchx_sort_extension);
+			orderList[2] = getString(R.string.jv_relaunchx_sort_size);
+            orderList[3] = getString(R.string.jv_relaunchx_sort_date);
 		}
+		int sortKey = prefs.getInt("sortKey", 0);
+		if (sortKey > orderList.length - 1)
+			sortKey = 0;
+		currentSortKey[0] = sortKey;
 		int sortMode = prefs.getInt("sortMode", 0);
-		if (sortMode > orderList.length - 1)
+		if (sortMode > 1)
 			sortMode = 0;
+
+		DialogInterface.OnClickListener onApplySorting = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				SharedPreferences.Editor editor = prefs.edit();
+				int sortMode = 1;
+				if (which == -1)
+					sortMode = 0; //Ascending
+				editor.putInt("sortMode", sortMode);
+				editor.putInt("sortKey", currentSortKey[0]);
+				editor.commit();
+				setSortMode(currentSortKey[0], sortMode);
+				dialog.dismiss();
+				drawDirectory(currentRoot, -1);
+			}
+		};
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(ReLaunch.this);
 		builder.setTitle(R.string.jv_relaunchx_sort_header);
-		builder.setSingleChoiceItems(orderList, sortMode,
+		builder.setSingleChoiceItems(orderList, currentSortKey[0],
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int i) {
-						SharedPreferences.Editor editor = prefs.edit();
-						editor.putInt("sortMode", i);
-						editor.commit();
-						setSortMode(i);
-						dialog.dismiss();
-						drawDirectory(currentRoot, -1);
+						currentSortKey[0] = i;
 					}
 				});
-		builder.setNegativeButton(
-				getResources().getString(R.string.jv_relaunchx_cancel),
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						dialog.dismiss();
-					}
-				});
+				builder.setPositiveButton(
+						getResources().getString(R.string.jv_relaunchx_sort_asc),
+						onApplySorting);
+				builder.setNegativeButton(
+						getResources().getString(R.string.jv_relaunchx_sort_dsc),
+						onApplySorting);
 		builder.show();
 	}
 
@@ -3750,20 +3730,25 @@ public class ReLaunch extends Activity {
 		super.onDestroy();
 	}
 
-	private void setSortMode(int i) {
+	private void setSortMode(int key, int mode) {
 		if ((!prefs.getBoolean("showBookTitles", false))) {
-            i += 2; //skip Book Title (Asc/Desc)
-            if (i > 9) {
-                Log.e("SortMode", "Index outsied of enum: ShowBookTitles=false, index " + i);
-                i = 0;
+			key += 1; //Skip stort by Book Title enum value.
+            if (key > 3) {
+                Log.e("SortKey", "Index outside of enum: ShowBookTitles=false, index " + key);
+                key = 0;
             }
         } else {
-            if (i > 3) {
-                Log.e("SortMode", "Index outsied of enum: ShowBookTitle=true, index " + i);
-                i = 0;
+            if (key > 1) {
+                Log.e("SortKey", "Index outside of enum: ShowBookTitle=true, index " + key);
+                key = 0;
             }
         }
-        sortMode = SortMode.values()[i];
+        if (mode > 1) {
+			Log.e("SortMode", "Index outside of enum: index " + mode);
+			mode = 0;
+		}
+        sortKey = SortKey.values()[key];
+        sortMode = SortMode.values()[mode];
 	}
 
 	@Override
@@ -3836,7 +3821,7 @@ public class ReLaunch extends Activity {
 		Bitmap cover = null;
 		final Dialog dialog = new Dialog(this, android.R.style.Theme_Light_NoTitleBar_Fullscreen);
 		dialog.setContentView(R.layout.bookinfo);
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, dialog.findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, dialog.findViewById(R.id.linearLayoutTop));
 
 		Parser parser = new InstantParser();
 		EBook eBook = parser.parse(file, true);
@@ -3900,7 +3885,7 @@ public class ReLaunch extends Activity {
 			}
 		});
 
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutTop));
 		dialog.show();
 	}
 

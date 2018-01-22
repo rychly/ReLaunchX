@@ -5,12 +5,11 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar" >
 
         <ImageView
             android:id="@+id/imageView1"
@@ -29,9 +28,9 @@
             android:focusable="false"
             android:gravity="left|center_vertical"
             android:inputType="textMultiLine"
-            android:paddingLeft="5.3dp"
+            android:paddingLeft="8dp"
             android:text="@string/prefs_layout_title"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
 
@@ -43,11 +42,11 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginRight="1dp"
             android:layout_weight="2.8"
             android:background="@drawable/main_button"
-            android:minWidth="64dp"
+            android:minWidth="96dp"
             android:src="@drawable/ci_exit" />
     </LinearLayout>
 
@@ -61,7 +60,7 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="5.3dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:duplicateParentState="true"
             android:fadeScrollbars="false"
@@ -70,9 +69,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayoutBottom"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5.3dp" >
+            style="@style/LinearLayoutToolbar"
+            android:layout_marginTop="8dp" >
 
             <ImageButton
                 android:id="@+id/btn_scrollup"
@@ -86,7 +84,7 @@
                 android:id="@+id/btn_scrolldown"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginLeft="2.7dp"
+                android:layout_marginLeft="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/main_button"
                 android:src="@drawable/ci_arrowdown" />

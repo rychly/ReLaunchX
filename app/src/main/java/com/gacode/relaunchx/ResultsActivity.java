@@ -10,8 +10,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import ebook.EBook;
-import ebook.parser.InstantParser;
-import ebook.parser.Parser;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,7 +28,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
-import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -44,7 +41,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -207,10 +203,8 @@ public class ResultsActivity extends Activity {
 			TextView tv1 = holder.tv1;
 			TextView tv2 = holder.tv2;
 
-			tv2.setTextSize(TypedValue.COMPLEX_UNIT_PX, Integer.parseInt(prefs
-					.getString("firstLineFontSizePx", "20")));
-			tv1.setTextSize(TypedValue.COMPLEX_UNIT_PX, Integer.parseInt(prefs
-					.getString("secondLineFontSizePx", "16")));
+			SizeManipulation.AdjustWithPreferencesFileListLine1(app, prefs, tv2);
+			SizeManipulation.AdjustWithPreferencesFileListLine2(app, prefs, tv1);
 
 			LinearLayout tvHolder = holder.tvHolder;
 			ImageView iv = holder.iv;
@@ -288,48 +282,26 @@ public class ResultsActivity extends Activity {
 				}
 
 				// setup icon
-				if (prefs.getString("firstLineIconSizePx", "48").equals("0")) {
-					iv.setVisibility(View.GONE);
-				} else {
-					Drawable d = app.specialIcon(fullName, item.get("type")
-							.equals("dir"));
+				if (SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv))
+				{
+					Drawable d = app.specialIcon(fullName, item.get("type").equals("dir"));
 					if (d != null)
-						iv.setImageBitmap(scaleDrawable(d, Integer
-								.parseInt(prefs.getString(
-										"firstLineIconSizePx", "48"))));
+						SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, d);
 					else {
 						String rdrName = app.readerName(fname);
 						if (rdrName.equals("Nope")) {
 							File f = new File(fullName);
 							if (f.length() > app.viewerMax)
-								iv.setImageBitmap(scaleDrawableById(
-										R.drawable.file_notok, Integer
-												.parseInt(prefs.getString(
-														"firstLineIconSizePx",
-														"48"))));
+								SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.file_notok);
 							else
-								iv.setImageBitmap(scaleDrawableById(
-										R.drawable.file_ok, Integer
-												.parseInt(prefs.getString(
-														"firstLineIconSizePx",
-														"48"))));
+								SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.file_ok);
 						} else if (rdrName.startsWith("Intent:"))
-							iv.setImageBitmap(scaleDrawableById(
-									R.drawable.icon, Integer.parseInt(prefs
-											.getString("firstLineIconSizePx",
-													"48"))));
+							SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.icon);
 						else {
 							if (icons.containsKey(rdrName))
-								iv.setImageBitmap(scaleDrawable(icons
-										.get(rdrName),
-										Integer.parseInt(prefs.getString(
-												"firstLineIconSizePx", "48"))));
+								SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, icons.get(rdrName));
 							else
-								iv.setImageBitmap(scaleDrawableById(
-										R.drawable.file_ok, Integer
-												.parseInt(prefs.getString(
-														"firstLineIconSizePx",
-														"48"))));
+								SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.file_ok);
 						}
 					}
 				}
@@ -1070,8 +1042,8 @@ public class ResultsActivity extends Activity {
 			}
 		});
 		ScreenOrientation.set(this, prefs);
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutNavigate));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutNavigate));
 	}
 
 	@Override

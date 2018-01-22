@@ -24,8 +24,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/LinearLayoutToolbar"
         android:layout_marginLeft="4dp"
         android:background="@color/normal_bg"
         android:orientation="vertical" >

@@ -3,9 +3,9 @@
 	android:id="@android:id/text1"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:textAppearance="@style/sonyTextAppearanceMenu"
+	android:textAppearance="?android:attr/textAppearanceLarge"
 	android:gravity="center_vertical"
-	android:textColor="@android:color/black"
 	android:paddingLeft="6dip"
-	android:minHeight="37dp"
+	android:textColor="@android:color/black"
+	android:minHeight="?android:attr/listPreferredItemHeight"
 />

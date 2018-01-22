@@ -4,14 +4,14 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="horizontal"
-    android:paddingBottom="1.3dp"
-    android:paddingTop="1.3dp" >
+    android:paddingBottom="2dp"
+    android:paddingTop="2dp" >
 
     <ImageView
         android:id="@+id/wf_icon"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="2.7dp"
+        android:layout_marginLeft="4dp"
         android:background="@color/normal_bg"
         android:src="@drawable/dir_ok" >
     </ImageView>
@@ -20,7 +20,7 @@
         android:id="@+id/linearLayoutTop"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="2.7dp"
+        android:layout_marginLeft="4dp"
         android:background="@color/normal_bg"
         android:orientation="vertical" >
 
@@ -28,11 +28,11 @@
             android:id="@+id/wf_ssid"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:background="@color/normal_bg"
             android:gravity="center_vertical"
             android:text="SSID"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg" >
         </TextView>
 
@@ -40,11 +40,11 @@
             android:id="@+id/wf_capabilities"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:background="@color/normal_bg"
             android:gravity="center_vertical"
             android:text="capabilities"
-            android:textAppearance="@style/sonyTextAppearanceSmall"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/normal_fg" >
         </TextView>
 
@@ -52,11 +52,11 @@
             android:id="@+id/wf_other"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:background="@color/normal_bg"
             android:gravity="center_vertical"
             android:text="other"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg" >
         </TextView>
     </LinearLayout>

@@ -1,11 +1,9 @@
 package com.gacode.relaunchx;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.R.integer;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -29,7 +27,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.os.SystemClock;
 import android.view.MotionEvent;
@@ -642,8 +639,8 @@ public class PrefsActivity extends PreferenceActivity implements
 		}
 
 		ScreenOrientation.set(this, prefs);
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutTop));
-		ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, findViewById(R.id.linearLayoutBottom));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutTop));
+		SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, findViewById(R.id.linearLayoutBottom));
 	}
 
 	@Override
@@ -1437,8 +1434,8 @@ public class PrefsActivity extends PreferenceActivity implements
 			LayoutInflater inflater = (LayoutInflater) getApplicationContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			final View prefView = inflater.inflate(R.layout.prefs_main, null);
-			ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, prefView.findViewById(R.id.linearLayoutTop));
-			ViewManipulation.AdjustViewMinHeightWithPreferences(app, prefs, prefView.findViewById(R.id.linearLayoutBottom));
+			SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, prefView.findViewById(R.id.linearLayoutTop));
+			SizeManipulation.AdjustWithPreferencesToolbarMinHeight(app, prefs, prefView.findViewById(R.id.linearLayoutBottom));
 			prefScreen.getDialog().setContentView(prefView);
 			final ListView prefListView = (ListView) prefView
 					.findViewById(android.R.id.list);

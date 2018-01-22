@@ -9,8 +9,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar" >
 
         <ImageView
             android:id="@+id/imageView1"
@@ -70,8 +69,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayoutBottom"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            style="@style/LinearLayoutToolbar"
             android:layout_marginTop="8dp" >
 
             <ImageButton

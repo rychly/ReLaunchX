@@ -4,12 +4,11 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/LinearLayoutToolbar"
         android:layout_weight="0" >
 
         <LinearLayout
@@ -17,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@color/normal_bg_gray"
             android:orientation="vertical" >
@@ -29,12 +28,12 @@
                 android:layout_gravity="center"
                 android:gravity="left|center"
                 android:maxLines="1"
-                android:paddingBottom="1.3dp"
-                android:paddingLeft="5.3dp"
-                android:paddingRight="1.3dp"
-                android:paddingTop="1.3dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:text="@string/editor_layout_viewtitle"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>
@@ -48,12 +47,12 @@
                 android:focusable="false"
                 android:gravity="left"
                 android:inputType="textMultiLine"
-                android:paddingBottom="1.3dp"
-                android:paddingLeft="5.3dp"
-                android:paddingRight="1.3dp"
-                android:paddingTop="1.3dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="2dp"
+                android:paddingTop="2dp"
                 android:text="Filename"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
 
@@ -67,12 +66,12 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="0"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_save"
-            android:minWidth="64dp"
-            android:paddingRight="5.3dp"
+            android:minWidth="96dp"
+            android:paddingRight="8dp"
             android:textColor="@color/normal_fg"
             android:text="@string/editor_layout_save" >
         </Button>
@@ -82,11 +81,11 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_del"
-            android:minWidth="64dp"
-            android:paddingRight="5.3dp"
+            android:minWidth="96dp"
+            android:paddingRight="8dp"
             android:textColor="@color/normal_fg"
             android:text="@string/editor_layout_cancel" >
         </Button>
@@ -95,12 +94,12 @@
     <TextView
         android:id="@+id/divider"
         android:layout_width="fill_parent"
-        android:layout_height="1.3dp"
-        android:layout_marginTop="2.7dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
         android:layout_weight="0"
         android:background="@color/normal_bg_gray"
         android:text="TextView"
-        android:textAppearance="@style/sonyTextAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" >
     </TextView>
 
@@ -108,11 +107,11 @@
         android:id="@+id/edit_txt"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="2.7dp"
+        android:layout_marginTop="4dp"
         android:layout_weight="1"
         android:background="#ffffff"
         android:inputType="textMultiLine"
-        android:textAppearance="@style/sonyTextAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#000000"
         android:typeface="monospace" >
 

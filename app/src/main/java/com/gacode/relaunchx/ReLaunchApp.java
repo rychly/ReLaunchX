@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -702,7 +703,7 @@ public class ReLaunchApp extends Application {
 		AlertDialog.Builder builder = new AlertDialog.Builder(a);
 		WebView wv = new WebView(a);
 
-        builder.setTitle("ReLaunch");
+        builder.setTitle("About");
 		// String str = "<h1><center>ReLaunch</center></h1>"
 		// + "<center><b>Reader launcher for Nook Simple Touch</b></center><br>"
 		// + "<center>Version: <b>" + vers + "</b></center><br>"
@@ -711,8 +712,12 @@ public class ReLaunchApp extends Application {
 		String str = getResources().getString(R.string.jv_rla_about_prev)
 				+ vers + getResources().getString(R.string.jv_rla_about_post);
         if (!DeviceInfo.isCompatibleDevice(a.getApplication())) {
-            str += "<hr><u>This e-reader is not approved yet:</u>"
-					+ "<table>"
+            str += "<hr>ReLaunchX has not been tested on this device yet. Let us know how it works for you.<br/>";
+		} else {
+        	str += "<hr>ReLaunchX has been reported to work well on this device but there may be insufficient testing.<br/>";
+		}
+
+			str += "<table>"
 					+ "<tr><td><b>DEVICE:</b></td><td>" + Build.DEVICE + "</td></tr>"
                     + "<tr><td><b>MANUFACTURER:&nbsp</b></td><td>" + Build.MANUFACTURER + "</td></tr>"
                     + "<tr><td><b>MODEL:</b></td><td>" + Build.MODEL + "</td></tr>"
@@ -721,7 +726,6 @@ public class ReLaunchApp extends Application {
 					+ "<tr><td><b>API level:</b></td><td>" + Build.VERSION.SDK + "</td></tr>"
 					+ "</table>"
             ;
-        }
 		wv.loadDataWithBaseURL(null, str, "text/html", "utf-8", null);
 		builder.setView(wv);
 		// "Ok"
@@ -770,13 +774,15 @@ public class ReLaunchApp extends Application {
 		if (fullScreen) {
 			if (Build.VERSION.SDK_INT >= 14) {
 				a.sendBroadcast(new Intent("hide_status_bar"));
+			} else {
+				a.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			}
-			a.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		} else {
 			if (Build.VERSION.SDK_INT >= 14) {
 				a.sendBroadcast(new Intent("show_status_bar"));
+			} else {
+				a.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			}
-			a.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 	}
 
@@ -842,4 +848,13 @@ public class ReLaunchApp extends Application {
 		editor.commit();
 	}
 
+	@Override
+	public void onCreate()
+	{
+		super.onCreate();
+
+//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+//		.detectAll()
+//		.build());
+	}
 }

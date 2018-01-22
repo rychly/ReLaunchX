@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- hdpi version search.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:padding="5.3dp" >
+    android:padding="8dp" >
 
     <LinearLayout
         android:id="@+id/linearLayoutTop"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        style="@style/LinearLayoutToolbar" >
 
         <ImageView
             android:id="@+id/results_icon"
@@ -29,9 +27,9 @@
             android:focusable="false"
             android:gravity="left|center_vertical"
             android:inputType="textMultiLine"
-            android:paddingLeft="5.3dp"
+            android:paddingLeft="8dp"
             android:text="@string/search_layout_title"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" />
 
@@ -40,11 +38,11 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
-            android:layout_marginRight="0.7dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="1dp"
             android:layout_weight="2.8"
             android:background="@drawable/main_button"
-            android:minWidth="64dp"
+            android:minWidth="96dp"
             android:src="@drawable/ci_exit" />
     </LinearLayout>
 
@@ -53,7 +51,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="5.3dp" >
+        android:layout_marginTop="8dp" >
 
         <TextView
             android:id="@+id/textView1"
@@ -62,7 +60,7 @@
             android:layout_gravity="center"
             android:layout_weight="1.2"
             android:text="@string/search_layout_case_sensitive"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
         </TextView>
@@ -88,7 +86,7 @@
             android:layout_gravity="center"
             android:layout_weight="1.2"
             android:text="@string/search_layout_search_known"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
         </TextView>
@@ -114,7 +112,7 @@
             android:layout_gravity="center"
             android:layout_weight="1.2"
             android:text="@string/search_layout_sort_search"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
         </TextView>
@@ -140,7 +138,7 @@
             android:layout_gravity="center"
             android:layout_weight="1.2"
             android:text="@string/search_layout_search_as"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
         </TextView>
@@ -168,7 +166,7 @@
             android:layout_gravity="center"
             android:layout_weight="1.2"
             android:text="@string/search_layout_search_in"
-            android:textAppearance="@style/sonyTextAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
             android:textStyle="bold" >
         </TextView>
@@ -202,7 +200,7 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:text="@string/search_layout_search_root"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>
@@ -213,7 +211,7 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:text="@string/search_layout_search_root_comment"
-                android:textAppearance="@style/sonyTextAppearanceSmall"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/normal_fg_gray" >
             </TextView>
         </LinearLayout>
@@ -221,7 +219,7 @@
         <EditText
             android:id="@+id/search_root"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_gravity="center"
             android:textColor="@color/normal_fg"
             android:layout_weight="1" >
@@ -236,9 +234,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginTop="2.7dp"
+        android:layout_marginTop="4dp"
         android:text="@string/search_layout_search_string"
-        android:textAppearance="@style/sonyTextAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/normal_fg"
         android:textStyle="bold" >
     </TextView>
@@ -255,7 +253,7 @@
             android:layout_weight="4"
             android:imeOptions="actionSearch"
             android:textColor="@color/normal_fg"
-            android:textAppearance="@style/sonyTextAppearanceMedium" >
+            android:textAppearance="?android:attr/textAppearanceLarge" >
         </EditText>
 
         <Button
@@ -263,12 +261,13 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="2.7dp"
+            android:layout_marginLeft="4dp"
             android:background="@drawable/main_button"
             android:drawableLeft="@drawable/ci_run"
-            android:minWidth="64dp"
-            android:paddingRight="10.7dp"
+            android:minWidth="96dp"
+            android:paddingRight="16dp"
             android:textColor="@color/normal_fg"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/search_layout_search" >
         </Button>
     </LinearLayout>
@@ -277,14 +276,15 @@
         android:id="@+id/search_all"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/main_button"
         android:drawableLeft="@drawable/ci_books"
-        android:paddingBottom="5.3dp"
-        android:paddingLeft="80dp"
-        android:paddingRight="80dp"
-        android:paddingTop="5.3dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="120dp"
+        android:paddingRight="120dp"
+        android:paddingTop="8dp"
         android:textColor="@color/normal_fg"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/search_layout_show_all_books" >
     </Button>
 

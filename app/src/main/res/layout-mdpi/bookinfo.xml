@@ -8,8 +8,7 @@
 
 	<LinearLayout
 		android:id="@+id/linearLayoutTop"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" >
+		style="@style/LinearLayoutToolbar" >
 
 		<ImageView
 			android:id="@+id/book_icon"

@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:paddingBottom="5.3dp" >
+    android:paddingBottom="8dp" >
 
     <TableLayout
         android:id="@+id/tableLayout1"
@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingBottom="0dp"
-        android:paddingRight="6.6dp"
-        android:paddingTop="3.3dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
         android:stretchColumns="1" >
 
         <TableRow
@@ -30,7 +30,7 @@
                 android:layout_gravity="right|center_vertical"
                 android:gravity="center_horizontal"
                 android:text="@string/filters_item_layout_rule"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>
@@ -49,18 +49,17 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center"
-                    android:layout_marginLeft="2.7dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:textColor="@color/normal_fg"
-                    android:paddingLeft="5.3dp" >
+                    android:paddingLeft="8dp" >
                 </Spinner>
 
                 <ImageButton
                     android:id="@+id/filters_delete"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_gravity="top|center_horizontal"
-                    android:layout_marginLeft="2.7dp"
+                    android:layout_marginLeft="4dp"
                     android:background="@drawable/main_button"
                     android:src="@drawable/ci_delsmall" >
                 </ImageButton>
@@ -71,7 +70,7 @@
             android:id="@+id/tableRow2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="5.3dp" >
+            android:layout_marginTop="8dp" >
 
             <TextView
                 android:id="@+id/filters_type_title"
@@ -79,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:text="@string/filters_item_layout_value"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>
@@ -97,10 +96,10 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="2.7dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_weight="1"
                     android:textColor="@color/normal_fg"
-                    android:paddingLeft="5.3dp" >
+                    android:paddingLeft="8dp" >
                 </Button>
             </LinearLayout>
         </TableRow>
@@ -109,7 +108,7 @@
             android:id="@+id/tableRow3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="5.3dp" >
+            android:layout_marginTop="8dp" >
 
             <TextView
                 android:id="@+id/filters_pad1"
@@ -118,7 +117,7 @@
                 android:layout_gravity="center"
                 android:text="Value:"
                 android:textColor="@color/normal_fg"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:visibility="invisible" >
             </TextView>
 
@@ -129,7 +128,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/filters_item_layout_and"
-                android:textAppearance="@style/sonyTextAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/normal_fg"
                 android:textStyle="bold" >
             </TextView>

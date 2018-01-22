@@ -43,7 +43,7 @@
 			android:summary="@string/pref_i_fileFontSize_sum"
 			android:title="@string/pref_i_fileFontSize_title" />
 		<EditTextPreference
-			android:defaultValue="50"
+			android:defaultValue="60"
 			android:enabled="true"
 			android:key="buttonMinHeight"
 			android:layout="@layout/pref_child"
@@ -104,7 +104,7 @@
 					android:summaryOn="@string/pref_i_saveDir_on"
 					android:title="@string/pref_i_saveDir_title" />
 				<CheckBoxPreference
-					android:defaultValue="true"
+					android:defaultValue="false"
 					android:key="notLeaveStartDir"
 					android:layout="@layout/pref_child"
 					android:persistent="true"
@@ -205,36 +205,15 @@
 					android:summaryOn="@string/pref_i_showNew_on"
 					android:title="@string/pref_i_showNew_title" />
 
-				<EditTextPreference
-					android:defaultValue="20"
+				<CheckBoxPreference
+					android:defaultValue="true"
 					android:enabled="true"
-					android:key="firstLineFontSizePx"
+					android:key="showIcon"
 					android:layout="@layout/pref_child"
-					android:numeric="integer"
 					android:persistent="true"
-					android:selectable="true"
-					android:summary="@string/pref_i_firstLineFontSizePx_sum"
-					android:title="@string/pref_i_firstLineFontSizePx_title" />
-				<EditTextPreference
-					android:defaultValue="16"
-					android:enabled="true"
-					android:key="secondLineFontSizePx"
-					android:layout="@layout/pref_child"
-					android:numeric="integer"
-					android:persistent="true"
-					android:selectable="true"
-					android:summary="@string/pref_i_secondLineFontSizePx_sum"
-					android:title="@string/pref_i_secondLineFontSizePx_title" />
-				<EditTextPreference
-					android:defaultValue="48"
-					android:enabled="true"
-					android:key="firstLineIconSizePx"
-					android:layout="@layout/pref_child"
-					android:numeric="integer"
-					android:persistent="true"
-					android:selectable="true"
-					android:summary="@string/pref_i_firstLineIconSizePx_sum"
-					android:title="@string/pref_i_firstLineIconSizePx_title" />
+					android:summaryOff="@string/pref_i_showIcon_off"
+					android:summaryOn="@string/pref_i_showIcon_on"
+					android:title="@string/pref_i_showIcon_title" />
 
 				<CheckBoxPreference
 					android:defaultValue="true"
@@ -432,9 +411,7 @@
 					android:summaryOn="@string/pref_i_confirmNonEmptyDirDelete_on"
 					android:title="@string/pref_i_confirmNonEmptyDirDelete_title" />
 			</PreferenceScreen>
-			<PreferenceScreen
-				android:key="psButtons"
-				android:title="@string/pref_s_buttons_title" >
+			<PreferenceScreen android:title="@string/pref_s_buttons_title" android:key="psButtons">
 				<ListPreference
 					android:defaultValue="OPENN"
 					android:enabled="true"
@@ -757,7 +734,7 @@
 					android:title="@string/pref_i_customScroll_title" />
 
 				<EditTextPreference
-					android:defaultValue="25"
+					android:defaultValue="30"
 					android:enabled="true"
 					android:key="scrollWidth"
 					android:layout="@layout/pref_child"
