@@ -5,7 +5,7 @@ It is assumed that the user library is organized in an ordered structure of fold
 ReLaunchX supports flexible configuration of many on-screen buttons for quick access to certain features of the program and run third party applications.
 
 Non-obvious possibilities:
-* Some functions of the program available only with run as a desktop shell for system.&lt;br&gt;
+* Some functions of the program available only with run as a desktop shell for system.
 * Some functions require a device with root-access, or only implemented for Nook Simple Touch (you will receive appropriate notice).
 * On-screen scrolling buttons support double click to navigate to the specified number of percents in list and long-click to quickly move to the end (beginning) of the file list. This feature often will not work properly, be careful (you need to enable it in settings).
 * If you open with the button, for example, the second-to-read book, it will be after the opening of the first. Thus, you will start in round fashion two (three, etc., depending on the configuration), the last-readed books.
@@ -71,6 +71,13 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 2.0.0
+ * Add support for Onyx Boox Max2
+ * Rework of hdpi layout, size increase - it was very small
+ * UI speed improvements
+ * Rework of search screen. Add option for hidden items.
+ * New list mode: extensions instead of icons. Works faster. Icons can be enabled via settings.
+ * Version increased to 2.0 to stop confusion about original ReLaunch v.1.4.4 from some fork.
 * 1.3.0
  * Adds Lock Screen.
 * 1.2.3 

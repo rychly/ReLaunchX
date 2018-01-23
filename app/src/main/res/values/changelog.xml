@@ -3,22 +3,13 @@
 
     <string name="about_help">
         &lt;b&gt;HELP&lt;/b&gt;&lt;br&gt;
-        ReLaunchX is a versatile reading programs launcher and system-wide shell for Onyx Boox Max.
-        It is a continuation of ReLaunch 1.3.8 made for Nook Simple Touch (also supported by Sony PRS-T1).&lt;br&gt;
-        It is assumed that the user library is organized in an ordered structure
-        of folders and files have names of books that match their names.&lt;br&gt;
-        ReLaunchX supports flexible configuration of many on-screen buttons for quick
-        access to certain features of the program and run third party applications.&lt;br&gt;
-        Non-obvious possibilities:&lt;br&gt;
-        - Some functions of the program available only with run as a desktop shell for system.&lt;br&gt;
-        - Some functions require a device with root-access, or only implemented for
-        Nook Simple Touch (you will receive appropriate notice).&lt;br&gt;
-        - On-screen scrolling buttons support double click to navigate to the specified
-        number of percents in list and long-click to quickly move to the end (beginning) of the file list.
-        This feature often will not work properly, be careful (you need to enable it in settings).&lt;br&gt;
-        - If you open with the button, for example, the second-to-read book, it will be after the opening of the first.
-        Thus, you will start in round fashion two (three, etc., depending on the configuration), the last-readed books.&lt;br&gt;
-        &lt;br&gt;
+        ReLaunchX is books manager and launcher for e-ink tablets. Developed and tested on Onyx Boox Max.
+        It is a code-fork and continuation of ReLaunch 1.3.8.&lt;br&gt;&lt;br&gt;
+        Non-obvious:&lt;br&gt;
+        - Bottom task toolbar is available only when run as a launcher.&lt;br&gt;
+        - Some functions are disabled on non-rooted devices.&lt;br&gt;
+        - Buttons and other things react on tap, long-tap, double-tap. Check the settings.
+        &lt;br&gt;&lt;br&gt;
     </string>
     <string name="about_appr">
         &lt;b>APPRECIATIONS&lt;/b>&lt;br>

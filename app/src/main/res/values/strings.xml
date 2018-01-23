@@ -242,8 +242,8 @@
 	<string name="jv_relaunchx_fileinfo_perm">Permissions:</string>
 	<string name="jv_rla_activity">Activity</string>
 	<string name="jv_rla_not_found">not found!</string>
-	<string name="jv_rla_about_prev">&lt;h1&gt;&lt;center&gt;ReLaunchX&lt;/center&gt;&lt;/h1&gt;&lt;center&gt;&lt;b&gt; E-ink reader launcher&lt;/b&gt;&lt;/center&gt;&lt;br&gt;&lt;center&gt;Version:\n\t\t&lt;b&gt;</string>
-	<string name="jv_rla_about_post">&lt;/b&gt;&lt;/center&gt;&lt;br&gt;&lt;center&gt;Source\n\t\tcode: &lt;a\n\t\thref=\"https://github.com/Leszek111/ReLaunchX\"&gt;https://github.com/Leszek111/ReLaunchX.git&lt;/a&gt;&lt;/center&gt;\n\t</string>
+	<string name="jv_rla_about_prev">&lt;h1&gt;&lt;center&gt;ReLaunchX&lt;/center&gt;&lt;/h1&gt;&lt;center&gt;&lt;b&gt; E-ink tablet books manager and launcher&lt;/b&gt;&lt;/center&gt;&lt;br&gt;&lt;center&gt;Version:\n\t\t&lt;b&gt;</string>
+	<string name="jv_rla_about_post">&lt;/b&gt;&lt;/center&gt;&lt;br&gt;&lt;center&gt;Source\n\t\tcode: &lt;a\n\t\thref=\"https://github.com/Leszek111/ReLaunchX\"&gt;https://github.com/Leszek111/ReLaunchX.git&lt;/a&gt;&lt;/center&gt;\n\t&lt;br&gt;&lt;center&gt;F-droid\n\t\tbuild: &lt;a\n\t\thref=\"https://f-droid.org/packages/com.gacode.relaunchx\"&gt;https://f-droid.org/packages/com.gacode.relaunchx&lt;/a&gt;&lt;/center&gt;\n\t</string>
 	<string name="jv_rla_ok">OK</string>
 	<string name="jv_rla_see_changelog">Information</string>
 	<string name="jv_rla_whats_new_title">Information</string>
