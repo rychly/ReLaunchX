@@ -206,7 +206,7 @@
 					android:title="@string/pref_i_showNew_title" />
 
 				<CheckBoxPreference
-					android:defaultValue="true"
+					android:defaultValue="false"
 					android:enabled="true"
 					android:key="showIcon"
 					android:layout="@layout/pref_child"
@@ -234,6 +234,15 @@
 					android:summaryOn="@string/pref_i_doNotHyph_on"
 					android:title="@string/pref_i_doNotHyph_title" >
 				</CheckBoxPreference>
+
+				<CheckBoxPreference
+					android:defaultValue="false"
+					android:key="showFileDetails"
+					android:layout="@layout/pref_child"
+					android:persistent="true"
+					android:summaryOff="@string/pref_i_showFileDetails_off"
+					android:summaryOn="@string/pref_i_showFileDetails_on"
+					android:title="@string/pref_i_showFileDetails_title" />
 
 				<CheckBoxPreference
 					android:defaultValue="false"
@@ -354,14 +363,6 @@
 					android:summaryOff="@string/pref_i_showHidden_off"
 					android:summaryOn="@string/pref_i_showHidden_on"
 					android:title="@string/pref_i_showHidden_title" />
-				<CheckBoxPreference
-					android:defaultValue="false"
-					android:key="showFileDetails"
-					android:layout="@layout/pref_child"
-					android:persistent="true"
-					android:summaryOff="@string/pref_i_showFileDetails_off"
-					android:summaryOn="@string/pref_i_showFileDetails_on"
-					android:title="@string/pref_i_showFileDetails_title" />
 				<CheckBoxPreference
 					android:defaultValue="false"
 					android:key="hideKnownExts"

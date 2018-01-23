@@ -33,6 +33,25 @@
 			android:src="@drawable/dir_ok" >
 		</ImageView>
 
+		<TextView
+			android:id="@+id/textViewIcon"
+			android:layout_width="wrap_content"
+			android:minWidth="50dp"
+			android:layout_height="wrap_content"
+			android:minHeight="30dp"
+			android:padding="1dp"
+			android:layout_margin="1dp"
+			android:textColor="@color/normal_fg"
+			android:background="@drawable/bold_border"
+			android:singleLine="true"
+			android:textAlignment="center"
+			android:gravity="center"
+			android:textStyle="bold"
+			android:text="$>"
+			/>
+		<!--android:typeface="monospace"-->
+		<!--android:textSize="10dp"-->
+
 		<LinearLayout
 			android:id="@+id/fl_holder"
 			android:layout_width="fill_parent"

@@ -36,11 +36,12 @@ public class SearchActivity extends Activity {
 	int SEARCH_PATH;
 
 	SharedPreferences prefs;
-	Spinner searchAs;
+	CheckBox searchRegexp;
 	Spinner searchIn;
 	CheckBox searchCase;
 	CheckBox searchKnown;
 	CheckBox searchSort;
+	CheckBox searchIncHidden;
 	EditText searchRoot;
 	EditText searchTxt;
 	Button searchButton;
@@ -85,6 +86,7 @@ public class SearchActivity extends Activity {
 			Boolean case_sens;
 			Boolean known_only;
 			Boolean regexp;
+			Boolean incHidden;
 			String pattern;
 			Boolean search_sort;
 			int search_mode;
@@ -114,9 +116,15 @@ public class SearchActivity extends Activity {
 				}
 			}
 
-			private void compareAdd(String dname, String fname,
-					String fullPath, boolean is_dir) {
+			private void compareAdd(String dname, String fname, String fullPath, boolean is_dir) {
 				String item; // Item for comparison
+				if (incHidden == false) {
+					String[] parts = fullPath.split("/");
+					for(String part : parts) {
+						if (part.startsWith(".") == true)
+							return;
+					}
+				}
 				if (search_mode == SEARCH_FILE) {
 					if (known_only && app.readerName(fname).equals("Nope"))
 						return;
@@ -219,20 +227,22 @@ public class SearchActivity extends Activity {
 					case_sens = false;
 					known_only = true;
 					regexp = true;
+					incHidden = true;
 					pattern = ".*";
 					addEntries(root);
 				} else {
 					case_sens = searchCase.isChecked();
 					known_only = searchKnown.isChecked();
-					regexp = searchAs.getSelectedItemPosition() == 1;
+					regexp = searchRegexp.isChecked();
+					incHidden = searchIncHidden.isChecked();
 					pattern = searchTxt.getText().toString();
 					search_mode = searchIn.getSelectedItemPosition();
 
 					// Save all specific search settings
 					editor.putBoolean("searchCase", case_sens);
 					editor.putBoolean("searchKnown", known_only);
-					editor.putInt("searchAs",
-							searchAs.getSelectedItemPosition());
+					editor.putBoolean("searchRegexp", regexp);
+					editor.putBoolean("searchIncHidden", incHidden);
 					editor.putInt("searchIn",
 							searchIn.getSelectedItemPosition());
 					editor.putString("searchRoot", root);
@@ -309,8 +319,9 @@ public class SearchActivity extends Activity {
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		searchCase = (CheckBox) findViewById(R.id.search_case);
 		searchKnown = (CheckBox) findViewById(R.id.search_books_only);
+		searchIncHidden = (CheckBox) findViewById(R.id.search_include_hidden);
 		searchSort = (CheckBox) findViewById(R.id.search_sort);
-		searchAs = (Spinner) findViewById(R.id.search_as);
+		searchRegexp = (CheckBox) findViewById(R.id.search_as);
 		searchIn = (Spinner) findViewById(R.id.search_in);
 		searchRoot = (EditText) findViewById(R.id.search_root);
 		searchTxt = (EditText) findViewById(R.id.search_txt);
@@ -373,13 +384,11 @@ public class SearchActivity extends Activity {
 		// Set search sort checkbox
 		searchSort.setChecked(prefs.getBoolean("searchSort", true));
 
-		// Set search as spinner
-		ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
-				this, R.array.search_as_values,
-				android.R.layout.simple_spinner_item);
-		adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		searchAs.setAdapter(adapter1);
-		searchAs.setSelection(prefs.getInt("searchAs", 0), false);
+		// Set include hidden files in search result
+		searchIncHidden.setChecked(prefs.getBoolean("searchIncHidden", false));
+
+		// Set search regexp checkbox
+		searchRegexp.setChecked(prefs.getBoolean("searchRegexp", false));
 
 		// Set search in spinner
 		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
@@ -400,7 +409,7 @@ public class SearchActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		searchAs.setSelection(prefs.getInt("searchAs", 0), false);
+		//searchRegexp.setChecked(prefs.getBoolean("searchRegexp", false));
 		searchIn.setSelection(prefs.getInt("searchIn", 0), false);
 		app.generalOnResume(TAG, this);
 	}

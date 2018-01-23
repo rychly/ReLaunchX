@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="search_as_values">
-        <item>@string/arr_search_as_values_substring</item>
-        <item>@string/arr_search_as_values_regexp</item>
-    </string-array>
-
     <integer name="SEARCH_FILE">    0 </integer>
     <integer name="SEARCH_LASTDIR"> 1 </integer>
     <integer name="SEARCH_FPATH">   2 </integer>

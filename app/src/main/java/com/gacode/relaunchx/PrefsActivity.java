@@ -743,17 +743,17 @@ public class PrefsActivity extends PreferenceActivity implements
 					((ListPreference) findPreference("einkUpdateMode"))
 							.setValueIndex(1);
 				}
-			} else if (key.equals("fileFontSize")) {
-				do_pref_subrequest = false;
-				String sValue = sharedPreferences.getString("fileFontSize", "20");
-				int f1Size = (new Integer(sValue)).intValue();
-				int f2Size = f1Size*4/5;
-				((EditTextPreference) findPreference("firstLineFontSizePx"))
-					.setText(((Integer) f1Size).toString());
-				((EditTextPreference) findPreference("secondLineFontSizePx"))
-					.setText(((Integer) f2Size).toString());
-				do_pref_subrequest = true;
-			}
+			} //else if (key.equals("fileFontSize")) {
+//				do_pref_subrequest = false;
+//				String sValue = sharedPreferences.getString("fileFontSize", "20");
+//				int f1Size = (new Integer(sValue)).intValue();
+//				int f2Size = f1Size*4/5;
+//				((EditTextPreference) findPreference("firstLineFontSizePx"))
+//					.setText(((Integer) f1Size).toString());
+//				((EditTextPreference) findPreference("secondLineFontSizePx"))
+//					.setText(((Integer) f2Size).toString());
+//				do_pref_subrequest = true;
+//			}
 
 			if ((key.equals("showBookTitles"))
 					|| (key.equals("useFileManagerFunctions"))) {

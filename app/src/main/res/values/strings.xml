@@ -39,15 +39,14 @@
 	<string name="search_layout_case_sensitive">Case sensitive</string>
 	<string name="search_layout_search_known">Search known extensions only</string>
 	<string name="search_layout_sort_search">Sort search results</string>
-	<string name="search_layout_search_as">Search as</string>
-	<string name="search_layout_search_in">Search in</string>
-	<string name="search_layout_search_root">Search root</string>
-	<string name="search_layout_search_root_comment">May be directory or comma separated directories
-		list</string>
+	<string name="search_layout_search_as">Search as regular expression</string>
+	<string name="search_layout_search_in">Match inside:</string>
+	<string name="search_layout_search_root">Search path(s):</string>
+	<string name="search_layout_search_root_comment">comma separated</string>
 	<string name="search_layout_search_string">Search string</string>
-	<string name="search_layout_search">Search</string>
+	<string name="search_layout_search">Search:</string>
 	<string name="search_layout_cancel">Cancel</string>
-	<string name="search_layout_show_all_books">Show all books (known extensions) from search root
+	<string name="search_layout_show_all_books">Show all books (known extensions) from search path
 	</string>
 	<string name="search_layout_title">Search</string>
 	<string name="service_details_layout_kill">Kill</string>
@@ -364,8 +363,8 @@
 	<string name="pref_i_einkUpdateInterval_title">EInk Screen Full Update Interval</string>
 	<string name="pref_i_einkUpdateInterval_sum">How often EInk will be fully updated</string>
 	<string name="pref_i_showIcon_title">Show icons in file list</string>
-	<string name="pref_i_showIcon_on">Show icons</string>
-	<string name="pref_i_showIcon_off">No icons</string>
+	<string name="pref_i_showIcon_on">Show associated app icons</string>
+	<string name="pref_i_showIcon_off">Show file extensions (faster)</string>
 	<string name="pref_i_columnsDirsFiles_title">Files and directories list (default)</string>
 	<string name="pref_i_doNotHyph_off">Output filename in multi lines</string>
 	<string name="pref_i_doNotHyph_on">Output filename in single line</string>
@@ -504,8 +503,6 @@
 	<string name="pref_s_listSize_title">&gt; Size of lists</string>
 	<string name="pref_s_file_title">&gt; File manager settings</string>
 	<string name="pref_s_system_title">&gt; Service settings</string>
-	<string name="arr_search_as_values_substring">Substring</string>
-	<string name="arr_search_as_values_regexp">Regexp</string>
 	<string name="arr_search_in_values_1">File name</string>
 	<string name="arr_search_in_values_2">Innermost directory name</string>
 	<string name="arr_search_in_values_3">Full path including file name</string>
@@ -589,9 +586,9 @@
 	<string name="jv_relaunchx_sort_extension">File Extension</string>
 	<string name="jv_relaunchx_sort_date">File Modification Date</string>
 	<string name="jv_relaunchx_sort_size">File Size</string>
-	<string name="pref_i_showFileDetails_title">Show file details</string>
-	<string name="pref_i_showFileDetails_on">Show file size and file modification date.</string>
-	<string name="pref_i_showFileDetails_off">Don\'t show file size and file modification date.</string>
+	<string name="pref_i_showFileDetails_title">Show file details in second line</string>
+	<string name="pref_i_showFileDetails_on">Show file size and modification date.</string>
+	<string name="pref_i_showFileDetails_off">Don\'t show file size and modification date.</string>
 	<string name="jv_bookbase_noauthor">(no author)</string>
 	<string name="jv_bookbase_notitle">(no title)</string>
 	<string name="jv_advanced_mount_storage">Storage info</string>
@@ -608,5 +605,6 @@
 	<string name="lock_screen_empty_passwd">No password</string>
 	<string name="jv_relaunchx_sort_asc">↑ Ascending</string>
 	<string name="jv_relaunchx_sort_dsc">↓ Descending</string>
+	<string name="search_layout_search_inc_hidden">Include hidden files</string>
 
 </resources>

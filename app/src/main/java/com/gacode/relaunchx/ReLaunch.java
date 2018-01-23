@@ -356,6 +356,7 @@ public class ReLaunch extends Activity {
 		TextView tv2;
         TextView tvSizeDate;
 		ImageView iv;
+		TextView tvicon;
 		ImageView is;
 		LinearLayout tvHolder;
 	}
@@ -405,6 +406,7 @@ public class ReLaunch extends Activity {
 				holder.tv = (TextView) v.findViewById(R.id.fl_text);
                 holder.tv2 = (TextView) v.findViewById(R.id.fl_text2);
                 holder.tvSizeDate = (TextView) v.findViewById(R.id.fl_SizeDate);
+                holder.tvicon = (TextView) v.findViewById(R.id.textViewIcon);
 				holder.iv = (ImageView) v.findViewById(R.id.fl_icon);
 				holder.is = (ImageView) v.findViewById(R.id.fl_separator);
 				holder.tvHolder = (LinearLayout) v.findViewById(R.id.fl_holder);
@@ -465,11 +467,13 @@ public class ReLaunch extends Activity {
 
 				String sname = item.displayName;
 				// clean extension, if needed
-				if (prefs.getBoolean("hideKnownExts", false) && !prefs.getBoolean("showBookTitles", false)) {
+				if (prefs.getBoolean("showIcon", false) == false) {
+					if (item.extension != null)
+						sname = sname.substring(0, sname.length() - (item.extension.length() + 1));
+				} else if (prefs.getBoolean("hideKnownExts", false) && !prefs.getBoolean("showBookTitles", false)) {
 					for (int i = 0; i < exts.size(); i++) {
 						if (sname.endsWith(exts.get(i))) {
-							sname = sname.substring(0, sname.length()
-									- exts.get(i).length());
+							sname = sname.substring(0, sname.length() - exts.get(i).length());
 						}
 					}
 				}
@@ -490,7 +494,9 @@ public class ReLaunch extends Activity {
 								R.color.dir_bg));
 						tv.setTextColor(getResources().getColor(R.color.dir_fg));
 					}
-					SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.dir_ok);
+					if (SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.dir_ok)) {
+						holder.tvicon.setVisibility(View.GONE);
+					}
 				} else {
 					if (useFaces) {
 						if (app.history.containsKey(fname)) {
@@ -532,6 +538,7 @@ public class ReLaunch extends Activity {
 					// setup icon
 					if (SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv))
 					{
+						holder.tvicon.setVisibility(View.GONE);
 						Drawable d = app.specialIcon(item.fullPathName, false);
 						if (d != null)
 							SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, d);
@@ -552,6 +559,9 @@ public class ReLaunch extends Activity {
 									SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.file_ok);
 							}
 						}
+					} else {
+						iv.setVisibility(View.GONE);
+						holder.tvicon.setText(item.extension.toUpperCase());
 					}
 				}
 //TODO check the file bitmap and extension
