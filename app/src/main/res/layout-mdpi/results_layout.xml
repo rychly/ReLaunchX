@@ -120,13 +120,12 @@
         <GridView
             android:id="@+id/results_list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:duplicateParentState="true"
             android:numColumns="3"
             android:smoothScrollbar="false"
-            android:stretchMode="columnWidth" >
-        </GridView>
+            android:stretchMode="columnWidth"></GridView>
     </LinearLayout>
 
 </LinearLayout>
