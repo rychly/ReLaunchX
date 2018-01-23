@@ -47,7 +47,7 @@
 			android:textAlignment="center"
 			android:gravity="center"
 			android:textStyle="bold"
-			android:text="$>"
+			android:text=">"
 			/>
 		<!--android:typeface="monospace"-->
 		<!--android:textSize="10dp"-->

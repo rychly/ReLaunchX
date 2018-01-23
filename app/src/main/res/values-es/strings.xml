@@ -334,18 +334,6 @@
 		pantalla eInk</string>
 	<string name="pref_i_einkUpdateInterval_sum">Con qué frecuencia la pantalla se actualiza por
 		completo</string>
-	<string name="pref_i_firstLineFontSizePx_title">Tamaño de fuente en nombres de archivos/carpetas
-	</string>
-	<string name="pref_i_firstLineFontSizePx_sum">Tamaño de fuente en nobres de archivos y
-		directorios de cualquer lista... px</string>
-	<string name="pref_i_secondLineFontSizePx_title">Tamaño de fuente para nombres de directorios
-		adicionales</string>
-	<string name="pref_i_secondLineFontSizePx_sum">Tamaño de fuente para de otros directorios como
-		Favoritos y otras listas... px</string>
-	<string name="pref_i_firstLineIconSizePx_title">Archivos y el tamaño de los iconos de directorios
-	</string>
-	<string name="pref_i_firstLineIconSizePx_sum">Icono de tamaño para los archivos y directorios ...
-		px (0 - desactivar el icono)</string>
 	<string name="pref_i_columnsDirsFiles_title">Lista de archivos y carpetas (por defecto)</string>
 	<string name="pref_i_columnsHomeList_title">Lista de carpetas inicial</string>
 	<string name="pref_i_columnsLRU_title">Lista de reciente apertura</string>

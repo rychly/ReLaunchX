@@ -232,10 +232,8 @@
 	<string name="jv_relaunchx_switch_titles_off">Показать файлы</string>
 	<string name="jv_relaunchx_tags_rename">Переименовать по тегам fb2/epub…</string>
 	<string name="jv_relaunchx_sort_header">Сортировать файлы по</string>
-	<string name="jv_relaunchx_sort_file_dir">имени файла А-Я</string>
-	<string name="jv_relaunchx_sort_file_rev">имени файла Я-А</string>
-	<string name="jv_relaunchx_sort_title_dir">алфавиту А-Я</string>
-	<string name="jv_relaunchx_sort_title_rev">алфавиту Я-А</string>
+	<string name="jv_relaunchx_sort_file">имени файла</string>
+	<string name="jv_relaunchx_sort_title">алфавиту</string>
 	<string name="jv_relaunchx_bookinfo">Аннотация</string>
 	<string name="jv_relaunchx_fileinfo">Свойства</string>
 	<string name="jv_relaunchx_fileinfo_title">Свойства файла</string>
@@ -377,14 +375,6 @@
 	<string name="pref_i_einkUpdateInterval_title">Частота полного обновления экрана EInk</string>
 	<string name="pref_i_einkUpdateInterval_sum">Как часто экран будет обновляться полностью...
 		(обновлений)</string>
-	<string name="pref_i_firstLineFontSizePx_title">Размер шрифта имен файлов/папок</string>
-	<string name="pref_i_firstLineFontSizePx_sum">Размер шрифта основной строки имен файлов и папок во всех
-		списках... px</string>
-	<string name="pref_i_secondLineFontSizePx_title">Дополнительный размер шрифта имен файлов</string>
-	<string name="pref_i_secondLineFontSizePx_sum">Размер шрифта дополнительной строки имен файлов</string>
-	<string name="pref_i_firstLineIconSizePx_title">Размер иконок имен файлов/папок</string>
-	<string name="pref_i_firstLineIconSizePx_sum">Размер иконок для имен файлов и папок во всех
-		списках... px (0 - без иконок)</string>
 	<string name="pref_i_doNotHyph_off">Вывод названия файла в несколько строк</string>
 	<string name="pref_i_doNotHyph_on">Вывод названия файла в одну строку</string>
 	<string name="pref_i_doNotHyph_title">Однострочный режим вывода</string>
@@ -536,8 +526,6 @@
 	<string name="pref_s_listSize_title">&gt; Размеры списков</string>
 	<string name="pref_s_file_title">&gt; Файловый менеджер</string>
 	<string name="pref_s_system_title">&gt; Служебные операции</string>
-	<string name="arr_search_as_values_substring">Подстрока</string>
-	<string name="arr_search_as_values_regexp">Регулярное выражение</string>
 	<string name="arr_search_in_values_1">Имени файла</string>
 	<string name="arr_search_in_values_2">Ближайшем имени папки</string>
 	<string name="arr_search_in_values_3">Полном маршруте и имени файла</string>
