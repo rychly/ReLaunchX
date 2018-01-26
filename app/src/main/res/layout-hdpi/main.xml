@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/normal_bg"
     android:orientation="vertical"
-    android:padding="8dp" >
+    android:padding="8dp">
     <LinearLayout
     	android:id="@+id/linearLayoutTop"
         style="@style/LinearLayoutToolbar" >
@@ -67,13 +68,15 @@
     <Button
         android:id="@+id/title_txt"
         android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/normal_bg_gray"
         android:gravity="center|left"
         android:padding="2dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/normal_fg"
         android:textStyle="bold"
-        style="@style/LinearLayoutToolbar">
+        tools:text="/sdcard">
     </Button>
 
 
