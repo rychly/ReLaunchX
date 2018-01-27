@@ -1158,7 +1158,7 @@ public class ReLaunch extends Activity {
             fileItemsArray.add(item);
 		}
 
-		setSortMode(prefs.getInt("sortKey", 0), prefs.getInt("sortMode", 0));
+		setSortMode(prefs.getInt("sortKey", 0), prefs.getInt("sortOrder", 0));
 		fileItemsArray = sortFiles(fileItemsArray, sortKey, sortMode);
 		itemsArray.addAll(fileItemsArray);
 		setUpButton(up, upDir, currentRoot);
@@ -1944,7 +1944,7 @@ public class ReLaunch extends Activity {
 			else if (r[1].equals("FINISHED"))
 				app.history.put(r[0], app.FINISHED);
 		}
-		setSortMode(prefs.getInt("sortKey", 0), prefs.getInt("sortMode", 0));
+		setSortMode(prefs.getInt("sortKey", 0), prefs.getInt("sortOrder", 0));
 		if (useDirViewer) {
 			String start_dir = null;
 			setContentView(R.layout.results_layout);
@@ -3691,21 +3691,18 @@ public class ReLaunch extends Activity {
 		if (sortKey > orderList.length - 1)
 			sortKey = 0;
 		currentSortKey[0] = sortKey;
-		int sortMode = prefs.getInt("sortMode", 0);
-		if (sortMode > 1)
-			sortMode = 0;
 
 		DialogInterface.OnClickListener onApplySorting = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				SharedPreferences.Editor editor = prefs.edit();
-				int sortMode = 1;
+				int sortOrder = 1;
 				if (which == -1)
-					sortMode = 0; //Ascending
-				editor.putInt("sortMode", sortMode);
+					sortOrder = 0; //Ascending
+				editor.putInt("sortOrder", sortOrder);
 				editor.putInt("sortKey", currentSortKey[0]);
 				editor.commit();
-				setSortMode(currentSortKey[0], sortMode);
+				setSortMode(currentSortKey[0], sortOrder);
 				dialog.dismiss();
 				drawDirectory(currentRoot, -1);
 			}
@@ -3754,7 +3751,7 @@ public class ReLaunch extends Activity {
             }
         }
         if (mode > 1) {
-			Log.e("SortMode", "Index outside of enum: index " + mode);
+			Log.e("SortOrder", "Index outside of enum: index " + mode);
 			mode = 0;
 		}
         sortKey = SortKey.values()[key];
