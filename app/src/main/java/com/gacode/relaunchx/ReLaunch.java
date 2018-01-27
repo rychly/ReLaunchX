@@ -468,7 +468,7 @@ public class ReLaunch extends Activity {
 				String sname = item.displayName;
 				// clean extension, if needed
 				if (prefs.getBoolean("showIcon", false) == false) {
-					if (item.extension != null)
+					if (item.extension != null && !item.extension.equals(""))
 						sname = sname.substring(0, sname.length() - (item.extension.length() + 1));
 				} else if (prefs.getBoolean("hideKnownExts", false) && !prefs.getBoolean("showBookTitles", false)) {
 					for (int i = 0; i < exts.size(); i++) {
