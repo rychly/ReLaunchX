@@ -407,8 +407,8 @@ public class ResultsActivity extends Activity {
 			List<HashMap<String, String>> newItemsArray = new ArrayList<HashMap<String, String>>();
 
 			for (HashMap<String, String> item : itemsArray) {
-				if (app.filterFile(item.get("directoryName"), item.get("fullPathName"))
-						|| item.get("type").equals("dir"))
+				if (item.get("type").equals("dir")
+						|| app.filterFile(item.get("directoryName"), item.get("fullPathName")))
 					newItemsArray.add(item);
 			}
 			itemsArray = newItemsArray;
@@ -455,10 +455,9 @@ public class ResultsActivity extends Activity {
 	private void createItemsArray() {
 		itemsArray = new ArrayList<HashMap<String, String>>();
 		for (String[] n : app.getList(listName)) {
-			if (!prefs.getBoolean("filterResults", false)
-					|| (prefs.getBoolean("filterResults", false) && app
-							.filterFile(n[0], n[1]))
-					|| (n[1].equals(app.DIR_TAG))) {
+			if (n[1].equals(app.DIR_TAG)
+					|| !prefs.getBoolean("filterResults", false)
+					|| app.filterFile(n[0], n[1])) {
 				HashMap<String, String> item = new HashMap<String, String>();
 				item.put("directoryName", n[0]);
 				item.put("fullPathName", n[1]);

@@ -682,8 +682,7 @@ public class ReLaunch extends Activity {
 
 	private void redrawList() {
 		setEinkController();
-		GridView gv = (GridView) findViewById(useDirViewer ? R.id.results_list
-				: R.id.gl_list);
+		GridView gv = (GridView) findViewById(useDirViewer ? R.id.results_list : R.id.gl_list);
 		if (prefs.getBoolean("filterResults", false)) {
 			List<FileDetails> newItemsArray = new ArrayList<FileDetails>();
 
@@ -1112,8 +1111,7 @@ public class ReLaunch extends Activity {
 				if (entry.isDirectory())
 					dirs.add(entry.getName());
 				else if (!prefs.getBoolean("filterResults", false)
-						|| app.filterFile(dir.getAbsolutePath(),
-								entry.getName()))
+						|| app.filterFile(dir.getAbsolutePath(), entry.getName()))
 					files.add(entry);
 			}
 		}
