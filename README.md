@@ -71,6 +71,12 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 2.0.1
+ * Fix app settings compatibility with 1.x.x version
+ * Fix bug related with file name / file extension display.
+ * Adjust height of Current Dir bar.
+ * Fix bug related to favorites list display.
+ * Fix bug, file added to favorites was treated as directory.
 * 2.0.0
  * Add support for Onyx Boox Max2
  * Rework of hdpi layout, size increase - it was very small
