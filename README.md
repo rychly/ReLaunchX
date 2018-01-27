@@ -71,6 +71,8 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 2.0.2
+ * Fix build for Nook Simple Touch. Reverting to gradle 2.3.1 as gradle 3.0.1 auto uplift project minimum supported platform to Gingerbread.
 * 2.0.1
  * Fix app settings compatibility with 1.x.x version
  * Fix bug related with file name / file extension display.
