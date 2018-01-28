@@ -2644,23 +2644,24 @@ public class ReLaunch extends Activity {
 			setEinkController();
 
 			// First directory to get to
+			currentPosition = -1;
 			if (data.getExtras() != null && data.getExtras().getString("start_dir") != null) {
-				drawDirectory(data.getExtras().getString("start_dir"), -1);
+				currentRoot = data.getExtras().getString("start_dir");
 			} else {
 				String lastDirPath = prefs.getString("lastdir", "/sdcard");
 				File lastDir = new File(lastDirPath);
 				if (prefs.getBoolean("saveDir", true) && lastDir.exists())
-					drawDirectory(lastDirPath, -1);
+					currentRoot = lastDirPath;
 				else {
 					String[] startDirs = prefs.getString("startDir","/sdcard,/media/My Files").split("\\,");
 					boolean dirFound = false;
 					for (String dir : startDirs) if (new File(dir).exists()) {
-						drawDirectory(dir, -1);
+						currentRoot = dir;
 						dirFound = true;
 						break;
 					}
 					if (dirFound == false) {
-						drawDirectory("/", -1);
+						currentRoot ="/";
 					}
 				}
 			}
