@@ -164,7 +164,7 @@ public class ReLaunch extends Activity {
 	TextView battTitle;
 	TextView battLevel;
 	IntentFilter batteryLevelFilter;
-	
+
 	String fileOpFile;
 	String fileOpDir;
 	int fileOp;
@@ -728,28 +728,38 @@ public class ReLaunch extends Activity {
 		currentPosition = p1;
 	}
 
+	private void setUpButtonIcons() {
+        TextView filterOutputListIcon = (TextView) findViewById(R.id.filter_results_icon);
+        TextView showHiddenItemsIcon = (TextView) findViewById(R.id.show_hidden_icon);
+        if (prefs.getBoolean("filterResults", false)) {
+            filterOutputListIcon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.filter_on, 0,0,0);
+        } else {
+            filterOutputListIcon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.filter_off, 0,0,0);
+        }
+        if (prefs.getBoolean("showHidden", false)) {
+            showHiddenItemsIcon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.show_hidden_on, 0,0,0);
+        } else {
+            showHiddenItemsIcon.setCompoundDrawablesWithIntrinsicBounds(R.drawable.show_hidden_off, 0,0,0);
+        }
+    }
+
 	private void setUpButton(final Button up, final String upDir, String currDir) {
 		if (up != null) {
-			// more versatile check against home, if needed
-			boolean enabled = !upDir.equals("");
-			if (enabled && !currDir.equals("/")
-					&& prefs.getBoolean("notLeaveStartDir", false)) {
-				enabled = false;
-				String[] homes = prefs.getString("startDir",
-						"/sdcard,/media/My Files").split("\\,");
-				for (int i = 0; i < homes.length; i++) {
-					if (homes[i].length() < currDir.length()
-							&& currDir.startsWith(homes[i])) {
-						enabled = true;
-						break;
-					}
-				}
-			}
-			up.setEnabled(enabled);
+            setUpButtonIcons();
+
 			// gesture listener
 			class UpSimpleOnGestureListener extends SimpleOnGestureListener {
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e) {
+                    if (prefs.getBoolean("notLeaveStartDir", false)) {
+                        String[] homes = prefs.getString("startDir",
+                                "/sdcard,/media/My Files").split("\\,");
+                        for (int i = 0; i < homes.length; i++) {
+                            if (homes[i].length() == currentRoot.length() && currentRoot.equals(homes[i])) {
+                                return true;
+                            }
+                        }
+                    }
 					if (!upDir.equals("")) {
 						Integer p = -1;
 						if (!positions.empty())
@@ -766,9 +776,45 @@ public class ReLaunch extends Activity {
 
 				@Override
 				public void onLongPress(MotionEvent e) {
-					if (up.hasWindowFocus()) {
+                    final CharSequence[] items = {
+                            app.getResources().getString(R.string.pref_i_filterResults_title),
+                            app.getResources().getString(R.string.pref_i_showHidden_title)
+                    };
+                    final boolean[] checkStates = new boolean[2];
+                    checkStates[0] = prefs.getBoolean("filterResults", false);
+                    checkStates[1] = prefs.getBoolean("showHidden", false);
 
-					}
+                    AlertDialog dialog = new AlertDialog.Builder(ReLaunch.this)
+                            .setTitle(app.getResources().getString(R.string.pref_s_file_title))
+                            .setMultiChoiceItems(items, checkStates, new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                                    checkStates[indexSelected] = isChecked;
+                                }
+                            }).setPositiveButton(app.getResources().getString(R.string.jv_relaunchx_viewOptions_adjustFilters_title),
+                                    new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    editor.putBoolean("filterResults", checkStates[0]);
+                                    editor.putBoolean("showHidden", checkStates[1]);
+                                    editor.commit();
+                                    Intent intent = new Intent(ReLaunch.this, FiltersActivity.class);
+                                    startActivityForResult(intent, -1);
+
+                                }
+                            }).setNegativeButton(app.getResources().getString(R.string.jv_relaunchx_viewOptions_OK),
+                                    new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    editor.putBoolean("filterResults", checkStates[0]);
+                                    editor.putBoolean("showHidden", checkStates[1]);
+                                    editor.commit();
+                                    drawDirectory(currentRoot, currentPosition);
+                                }
+                            }).create();
+                    dialog.show();
 				}
 			}
 			;
@@ -902,7 +948,8 @@ public class ReLaunch extends Activity {
 	}
 
 	private void drawDirectory(String root, Integer startPosition) {
-		File dir = new File(root);
+
+        File dir = new File(root);
 		File[] allEntries = dir.listFiles();
 		List<File> files = new ArrayList<File>();
 		List<String> dirs = new ArrayList<String>();

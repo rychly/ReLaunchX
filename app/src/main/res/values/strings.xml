@@ -23,7 +23,7 @@
 	<string name="filters_view_layout_add_new">Add new</string>
 	<string name="filters_view_layout_and">AND</string>
 	<string name="filters_view_layout_cancel">Cancel</string>
-	<string name="main_launcher_nb_layout_go_one_level_up">One level up</string>
+	<string name="main_launcher_nb_layout_go_one_level_up">Upper level</string>
 	<string name="main_launcher_nb_layout_memory">Memory</string>
 	<string name="main_launcher_nb_layout_mem">Mem:</string>
 	<string name="main_launcher_nb_layout_battery">Battery</string>
@@ -224,8 +224,8 @@
 	<string name="jv_relaunchx_default">Default</string>
 	<string name="jv_relaunchx_turning_wifi_on">WiFi is ON</string>
 	<string name="jv_relaunchx_turning_wifi_off">WiFi is off</string>
-	<string name="jv_relaunchx_prev">prev</string>
-	<string name="jv_relaunchx_next">next</string>
+	<string name="jv_relaunchx_prev">PgUp</string>
+	<string name="jv_relaunchx_next">PgDn</string>
 	<string name="jv_relaunchx_switch_titles_on">Show book titles</string>
 	<string name="jv_relaunchx_switch_titles_off">Show file names</string>
 	<string name="jv_relaunchx_tags_rename">Rename file with fb2/epub tags...</string>
@@ -606,5 +606,7 @@
 	<string name="jv_relaunchx_sort_asc">↑ Ascending</string>
 	<string name="jv_relaunchx_sort_dsc">↓ Descending</string>
 	<string name="search_layout_search_inc_hidden">Include hidden files</string>
+	<string name="jv_relaunchx_viewOptions_adjustFilters_title">Adjust filters</string>
+	<string name="jv_relaunchx_viewOptions_OK">OK</string>
 
 </resources>

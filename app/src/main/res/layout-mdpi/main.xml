@@ -81,22 +81,64 @@
 
 
     <LinearLayout
-    	android:id="@+id/linearLayoutNavigate"
-    	android:layout_marginTop="8dp"
+        android:id="@+id/linearLayoutNavigate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         style="@style/LinearLayoutToolbar" >
 
+        <LinearLayout
+            android:background="@drawable/main_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.757">
         <Button
             android:id="@+id/goup_btn"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.757"
-            android:background="@drawable/main_button"
+            android:background="@color/normal_bg"
             android:drawableLeft="@drawable/ci_levelup"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/normal_fg"
-            android:text="@string/main_launcher_nb_layout_go_one_level_up" >
+            android:singleLine="true"
+            android:text="@string/main_launcher_nb_layout_go_one_level_up"
+            >
         </Button>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/filter_results_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/normal_transparent"
+                    android:paddingTop="5dp"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/filter_off"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/normal_fg">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/show_hidden_icon"
+                    android:layout_below="@id/filter_results_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/normal_transparent"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/show_hidden_off"
+                    android:visibility="visible"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/normal_fg"
+                    android:textStyle="bold" >
+                </TextView>
+            </RelativeLayout>
+        </LinearLayout>
 
         <Button
             android:id="@+id/upscroll_btn"
