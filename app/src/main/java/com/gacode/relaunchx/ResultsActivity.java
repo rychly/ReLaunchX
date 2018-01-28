@@ -362,43 +362,15 @@ public class ResultsActivity extends Activity {
 		}
 	}
 
-	private Integer Percentile(ArrayList<Integer> values, Integer Quantile)
-	// not fully "mathematical proof", but not too difficult and working
-	{
-		Collections.sort(values);
-		Integer index = (values.size() * Quantile) / 100;
-		return values.get(index);
-	}
-
 	private Integer getAutoColsNum() {
-		// implementation - via percentiles len
-		Integer auto_cols_num = 1;
-		ArrayList<Integer> tmp = new ArrayList<Integer>();
+		ArrayList<Integer> textLength = new ArrayList<Integer>();
 		if (itemsArray.size() > 0) {
-			Integer factor = 0;
 			for (Integer i = 0; i < itemsArray.size(); i++) {
-				tmp.add(itemsArray.get(i).get("fullPathName").length());
-			}
-			String pattern = prefs.getString("columnsAlgIntensity",
-					"70 3:5 7:4 15:3 48:2"); // default - medium
-			String[] spat = pattern.split("[\\s\\:]+");
-			Integer quantile = Integer.parseInt(spat[0]);
-			factor = Percentile(tmp, quantile);
-			for (Integer i = 1; i < spat.length; i = i + 2) {
-				try {
-					double fval = Double.parseDouble(spat[i]);
-					int cval = Integer.parseInt(spat[i + 1]);
-					if (factor <= fval) {
-						auto_cols_num = cval;
-						break;
-					}
-				} catch (Exception e) {
-				}
+				textLength.add(itemsArray.get(i).get("fullPathName").length());
 			}
 		}
-		if (auto_cols_num > itemsArray.size())
-			auto_cols_num = itemsArray.size();
-		return auto_cols_num;
+
+		return SizeManipulation.AutoColumnsNumber(app, prefs, textLength);
 	}
 
 	private void redrawList() {
