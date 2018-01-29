@@ -7,8 +7,8 @@ android {
         applicationId 'com.gacode.relaunchx'
         minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
-        versionCode 200002000
-        versionName '2.0.2'
+        versionCode 200100000
+        versionName '2.1.0'
     }
     buildTypes {
         release {
