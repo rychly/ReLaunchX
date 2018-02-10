@@ -497,6 +497,9 @@ public class ReLaunch extends Activity {
 					}
 					if (SizeManipulation.AassignWithPreferencesIcon(app, prefs, iv, R.drawable.dir_ok)) {
 						holder.tvicon.setVisibility(View.GONE);
+					}else {
+						holder.iv.setVisibility(View.GONE);
+						holder.tvicon.setText(">");
 					}
 				} else {
 					if (useFaces) {
