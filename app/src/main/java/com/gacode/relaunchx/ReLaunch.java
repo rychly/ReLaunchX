@@ -137,6 +137,7 @@ public class ReLaunch extends Activity {
 	Integer currentPosition = -1;
 	List<FileDetails> itemsArray;
 	Stack<Integer> positions = new Stack<Integer>();
+	Stack<Integer> scrollPositions = new Stack<Integer>();
 	BaseAdapter adapter;
 	SharedPreferences prefs;
 	ReLaunchApp app;
@@ -1567,18 +1568,25 @@ public class ReLaunch extends Activity {
 					gv.dispatchTouchEvent(ev);
 				} else { // other devices
 					int first = gv.getFirstVisiblePosition();
-					int visible = gv.getLastVisiblePosition()
-							- gv.getFirstVisiblePosition() + 1;
-					int total = itemsArray.size();
-					first -= visible;
-					if (first < 0)
-						first = 0;
-					gv.setSelection(first);
-					// some hack workaround against not scrolling in some cases
-					if (total > 0) {
-						gv.requestFocusFromTouch();
-						gv.setSelection(first);
+					int target = 0;
+					if (first == 0) {
+						//clear the stack if the view was reset
+						scrollPositions.clear();
 					}
+
+					if (scrollPositions.empty()) {
+						int visible = gv.getLastVisiblePosition() - first + 1;
+						target = first - visible;
+						if (target < 0)
+							target = 0;
+					} else {
+						target = scrollPositions.pop();
+					}
+					gv.setSelection(target);
+
+					// some hack workaround against not scrolling in some cases
+					gv.requestFocusFromTouch();
+					gv.setSelection(target);
 				}
 				return true;
 			}
@@ -1632,17 +1640,13 @@ public class ReLaunch extends Activity {
 		class RepeatedDownScroll {
 			public void doIt(int first, int target, int shift) {
 				final GridView gv = (GridView) findViewById(R.id.gl_list);
-				int total = gv.getCount();
-				int last = gv.getLastVisiblePosition();
-				if (total == last + 1)
-					return;
 				final int ftarget = target + shift;
 				gv.clearFocus();
-				gv.post(new Runnable() {
-					public void run() {
-						gv.setSelection(ftarget);
-					}
-				});
+				gv.setSelection(ftarget);
+				if (ftarget == gv.getLastVisiblePosition()) {
+					return;
+				}
+
 				final int ffirst = first;
 				final int fshift = shift;
 				gv.postDelayed(new Runnable() {
@@ -1684,13 +1688,16 @@ public class ReLaunch extends Activity {
 					gv.dispatchTouchEvent(ev);
 				} else { // other devices
 					int first = gv.getFirstVisiblePosition();
-					int total = itemsArray.size();
-					int last = gv.getLastVisiblePosition();
-					if (total == last + 1)
-						return true;
-					int target = last + 1;
-					if (target > (total - 1))
-						target = total - 1;
+					int target = gv.getLastVisiblePosition();
+					if (first == 0) {
+						scrollPositions.clear();
+					} else if (prefs.getBoolean("disableScrollJump", true)) {
+						//remember top element to easily go back to current view via PgUp
+						if (scrollPositions.empty())
+							scrollPositions.push(first);
+						else if (scrollPositions.peek() != first) //don't repeat at the bottom
+							scrollPositions.push(first);
+					}
 					RepeatedDownScroll ds = new RepeatedDownScroll();
 					ds.doIt(first, target, 0);
 				}
