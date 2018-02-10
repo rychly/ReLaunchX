@@ -71,6 +71,10 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 2.1.1
+ * Fix Go Up button animation.
+ * Fix txt directory icons.
+ * Fix PgUp / PgDn scrolling.
 * 2.1.0
  * UI improvement: detection of optimal number of columns based on text size and display width.
  * Hidden items and filtered items icons and easy manipulation by long press on Upper Dir button.

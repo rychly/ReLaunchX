@@ -2,9 +2,7 @@
 <resources>
 
     <string name="about_help">
-        &lt;b&gt;HELP&lt;/b&gt;&lt;br&gt;
-        ReLaunchX is books manager and launcher for e-ink tablets. Developed and tested on Onyx Boox Max.
-        It is a code-fork and continuation of ReLaunch 1.3.8.&lt;br&gt;&lt;br&gt;
+        <b>ReLaunchX</b> is a fully open source monochrome file manager/book manager designed for e-ink. It can be used as an Android launcher too.&lt;br&gt;&lt;br&gt;
         Non-obvious:&lt;br&gt;
         - Bottom task toolbar is available only when run as a launcher.&lt;br&gt;
         - Some functions are disabled on non-rooted devices.&lt;br&gt;
