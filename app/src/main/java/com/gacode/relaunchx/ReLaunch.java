@@ -1583,7 +1583,7 @@ public class ReLaunch extends Activity {
 						if (target < 0)
 							target = 0;
 					} else {
-						target = scrollPositions.pop();
+						target = scrollPositions.pop() + currentColsNum;
 					}
 					gv.setSelection(target);
 
