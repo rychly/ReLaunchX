@@ -180,6 +180,7 @@
 	<string name="jv_relaunchx_mark">Mark as read</string>
 	<string name="jv_relaunchx_unmark">Remove \"read\" mark</string>
 	<string name="jv_relaunchx_unmarkall">Forget all marks</string>
+	<string name="jv_relaunchx_rem_from_history">Remove from history</string>
 	<string name="jv_relaunchx_openwith">Open with ...</string>
 	<string name="jv_relaunchx_createintent">Create Intent ...</string>
 	<string name="jv_relaunchx_copy">Copy</string>
