@@ -1,0 +1,41 @@
+# http://doc.gitlab.com/ce/ci/yaml/README.html
+# https://hub.docker.com/_/gradle/
+# https://developer.android.com/studio/index.html#downloads
+
+image: gradle:latest
+
+variables:
+  PUBLIC: "public"
+
+.android_sdk: &android_sdk
+  variables:
+    ANDROID_SDK_TOOLS: "3859397"
+    ANDROID_BUILD_TOOLS: "27.0.3"
+    ANDROID_API: "17"
+    ANDROID_HOME: "${CI_PROJECT_DIR}/.."
+  before_script:
+    - wget --quiet -O "${ANDROID_HOME}/tools.zip" "https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip" && unzip -q "${ANDROID_HOME}/tools.zip" -d "${ANDROID_HOME}" && echo "Android SDK tools ${ANDROID_SDK_TOOLS} package downloaded and extracted"
+    - yes | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses | sed '/^---------------------------------------$/,/^---------------------------------------$/d' || true
+    - ${ANDROID_HOME}/tools/bin/sdkmanager "platform-tools" "platforms;android-${ANDROID_API}" "build-tools;${ANDROID_BUILD_TOOLS}"
+
+stages:
+  - build
+
+pages:
+  stage: build
+  only:
+    - rychly/master
+  <<: *android_sdk
+  script:
+    # git submodules (from public repos)
+    - git submodule init
+    - git submodule update --depth 1 --recursive || git submodule foreach git checkout master
+    # version patching (Android SDK 17 and all Onyx models) and build
+    - sed -i -e 's|\(\scompileSdkVersion\s\).*$|\1Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)|g' -e 's|\(\sbuildToolsVersion\s\).*$|\1project.ANDROID_BUILD_TOOLS_VERSION|g' -e 's|\(\sminSdkVersion\s\).*$|\1Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)|g' -e 's|\(\stargetSdkVersion\s\).*$|\1Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)|g' libs/ebookparser/build.gradle
+    - sed -i -e 's|\(MODEL.contentEquals("max")\)|true|g' app/src/main/java/com/gacode/relaunchx/DeviceInfo.java
+    - gradle -PANDROID_BUILD_TARGET_SDK_VERSION=${ANDROID_API} -PANDROID_BUILD_TOOLS_VERSION=${ANDROID_BUILD_TOOLS} -PANDROID_BUILD_SDK_VERSION=${ANDROID_API} packageDebug
+    - mkdir -p "${PUBLIC}"
+    - mv -v */build/outputs/apk/*-debug.apk "${PUBLIC}/"
+  artifacts:
+    paths:
+      - ${PUBLIC}
