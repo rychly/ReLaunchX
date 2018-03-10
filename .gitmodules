@@ -1,4 +1,0 @@
-[submodule "libs/ebookparser"]
-	path = libs/ebookparser
-	url = https://github.com/Leszek111/ebookparser.git
-	branch = 6ea34dc7e42da1ded56e7b6e5da53b7a1e803757
