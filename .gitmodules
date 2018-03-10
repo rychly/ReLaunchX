@@ -1,0 +1,3 @@
+[submodule "libs/ebookparser"]
+	path = libs/ebookparser
+	url = https://github.com/Leszek111/ebookparser.git
