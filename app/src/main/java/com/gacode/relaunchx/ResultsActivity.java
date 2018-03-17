@@ -28,7 +28,6 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -67,6 +66,7 @@ public class ResultsActivity extends Activity {
 	final int CNTXT_MENU_MARK_READING = 7;
 	final int CNTXT_MENU_MARK_FORGET = 8;
 	final int CNTXT_MENU_RMDIR = 9;
+	final int CNTXT_MENU_REMOVE_HISTORY = 10;
 	ReLaunchApp app;
 	HashMap<String, Drawable> icons;
 	String listName;
@@ -1160,6 +1160,9 @@ public class ResultsActivity extends Activity {
 						getResources().getString(
 								R.string.jv_results_delete_file));
 			// "Cancel"
+			menu.add(Menu.NONE, CNTXT_MENU_REMOVE_HISTORY, Menu.NONE,
+					getResources()
+							.getString(R.string.jv_relaunchx_rem_from_history));
 			menu.add(Menu.NONE, CNTXT_MENU_CANCEL, Menu.NONE, getResources()
 					.getString(R.string.jv_results_cancel));
 		} else if (listName.equals("searchResults")) {
@@ -1230,6 +1233,11 @@ public class ResultsActivity extends Activity {
 		case CNTXT_MENU_MARK_FORGET:
 			app.history.remove(fullName);
 			app.saveList("history");
+			redrawList();
+			break;
+		case CNTXT_MENU_REMOVE_HISTORY:
+			app.removeFromList("lastOpened", fullName);
+			itemsArray.remove(pos);
 			redrawList();
 			break;
 		case CNTXT_MENU_RMFAV:
