@@ -71,6 +71,8 @@ Launcher mode functionality:
 
 
 # CHANGELOG
+* 2.1.3
+ * Add possibility to remove item from recent list
 * 2.1.2
  * Fix off-by-one-line navigation bug on PgUp button action. Now PgUp should return to exactly the same view as before PgDn.
 * 2.1.1
