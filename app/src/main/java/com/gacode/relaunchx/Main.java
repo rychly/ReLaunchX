@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import java.lang.System;
+import android.os.Build;
 
 public class Main extends Activity {
 	final String TAG = "Main";
@@ -14,6 +16,9 @@ public class Main extends Activity {
 		super.onCreate(savedInstanceState);
 
 		app = ((ReLaunchApp) getApplicationContext());
+		if (Build.MODEL == "BNRV520") {
+			System.setProperty("bn.bootanim.exit", "1");
+		};
 		app.RestartIntent = PendingIntent.getActivity(this, 0, getIntent(),
 				getIntent().getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
 
