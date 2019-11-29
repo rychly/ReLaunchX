@@ -13,6 +13,10 @@ Non-obvious possibilities:
 Note:
 I aim to keep compatibility with previously supported devices however the only device on which I can run/debug the app is Onyx Boox Max as of today hence I decided to rename/rebrand the product in order to not cause any confusion.
 
+# How to get it
+
+The source code is set up on F-droid to build any new release tag.
+
 # The tool is able to work in two modes:
 
 ### Application mode
