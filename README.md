@@ -1,3 +1,4 @@
+<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">
 # ReLaunchX - filemanager / launcher for ONYX Boox Max 
 
 ReLaunchX is a versatile reading programs launcher and system-wide shell for Onyx Boox Max. It is a continuation of ReLaunch 1.3.8 made for Nook Simple Touch (also supported by Sony PRS-T1).
@@ -12,10 +13,6 @@ Non-obvious possibilities:
 
 Note:
 I aim to keep compatibility with previously supported devices however the only device on which I can run/debug the app is Onyx Boox Max as of today hence I decided to rename/rebrand the product in order to not cause any confusion.
-
-# How to get it
-
-The source code is set up on F-droid to build any new release tag.
 
 # The tool is able to work in two modes:
 
