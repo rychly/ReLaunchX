@@ -18,6 +18,7 @@ import java.util.Collections;
 
 public final class SizeManipulation {
     static final int TOOLBAR_MIN_HEIGHT_DEF = 60;
+    static final int TOOLBAR_TEXT_SIZE_DEF = 20;
     static final int FILE_LIST_LINE_TEXT_SIZE_DEF = 20;
     static final int ICON_SIZE_DEF = 48;
     static final int TEXT_ICON_SIZE_DEF = 50;
@@ -38,6 +39,14 @@ public final class SizeManipulation {
         if (dp == TOOLBAR_MIN_HEIGHT_DEF) return;
 
         view.setMinimumHeight(DpToPx(app, dp));
+    }
+
+    public static void AdjustWithPreferencesToolbarText(Application app, SharedPreferences preferences, TextView view) {
+        String dpString = preferences.getString("toolbarTextSize", String.valueOf(TOOLBAR_TEXT_SIZE_DEF));
+        int dp = Integer.valueOf(dpString);
+        if (dp == TOOLBAR_TEXT_SIZE_DEF) return;
+
+        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, DpToPx(app, dp));
     }
 
     public static void AdjustWithPreferencesFileListLine1(Application app, SharedPreferences preferences, TextView view) {

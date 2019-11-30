@@ -834,6 +834,8 @@ public class ReLaunch extends Activity {
 	}
 
 	private void refreshBottomInfo() {
+    	final boolean labels = true;
+
 		// Date
 		String d;
 		Calendar c = Calendar.getInstance();
@@ -848,8 +850,13 @@ public class ReLaunch extends Activity {
 					c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),
 					c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH) + 1,
 					(c.get(Calendar.YEAR) - 2000));
-		if (memTitle != null)
-			memTitle.setText(d);
+		if (memTitle != null) {
+			if (labels) {
+				memTitle.setText(d);
+				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, memTitle);
+			}
+			else memTitle.setText("");
+		}
 
 		// Memory
 		MemoryInfo mi = new MemoryInfo();
@@ -857,8 +864,12 @@ public class ReLaunch extends Activity {
 		activityManager.getMemoryInfo(mi);
 		if (memLevel != null) {
 			// "M free"
-			memLevel.setText(mi.availMem / 1048576L
-					+ getResources().getString(R.string.jv_relaunchx_m_free));
+			if (labels) {
+				memLevel.setText(mi.availMem / 1048576L
+						+ getResources().getString(R.string.jv_relaunchx_m_free));
+				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, memLevel);
+			}
+			else memLevel.setText("");
 			memLevel.setCompoundDrawablesWithIntrinsicBounds(null, null,
 					getResources().getDrawable(R.drawable.ram), null);
 		}
@@ -867,20 +878,28 @@ public class ReLaunch extends Activity {
 		WifiManager wfm = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 		if (battTitle != null) {
 			if (wfm.isWifiEnabled()) {
-				String nowConnected = wfm.getConnectionInfo().getSSID();
-				if (nowConnected != null && !nowConnected.equals("")) {
-					battTitle.setText(nowConnected);
-				} else {
-					battTitle.setText(getResources().getString(
-							R.string.jv_relaunchx_wifi_is_on));
+				if (labels) {
+					String nowConnected = wfm.getConnectionInfo().getSSID();
+					if (nowConnected != null && !nowConnected.equals("")) {
+						battTitle.setText(nowConnected);
+					} else {
+						battTitle.setText(getResources().getString(
+								R.string.jv_relaunchx_wifi_is_on));
+					}
+					SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battTitle);
 				}
+				else battTitle.setText("");
 				battTitle.setCompoundDrawablesWithIntrinsicBounds(
 						getResources().getDrawable(R.drawable.wifi_on), null,
 						null, null);
 			} else {
 				// "WiFi is off"
-				battTitle.setText(getResources().getString(
-						R.string.jv_relaunchx_wifi_is_off));
+				if (labels) {
+					battTitle.setText(getResources().getString(
+							R.string.jv_relaunchx_wifi_is_off));
+					SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battTitle);
+				}
+				else battTitle.setText("");
 				battTitle.setCompoundDrawablesWithIntrinsicBounds(
 						getResources().getDrawable(R.drawable.wifi_off), null,
 						null, null);
@@ -905,13 +924,17 @@ public class ReLaunch extends Activity {
 							level = (rawlevel * 100) / scale;
 						}
 						if (battLevel != null) {
-							String add_text = "";
-							if (plugged == BatteryManager.BATTERY_PLUGGED_AC) {
-								add_text = " AC";
-							} else if (plugged == BatteryManager.BATTERY_PLUGGED_USB) {
-								add_text = " USB";
+							if (labels) {
+								String add_text = "";
+								if (plugged == BatteryManager.BATTERY_PLUGGED_AC) {
+									add_text = " AC";
+								} else if (plugged == BatteryManager.BATTERY_PLUGGED_USB) {
+									add_text = " USB";
+								}
+								battLevel.setText(level + "%" + add_text);
+								SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battLevel);
 							}
-							battLevel.setText(level + "%" + add_text);
+							else battLevel.setText("");
 
 							if (level < 25)
 								battLevel
