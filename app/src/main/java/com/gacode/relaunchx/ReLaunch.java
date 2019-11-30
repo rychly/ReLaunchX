@@ -834,7 +834,8 @@ public class ReLaunch extends Activity {
 	}
 
 	private void refreshBottomInfo() {
-    	final boolean labels = true;
+		boolean longLabelsMode = prefs.getBoolean("toolbarTextMode", true);
+
 
 		// Date
 		String d;
@@ -850,35 +851,44 @@ public class ReLaunch extends Activity {
 					c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),
 					c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.MONTH) + 1,
 					(c.get(Calendar.YEAR) - 2000));
-		if (memTitle != null) {
-			if (labels) {
-				memTitle.setText(d);
-				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, memTitle);
-			}
-			else memTitle.setText("");
-		}
-
 		// Memory
 		MemoryInfo mi = new MemoryInfo();
 		ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		activityManager.getMemoryInfo(mi);
-		if (memLevel != null) {
-			// "M free"
-			if (labels) {
+
+		if (longLabelsMode) {
+			if (memTitle != null) {
+				memTitle.setText(d);
+				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, memTitle);
+			}
+
+			if (memLevel != null) {
+				// "M free"
 				memLevel.setText(mi.availMem / 1048576L
 						+ getResources().getString(R.string.jv_relaunchx_m_free));
+				memLevel.setCompoundDrawablesWithIntrinsicBounds(null, null,
+						getResources().getDrawable(R.drawable.ram), null);
 				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, memLevel);
 			}
-			else memLevel.setText("");
-			memLevel.setCompoundDrawablesWithIntrinsicBounds(null, null,
-					getResources().getDrawable(R.drawable.ram), null);
+		} else {
+			if (memTitle != null) {
+				memTitle.setText("");
+				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, memTitle);
+			}
+
+			if (memLevel != null) {
+				memLevel.setText(mi.availMem / 1048576L + "M");
+				memLevel.setCompoundDrawablesWithIntrinsicBounds(null, null,
+						getResources().getDrawable(R.drawable.ram), null);
+				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, memLevel);
+			}
 		}
 
 		// Wifi status
 		WifiManager wfm = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 		if (battTitle != null) {
 			if (wfm.isWifiEnabled()) {
-				if (labels) {
+				if (longLabelsMode) {
 					String nowConnected = wfm.getConnectionInfo().getSSID();
 					if (nowConnected != null && !nowConnected.equals("")) {
 						battTitle.setText(nowConnected);
@@ -886,22 +896,25 @@ public class ReLaunch extends Activity {
 						battTitle.setText(getResources().getString(
 								R.string.jv_relaunchx_wifi_is_on));
 					}
-					SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battTitle);
+				} else {
+					battTitle.setText(getResources().getString(
+							R.string.jv_relaunchx_wifi));
 				}
-				else battTitle.setText("");
+				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battTitle);
 				battTitle.setCompoundDrawablesWithIntrinsicBounds(
 						getResources().getDrawable(R.drawable.wifi_on), null,
 						null, null);
 			} else {
 				// "WiFi is off"
-				if (labels) {
+				if (longLabelsMode) {
 					battTitle.setText(getResources().getString(
 							R.string.jv_relaunchx_wifi_is_off));
-					SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battTitle);
+				} else {
+					battTitle.setText("");
 				}
-				else battTitle.setText("");
+				SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battTitle);
 				battTitle.setCompoundDrawablesWithIntrinsicBounds(
-						getResources().getDrawable(R.drawable.wifi_off), null,
+						null, null,
 						null, null);
 			}
 		}
@@ -911,6 +924,8 @@ public class ReLaunch extends Activity {
 			batteryLevelReceiver = new BroadcastReceiver() {
 				public void onReceive(Context context, Intent intent) {
 					try {
+						boolean longLabelsMode = prefs.getBoolean("toolbarTextMode", true);
+
 						context.unregisterReceiver(this);
 						batteryLevelRegistered = false;
 						int rawlevel = intent.getIntExtra(
@@ -924,7 +939,7 @@ public class ReLaunch extends Activity {
 							level = (rawlevel * 100) / scale;
 						}
 						if (battLevel != null) {
-							if (labels) {
+							if (longLabelsMode) {
 								String add_text = "";
 								if (plugged == BatteryManager.BATTERY_PLUGGED_AC) {
 									add_text = " AC";
@@ -932,9 +947,10 @@ public class ReLaunch extends Activity {
 									add_text = " USB";
 								}
 								battLevel.setText(level + "%" + add_text);
-								SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battLevel);
+							} else {
+								battLevel.setText(level + "%");
 							}
-							else battLevel.setText("");
+							SizeManipulation.AdjustWithPreferencesToolbarText(app, prefs, battLevel);
 
 							if (level < 25)
 								battLevel
@@ -2135,7 +2151,7 @@ public class ReLaunch extends Activity {
 					}
 				});
 			} else {
-				hideLayout(R.id.linearLayoutBottom);
+				//hideLayout(R.id.linearLayoutBottom);
 			}
 
 			if (prefs.getBoolean("showButtons", true)) {

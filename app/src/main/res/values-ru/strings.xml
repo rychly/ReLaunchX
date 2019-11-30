@@ -168,6 +168,7 @@
 	<string name="jv_relaunchx_yes">Да</string>
 	<string name="jv_relaunchx_no">Нет</string>
 	<string name="jv_relaunchx_m_free">M своб.</string>
+	<string name="jv_relaunchx_free">своб.</string>
 	<string name="jv_relaunchx_wifi_is_off">WiFi выкл.</string>
 	<string name="jv_relaunchx_wifi_is_on">WiFi ВКЛ.</string>
 	<string name="jv_relaunchx_select_application">Выберите приложение</string>

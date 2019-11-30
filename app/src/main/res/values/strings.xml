@@ -168,8 +168,10 @@
 	<string name="jv_relaunchx_yes">YES</string>
 	<string name="jv_relaunchx_no">NO</string>
 	<string name="jv_relaunchx_m_free">M free</string>
+	<string name="jv_relaunchx_free">free</string>
 	<string name="jv_relaunchx_wifi_is_off">WiFi is off</string>
 	<string name="jv_relaunchx_wifi_is_on">WiFi is ON</string>
+	<string name="jv_relaunchx_wifi">WiFi</string>
 	<string name="jv_relaunchx_select_application">Select application</string>
 	<string name="jv_relaunchx_lru_a">Last recently used applications</string>
 	<string name="jv_relaunchx_all_a">All applications</string>
@@ -601,6 +603,9 @@
 	<string name="pref_i_button_minHeight_title">Toolbar buttons height</string>
 	<string name="pref_i_button_textSize_sum">Toolbar buttons text size</string>
 	<string name="pref_i_button_textSize_title">Toolbar text size</string>
+	<string name="pref_i_toolbarFullText_off">Narrow screen, short description</string>
+	<string name="pref_i_toolbarFullText_on">Wide screen, long description</string>
+	<string name="pref_i_toolbarFullText_title">Toolbar text mode</string>
 	<string name="jv_relaunchx_fileinfo_title2">Directory</string>
 	<string name="pref_i_lock_passwd_title">Lock password</string>
 	<string name="pref_i_lock_passwd_sum">ReLaunchX Lock Screen</string>

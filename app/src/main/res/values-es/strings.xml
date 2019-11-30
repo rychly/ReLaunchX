@@ -159,6 +159,7 @@
 	<string name="jv_relaunchx_yes">Sí</string>
 	<string name="jv_relaunchx_no">NO</string>
 	<string name="jv_relaunchx_m_free">M libre</string>
+	<string name="jv_relaunchx_free">libre</string>
 	<string name="jv_relaunchx_wifi_is_off">WiFi OFF</string>
 	<string name="jv_relaunchx_wifi_is_on">WiFi ON</string>
 	<string name="jv_relaunchx_select_application">Seleccionar aplicación</string>

@@ -62,6 +62,15 @@
 			android:selectable="true"
 			android:summary="@string/pref_i_button_textSize_sum"
 			android:title="@string/pref_i_button_textSize_title" />
+		<CheckBoxPreference
+			android:defaultValue="true"
+			android:key="toolbarTextMode"
+			android:layout="@layout/pref_child"
+			android:persistent="true"
+			android:summaryOff="@string/pref_i_toolbarFullText_off"
+			android:summaryOn="@string/pref_i_toolbarFullText_on"
+			android:title="@string/pref_i_toolbarFullText_title" />
+
 		<EditTextPreference
 			android:enabled="true"
 			android:key="lockPassword"
