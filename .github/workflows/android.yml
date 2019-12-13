@@ -15,7 +15,7 @@ jobs:
       - name: Checkout submodules
         run: bash git submodule update --init --recursive
       - name: Verify submodule
-        run: ls -l lib/ebookparser
+        run: bash ls -l lib/ebookparser
       - name: set up JDK 1.8
         uses: actions/setup-java@v1
         with:
