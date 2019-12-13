@@ -13,8 +13,6 @@ jobs:
       - uses: actions/checkout@v1
       - name: Checkout submodules
         uses: textbook/git-checkout-submodule-action@master
-      - name: Verify submodule
-        run: bash ls -l lib/ebookparser
       - name: set up JDK 1.8
         uses: actions/setup-java@v1
         with:
