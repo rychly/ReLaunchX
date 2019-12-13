@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Checkout
       - uses: actions/checkout@v1
       - name: Checkout submodules
         run: bash git submodule update --init --recursive
